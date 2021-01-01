@@ -1,0 +1,1 @@
+%vehicleName = "Example Car"; //Name shown in the vehicle section menu

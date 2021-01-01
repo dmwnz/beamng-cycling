@@ -1,0 +1,216 @@
+{
+"beamng_suspension_R": {
+	"information":{
+		"authors":"DrowsySam",
+		"name":"Example Car Independent Rear Suspension",
+	}
+    "slotType" : "beamng_suspension_R",
+	"scalebeamSpring":0.84,
+	"scalebeamDamp":1.3,
+	"scalebeamDeform":1.5,
+	"scalebeamStrength":1.78,
+	"slots": [
+		["type", "default", "description"]
+		["beamng_diff_R","beamng_diff_R","Example Car Rear Differential"],
+		["beamng_brake_R","beamng_brake_R","Example Car Rear Brakes"],
+		["beamng_coilover_R","beamng_coilover_R","Example Car Rear Coilover"],
+		["beamng_wheel_R","beamng_wheel_R","Example Car Rear Wheels"],
+		["beamng_steering_R","beamng_steering_R","Example Car Rear Steering"],
+	],
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+		 ["BeamNG_Lowerarm_R", ["BeamNG_Lowerarm_R"]],
+		 ["BeamNG_Upperarm_R", ["BeamNG_Upperarm_R"]],
+		 
+		 ["BeamNG_Spindle_RL", ["BeamNG_Spindle_RL"]],
+		 ["BeamNG_Spindle_RR", ["BeamNG_Spindle_RR"]],
+
+	],
+	"nodes": [
+		 ["id", "posX", "posY", "posZ"],
+		 //LIFT KIT
+		 {"collision":true}
+		 {"frictionCoef":0.7},
+		 {"nodeMaterial":"|NM_METAL"},
+		 {"nodeWeight":6.5},
+		 
+		 {"group":"BeamNG_Lowerarm_R"},
+			["SUSBL1", 1.5, 1.501, 0.475],
+			["SUSBR1", -1.5, 1.501, 0.475],
+		 {"group":"BeamNG_Upperarm_R"},
+			["SUSBL2", 1.5, 1.501, 1.025],
+			["SUSBR2", -1.5, 1.501, 1.025],
+
+		 {"group":"BeamNG_Spindle_RL"},
+			["SUSBL0", 1.5, 1.796, 0.75],
+			["SUSBL3", 1.924, 1.497, 0.75],
+			["SUSBL4", 1.443, 1.497, 0.75],
+			["SUSBL5", 1.5, 1.199, 0.75],
+			
+		 {"group":"BeamNG_Spindle_RR"},
+			["SUSBR0", -1.5, 1.796, 0.75],
+			["SUSBR3", -1.924, 1.497, 0.75],
+			["SUSBR4", -1.443, 1.497, 0.75],
+			["SUSBR5", -1.5, 1.199, 0.75],
+
+
+
+
+		 
+	],
+	
+	"beams": [
+		  ["id1:", "id2:"],
+		  {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+		  {"beamSpring":8911000,"beamDamp":75},
+		  {"beamDeform":51000,"beamStrength":"FLT_MAX"},
+		  //Spindle L
+			["SUSBL5","SUSBL2"],
+			["SUSBL2","SUSBL0"],
+			["SUSBL0","SUSBL1"],
+			["SUSBL1","SUSBL5"],
+			["SUSBL4","SUSBL5"],
+			["SUSBL4","SUSBL0"],
+			["SUSBL2","SUSBL4"],
+			["SUSBL1","SUSBL4"],
+			["SUSBL4","SUSBL3"],
+			["SUSBL5","SUSBL3"],
+			["SUSBL0","SUSBL3"],
+			["SUSBL2","SUSBL3"],
+			["SUSBL1","SUSBL3"],
+			["SUSBL2","SUSBL1"],
+			["SUSBL0","SUSBL5"],
+			//R
+			["SUSBR5","SUSBR2"],
+			["SUSBR2","SUSBR0"],
+			["SUSBR0","SUSBR1"],
+			["SUSBR1","SUSBR5"],
+			["SUSBR4","SUSBR5"],
+			["SUSBR4","SUSBR0"],
+			["SUSBR2","SUSBR4"],
+			["SUSBR1","SUSBR4"],
+			["SUSBR4","SUSBR3"],
+			["SUSBR5","SUSBR3"],
+			["SUSBR0","SUSBR3"],
+			["SUSBR2","SUSBR3"],
+			["SUSBR1","SUSBR3"],
+			["SUSBR2","SUSBR1"],
+			["SUSBR0","SUSBR5"],
+			
+			//Body to spindles L
+			["BeamNGL16","SUSBL1"],
+			["BeamNGL12","SUSBL1"],
+			["BeamNGL17","SUSBL2"],
+			["BeamNGL13","SUSBL2"],
+			//R
+			["BeamNGR16","SUSBR1"],
+			["BeamNGR12","SUSBR1"],
+			["BeamNGR17","SUSBR2"],
+			["BeamNGR13","SUSBR2"],
+
+
+
+
+		  
+	],
+	"triangles": [
+			["id1:","id2:","id3:"],
+			
+	],
+}
+"beamng_brake_R": {
+	"information":{
+		"authors":"DrowsySam",
+		"name":"Example Car Rear Brakes",
+	}
+    "slotType" : "beamng_brake_R",
+	"scalebeamSpring":0.84,
+	"scalebeamDamp":1.3,
+	"scalebeamDeform":1.5,
+	"scalebeamStrength":1.78,
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+		 //brake discs
+		 //["beamng_disc_RR", ["wheel_RR"]],
+		 //["beamng_disc_RL", ["wheel_RL"]],
+	],
+	"hubWheels": [
+            ["name","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+			//brakes
+			{"brakeTorque":1000},
+			{"parkingTorque":0},
+	],
+}
+"beamng_coilover_R": {
+	"information":{
+		"authors":"DrowsySam",
+		"name":"Example Car Rear Coilovers",
+	}
+    "slotType" : "beamng_coilover_R",
+	"scalebeamSpring":0.84,
+	"scalebeamDamp":1.3,
+	"scalebeamDeform":1.5,
+	"scalebeamStrength":1.78,
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+
+	],
+	"beams": [
+		  ["id1:", "id2:"],
+		  {"beamSpring":19000,"beamDeform":280000,"beamStrength":260000},
+		  {"beamLimitSpring":3001000,"beamLimitDamp":10000},
+		  {"beamDamp":1000},
+		  {"beamPrecompression":1.05, "beamType":"|BOUNDED", "beamLongBound":0.5, "beamShortBound":0.5},
+		  ["BeamNGL13","SUSBL1", {"beamDampRebound":1000,"beamDampVelocitySplit":0.0,"beamDampFast":1000,"beamDampReboundFast":1000}],
+		  ["BeamNGL17","SUSBL1", {"beamDampRebound":1000,"beamDampVelocitySplit":0.0,"beamDampFast":1000,"beamDampReboundFast":1000}],
+		  
+		  ["BeamNGR13","SUSBR1", {"beamDampRebound":1000,"beamDampVelocitySplit":0.0,"beamDampFast":1000,"beamDampReboundFast":1000}],
+		  ["BeamNGR17","SUSBR1", {"beamDampRebound":1000,"beamDampVelocitySplit":0.0,"beamDampFast":1000,"beamDampReboundFast":1000}],
+
+
+
+
+		  {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+		  ],
+}
+"beamng_steering_R": {
+	"information":{
+		"authors":"DrowsySam",
+		"name":"Example Car Rear Steering",
+	}
+    "slotType" : "beamng_steering_R",
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+
+
+	],
+	"hydros": [
+			["id1:","id2:"],
+			{"beamPrecompression":1},
+			{"beamSpring":10001000,"beamDamp":20,"beamDeform":550000,"beamStrength":23004000},
+			["BeamNG14","SUSBL5",{"factor":0.07,"steeringWheelLock":480}],
+			["BeamNG14","SUSBR5",{"factor":-0.07,"steeringWheelLock":480}],
+		
+	],
+}
+"beamng_diff_R": {
+	"information":{
+		"authors":"DrowsSam",
+		"name":"Example Car Rear Differential",
+	}
+	"differentials": [
+			["wheelName1", 	"wheelName2", "type", "state", "closedTorque", "engineTorqueCoef"],
+			["RL","RR", "lsd", "closed", 500, 1]
+	],
+	"engine":{
+		"differential":7.00,
+		"axleFriction":10
+		},
+    "slotType" : "beamng_diff_R",
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+
+
+	],	
+}
+}

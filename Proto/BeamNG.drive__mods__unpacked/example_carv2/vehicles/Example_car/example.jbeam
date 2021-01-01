@@ -1,0 +1,326 @@
+{
+"beamng": {
+	"information":{
+		"authors":"DrowsySam",
+		"name":"Example Car",
+	}
+    "slotType" : "main",
+	"slots": [
+		["type", "default", "description"]
+		["beamng_engine","beamng_engine","Example Car Engine"],
+		["beamng_suspension_R","beamng_suspension_R","Example Car Rear Suspension"],
+		["beamng_suspension_F","beamng_suspension_F","Example Car Front Suspension"],
+		
+	],
+	
+	//
+	
+	"dragCoef":10,
+	"scalebeamSpring":0.84,
+	"scalebeamDamp":1.3,
+	"scalebeamDeform":1.5,
+	"scalebeamStrength":1.78,
+	
+	//refNodes
+	
+	"refNodes":[
+		["ref:", "back:", "left:", "up:"]
+		["BeamNG10", "BeamNG14", "BeamNGL8", "BeamNG11"]	
+		//refNodes are important, the camera and spawning will work off these, make sure they are correct, enter false refNodes and your vehicle will not load.
+		//The first number should be in the middle of the nodes, this is where the camera pivots from, if it's off to the side, the camera will be too
+		],
+		
+	//External Cameras
+	
+	"cameraExternal":{
+		"distance":6.0, //How far away the default camera position should be
+		"distanceMin":4, //How close can it get before it can't go any further
+		"offset":{"x":0, "y":0.0, "z":1.0}, //Camera offset, X = Left/right, Y = Forward/backwards, Z = Height
+		"fov":65, //Field of view
+		},
+		
+	//Mesh and groups
+	
+	"flexbodies": [
+		 ["mesh", "[group]:", "nonFlexMaterials"],
+		 ["BeamNG_Nodes", ["beamng_frame", "BeamNG_Lowerarm_F", "BeamNG_Upperarm_F"]],
+		 ["BeamNG_Beams", ["beamng_frame", "BeamNG_Lowerarm_F", "BeamNG_Upperarm_F"]],
+		 ["BeamNG_XBeams", ["beamng_frame", "BeamNG_Lowerarm_F", "BeamNG_Upperarm_F"]],
+		 
+		 //Flexbodies, the first name in the quotations is the name of the mesh from the .DAE file you created, the second name in quotations is the group it belongs to.
+		 //
+	 ],
+	 
+	 //Nodes section
+
+	"nodes": [
+		 ["id", "posX", "posY", "posZ"],
+		 {"selfcollision":true} //Can the nodes collide with themselves?
+		 {"collision":true} //Do the nodes have collision?
+		 {"frictionCoef":0.7}, //How much grip the nodes have
+		 {"nodeMaterial":"|NM_METAL"}, //The material for each node
+		 {"nodeWeight":10}, //How much the node weighs
+		 
+		 //beamng frame
+		 {"group":"beamng_frame"},
+		 
+		 //Left side nodes
+			["BeamNGL8", 1.0, 0.0, 0.5],
+			["BeamNGL9", 1.0, 0.0, 1.03],
+			
+		//Middle row nodes
+			["BeamNG2", 0.0, -2.0, 0.5],
+			["BeamNG3", 0.0, -2.0, 1.03],
+			["BeamNG6", 0.0, -1.0, 0.5],
+			["BeamNG7", 0.0, -1.0, 1.03],
+			["BeamNG10", 0.0, 0.0, 0.5],
+			["BeamNG11", 0.0, 0.0, 1.03],
+			["BeamNG14", 0.0, 1.0, 0.5],
+			["BeamNG15", 0.0, 1.0, 1.03],
+			["BeamNG18", 0.0, 2.0, 0.5],
+			["BeamNG19", 0.0, 2.0, 1.03],
+			
+		//Right side nodes
+			["BeamNGR8", -1.0, 0.0, 0.5],
+			["BeamNGR9", -1.0, 0.0, 1.03],
+			
+		 {"group":"BeamNG_Lowerarm_F"},
+			["BeamNGL0", 1.0, -2.0, 0.5],
+			["BeamNGL4", 1.0, -1.0, 0.5],
+			["BeamNGR0", -1.0, -2.0, 0.5],
+			["BeamNGR4", -1.0, -1.0, 0.5],
+			
+		 {"group":"BeamNG_Upperarm_F"},
+			["BeamNGL1", 1.0, -2.0, 1.03],
+			["BeamNGL5", 1.0, -1.0, 1.03],
+			["BeamNGR1", -1.0, -2.0, 1.03],
+			["BeamNGR5", -1.0, -1.0, 1.03],
+			
+		 {"group":"BeamNG_Lowerarm_R"},
+			["BeamNGL16", 1.0, 2.0, 0.5],
+			["BeamNGL12", 1.0, 1.0, 0.5],
+			["BeamNGR12", -1.0, 1.0, 0.5],
+			["BeamNGR16", -1.0, 2.0, 0.5],
+			
+		 {"group":"BeamNG_Upperarm_R"},
+			["BeamNGL13", 1.0, 1.0, 1.03],
+			["BeamNGL17", 1.0, 2.0, 1.03],
+			["BeamNGR13", -1.0, 1.0, 1.03],
+			["BeamNGR17", -1.0, 2.0, 1.03],
+		
+		 {"group":""} //The end of the group, always end a group with a closed bracket, unless starting another.
+
+	],
+	"beams": [
+		  ["id1:", "id2:"],
+		  {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1, "beamShortBound":1},
+		  {"beamSpring":1000000},
+		  {"beamDamp":400},
+		  {"beamDeform":40000}, //beamDeform controls how easily the beams can bend and deform, lower values = easier to bend
+		  {"beamStrength":"FLT_MAX"},
+		  //Left hand side nodes
+			["BeamNG2","BeamNG3"],
+			["BeamNG3","BeamNG7"],
+			["BeamNG7","BeamNG6"],
+			["BeamNG6","BeamNG2"],
+			["BeamNG7","BeamNGL5"],
+			["BeamNGL5","BeamNGL4"],
+			["BeamNGL4","BeamNG6"],
+			["BeamNGL5","BeamNGL1"],
+			["BeamNGL1","BeamNGL0"],
+			["BeamNGL0","BeamNGL4"],
+			["BeamNGL1","BeamNG3"],
+			["BeamNG2","BeamNGL0"],
+			["BeamNG11","BeamNG10"],
+			["BeamNG11","BeamNGL9"],
+			["BeamNGL9","BeamNGL8"],
+			["BeamNGL8","BeamNG10"],
+			["BeamNGL8","BeamNGL4"],
+			["BeamNG6","BeamNG10"],
+			["BeamNGL9","BeamNGL5"],
+			["BeamNG11","BeamNG7"],
+			["BeamNGL0","BeamNGL5"],
+			["BeamNG3","BeamNGL5"],
+			["BeamNG7","BeamNGL1"],
+			["BeamNG2","BeamNGL1"],
+			["BeamNGL0","BeamNG3"],
+			["BeamNG6","BeamNGL0"],
+			["BeamNG2","BeamNGL4"],
+			["BeamNGL4","BeamNGL1"],
+			["BeamNG2","BeamNG7"],
+			["BeamNG6","BeamNG3"],
+			["BeamNG2","BeamNGL5"],
+			["BeamNG6","BeamNGL1"],
+			["BeamNGL0","BeamNG7"],
+			["BeamNGL4","BeamNG3"],
+			["BeamNG6","BeamNGL5"],
+			["BeamNGL4","BeamNG7"],
+			["BeamNGL4","BeamNG11"],
+			["BeamNG7","BeamNGL8"],
+			["BeamNG6","BeamNGL9"],
+			["BeamNGL5","BeamNG10"],
+			["BeamNGL5","BeamNG11"],
+			["BeamNG7","BeamNGL9"],
+			["BeamNG6","BeamNG11"],
+			["BeamNG7","BeamNG10"],
+			["BeamNGL8","BeamNG11"],
+			["BeamNG10","BeamNGL9"],
+			["BeamNGL4","BeamNGL9"],
+			["BeamNGL5","BeamNGL8"],
+			["BeamNGL4","BeamNG10"],
+			["BeamNG6","BeamNGL8"],
+			["BeamNG18","BeamNG19"],
+			["BeamNG19","BeamNG15"],
+			["BeamNG15","BeamNG14"],
+			["BeamNG14","BeamNG18"],
+			["BeamNG15","BeamNGL13"],
+			["BeamNGL13","BeamNGL12"],
+			["BeamNGL12","BeamNG14"],
+			["BeamNGL13","BeamNGL17"],
+			["BeamNGL17","BeamNGL16"],
+			["BeamNGL16","BeamNGL12"],
+			["BeamNGL17","BeamNG19"],
+			["BeamNG18","BeamNGL16"],
+			["BeamNGL16","BeamNGL13"],
+			["BeamNG19","BeamNGL13"],
+			["BeamNG15","BeamNGL17"],
+			["BeamNG18","BeamNGL17"],
+			["BeamNGL16","BeamNG19"],
+			["BeamNG14","BeamNGL16"],
+			["BeamNG18","BeamNGL12"],
+			["BeamNGL12","BeamNGL17"],
+			["BeamNG18","BeamNG15"],
+			["BeamNG14","BeamNG19"],
+			["BeamNG18","BeamNGL13"],
+			["BeamNG14","BeamNGL17"],
+			["BeamNGL16","BeamNG15"],
+			["BeamNGL12","BeamNG19"],
+			["BeamNG14","BeamNGL13"],
+			["BeamNGL12","BeamNG15"],
+			["BeamNGL8","BeamNGL12"],
+			["BeamNG14","BeamNG10"],
+			["BeamNGL9","BeamNGL13"],
+			["BeamNG11","BeamNG15"],
+			["BeamNGL12","BeamNG11"],
+			["BeamNG15","BeamNGL8"],
+			["BeamNG14","BeamNGL9"],
+			["BeamNGL13","BeamNG10"],
+			["BeamNGL13","BeamNG11"],
+			["BeamNG15","BeamNGL9"],
+			["BeamNG14","BeamNG11"],
+			["BeamNG15","BeamNG10"],
+			["BeamNGL12","BeamNGL9"],
+			["BeamNGL13","BeamNGL8"],
+			["BeamNGL12","BeamNG10"],
+			["BeamNG14","BeamNGL8"],
+			
+			//Right side nodes
+			
+			["BeamNG2","BeamNG3"],
+			["BeamNG3","BeamNG7"],
+			["BeamNG7","BeamNG6"],
+			["BeamNG6","BeamNG2"],
+			["BeamNG7","BeamNGR5"],
+			["BeamNGR5","BeamNGR4"],
+			["BeamNGR4","BeamNG6"],
+			["BeamNGR5","BeamNGR1"],
+			["BeamNGR1","BeamNGR0"],
+			["BeamNGR0","BeamNGR4"],
+			["BeamNGR1","BeamNG3"],
+			["BeamNG2","BeamNGR0"],
+			["BeamNG11","BeamNG10"],
+			["BeamNG11","BeamNGR9"],
+			["BeamNGR9","BeamNGR8"],
+			["BeamNGR8","BeamNG10"],
+			["BeamNGR8","BeamNGR4"],
+			["BeamNG6","BeamNG10"],
+			["BeamNGR9","BeamNGR5"],
+			["BeamNG11","BeamNG7"],
+			["BeamNGR0","BeamNGR5"],
+			["BeamNG3","BeamNGR5"],
+			["BeamNG7","BeamNGR1"],
+			["BeamNG2","BeamNGR1"],
+			["BeamNGR0","BeamNG3"],
+			["BeamNG6","BeamNGR0"],
+			["BeamNG2","BeamNGR4"],
+			["BeamNGR4","BeamNGR1"],
+			["BeamNG2","BeamNG7"],
+			["BeamNG6","BeamNG3"],
+			["BeamNG2","BeamNGR5"],
+			["BeamNG6","BeamNGR1"],
+			["BeamNGR0","BeamNG7"],
+			["BeamNGR4","BeamNG3"],
+			["BeamNG6","BeamNGR5"],
+			["BeamNGR4","BeamNG7"],
+			["BeamNGR4","BeamNG11"],
+			["BeamNG7","BeamNGR8"],
+			["BeamNG6","BeamNGR9"],
+			["BeamNGR5","BeamNG10"],
+			["BeamNGR5","BeamNG11"],
+			["BeamNG7","BeamNGR9"],
+			["BeamNG6","BeamNG11"],
+			["BeamNG7","BeamNG10"],
+			["BeamNGR8","BeamNG11"],
+			["BeamNG10","BeamNGR9"],
+			["BeamNGR4","BeamNGR9"],
+			["BeamNGR5","BeamNGR8"],
+			["BeamNGR4","BeamNG10"],
+			["BeamNG6","BeamNGR8"],
+			["BeamNG18","BeamNG19"],
+			["BeamNG19","BeamNG15"],
+			["BeamNG15","BeamNG14"],
+			["BeamNG14","BeamNG18"],
+			["BeamNG15","BeamNGR13"],
+			["BeamNGR13","BeamNGR12"],
+			["BeamNGR12","BeamNG14"],
+			["BeamNGR13","BeamNGR17"],
+			["BeamNGR17","BeamNGR16"],
+			["BeamNGR16","BeamNGR12"],
+			["BeamNGR17","BeamNG19"],
+			["BeamNG18","BeamNGR16"],
+			["BeamNGR16","BeamNGR13"],
+			["BeamNG19","BeamNGR13"],
+			["BeamNG15","BeamNGR17"],
+			["BeamNG18","BeamNGR17"],
+			["BeamNGR16","BeamNG19"],
+			["BeamNG14","BeamNGR16"],
+			["BeamNG18","BeamNGR12"],
+			["BeamNGR12","BeamNGR17"],
+			["BeamNG18","BeamNG15"],
+			["BeamNG14","BeamNG19"],
+			["BeamNG18","BeamNGR13"],
+			["BeamNG14","BeamNGR17"],
+			["BeamNGR16","BeamNG15"],
+			["BeamNGR12","BeamNG19"],
+			["BeamNG14","BeamNGR13"],
+			["BeamNGR12","BeamNG15"],
+			["BeamNGR8","BeamNGR12"],
+			["BeamNG14","BeamNG10"],
+			["BeamNGR9","BeamNGR13"],
+			["BeamNG11","BeamNG15"],
+			["BeamNGR12","BeamNG11"],
+			["BeamNG15","BeamNGR8"],
+			["BeamNG14","BeamNGR9"],
+			["BeamNGR13","BeamNG10"],
+			["BeamNGR13","BeamNG11"],
+			["BeamNG15","BeamNGR9"],
+			["BeamNG14","BeamNG11"],
+			["BeamNG15","BeamNG10"],
+			["BeamNGR12","BeamNGR9"],
+			["BeamNGR13","BeamNGR8"],
+			["BeamNGR12","BeamNG10"],
+			["BeamNG14","BeamNGR8"],
+
+
+
+
+		  
+
+	],
+	"triangles": [
+			["id1:","id2:","id3:"],
+
+			
+	],
+}
+}
