@@ -13,7 +13,7 @@
 
         ["Wheel_Front", ["wheel_F", "wheelhub_F"]],
         ["Wheel_Rear" , ["wheel_R", "wheelhub_R"]]
-        ], 
+    ], 
 
     "props": [
         ["func",    "mesh",    "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
@@ -210,24 +210,24 @@
         ["rfb", "f_bc"],
         ["rft", "f_bc"],
 
-            //rear hub
-            ["lrb", "l_rh"],
-            ["lrt", "l_rh"],
-            ["rrb", "l_rh"],
-            ["rrt", "l_rh"],
+        //rear hub
+        ["lrb", "l_rh"],
+        ["lrt", "l_rh"],
+        ["rrb", "l_rh"],
+        ["rrt", "l_rh"],
 
-            ["lrb", "r_rh"],
-            ["lrt", "r_rh"],
-            ["rrb", "r_rh"],
-            ["rrt", "r_rh"],
+        ["lrb", "r_rh"],
+        ["lrt", "r_rh"],
+        ["rrb", "r_rh"],
+        ["rrt", "r_rh"],
 
-            ["r_rh", "l_rh"],
+        ["r_rh", "l_rh"],
 
-            //rear caliper
-            ["lrb", "r_bc"],
-            ["lrt", "r_bc"],
-            ["rrb", "r_bc"],
-            ["rrt", "r_bc"]
+        //rear caliper
+        ["lrb", "r_bc"],
+        ["lrt", "r_bc"],
+        ["rrb", "r_bc"],
+        ["rrt", "r_bc"]
             
     ],
 
@@ -241,16 +241,7 @@
         ["rrt","lrt","lrb","rrb"],
         ["rft","rrt","rrb","rfb"],
         ["lft","rft","rfb","lfb"],
-        ["lfb","rfb","rrb","lrb"]
-
-
-        // ["rfb","lfb","lft","rft"],
-        // ["rrt","rft","lft","lrt"],
-        // ["rfb","rrb","lrb","lfb"],
-        // ["lrb","lrt","lft","lfb"],
-        // ["lrt","rrt","rrb","lrb"],
-        // ["rrt","rft","rfb","rrb"]
-        
+        ["lfb","rfb","rrb","lrb"]        
     ]
 }
 }
