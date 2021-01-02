@@ -1,256 +1,256 @@
 {
 "MyVehicle":{
-        "information":{
-            "name":"Sir Velo",
-            "authors":"dmwnz"
-        },
-        "slotType":"main",
+    "information":{
+        "name":"Sir Velo",
+        "authors":"dmwnz"
+    },
+    "slotType":"main",
 
-        "flexbodies": [
-            ["mesh", "[group]:"],
-            ["Frame", ["frame_g"]],
-            ["Chain", ["frame_g"]],
+    "flexbodies": [
+        ["mesh", "[group]:"],
+        ["Frame", ["frame_g"]],
+        ["Chain", ["frame_g"]],
 
-            ["Wheel_Front", ["wheel_F", "wheelhub_F"]],
-            ["Wheel_Rear" , ["wheel_R", "wheelhub_R"]],
-         ], 
+        ["Wheel_Front", ["wheel_F", "wheelhub_F"]],
+        ["Wheel_Rear" , ["wheel_R", "wheelhub_R"]]
+        ], 
 
-        "props": [
-            ["func",    "mesh",    "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
-            ["steering","Cockpit", "rfb",    "lfb",  "rrb",  {"x":71.5, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1],
-            ["steering","Crankset","rfb",    "lfb",  "rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1]
+    "props": [
+        ["func",    "mesh",    "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
+        ["steering","Cockpit", "rfb",    "lfb",  "rrb",  {"x":71.5, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1],
+        ["steering","Crankset","rfb",    "lfb",  "rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1]
+    ],
+
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"disableMeshBreaking":false,"disableHubMeshBreaking":false},
+        {"hasTire":true},
+        {"enableTireReinfBeams":false},
+        {"enableTireLbeams":true},
+        {"enableTireSideReinfBeams":false},
+        {"enableTreadReinfBeams":true},
+        {"enableTirePeripheryReinfBeams":true},
+
+        //general settings
+        {"radius":0.327},
+        {"hubRadius":0.3},
+        {"wheelOffset":0.0},
+        {"hubWidth":0.05},
+        {"tireWidth":0.05},
+        {"numRays":16},
+
+        //hub options
+        {"hubTreadBeamSpring":701000, "hubTreadBeamDamp":4},
+        {"hubPeripheryBeamSpring":701000, "hubPeripheryBeamDamp":4},
+        {"hubSideBeamSpring":901000, "hubSideBeamDamp":4},
+        {"hubNodeWeight":0.3},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef":0.5},
+
+        //tire options
+        {"wheelSideBeamSpring":2100,"wheelSideBeamDamp":5},
+        {"wheelSideBeamSpringExpansion":251000,"wheelSideBeamDampExpansion":20},
+        {"wheelSideTransitionZone":0.08,"wheelSideBeamPrecompression":0.99},
+
+        {"wheelReinfBeamSpring":15000,"wheelReinfBeamDamp":145},
+        {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.99},
+
+        {"wheelTreadBeamSpring":121000,"wheelTreadBeamDamp":44},
+        {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.99},
+
+        {"wheelTreadReinfBeamSpring":121000,"wheelTreadReinfBeamDamp":44},
+        {"wheelTreadReinfBeamDampCutoffHz":500,"wheelTreadReinfBeamPrecompression":0.99},
+
+        {"wheelPeripheryBeamSpring":101000,"wheelPeripheryBeamDamp":22},
+        {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":1},
+
+        {"wheelPeripheryReinfBeamSpring":51000,"wheelPeripheryReinfBeamDamp":22},
+        {"wheelPeripheryReinfBeamDampCutoffHz":500,"wheelPeripheryReinfBeamPrecompression":1},
+
+        //general tire values
+        {"nodeWeight":0.09},
+        {"nodeMaterial":"|NM_RUBBER"},
+        {"triangleCollision":false},
+        {"pressurePSI":30},
+        {"dragCoef":5},
+
+        //groundmodel friction multipliers
+        {"frictionCoef":1.0},
+        {"slidingFrictionCoef":1.0},
+        {"treadCoef":0.6},
+
+        //advanced friction values
+        {"noLoadCoef":1.34},
+        {"loadSensitivitySlope":0.0002},
+        {"fullLoadCoef":0.35},
+        {"softnessCoef":0.7},
+
+        //deform values
+        {"wheelSideBeamDeform":11000,"wheelSideBeamStrength":14000},
+        {"wheelReinfBeamDeform":101000,"wheelReinfBeamStrength":101000},
+        {"wheelTreadBeamDeform":8100,"wheelTreadBeamStrength":11000},
+        {"wheelTreadReinfBeamDeform":8100,"wheelTreadReinfBeamStrength":11000},
+        {"wheelPeripheryBeamDeform":101000,"wheelPeripheryBeamStrength":101000},
+        {"hubBeamDeform":14000, "hubBeamStrength":88000},
+
+        //front
+        {"selfCollision":false},
+        {"collision":true},
+        ["F", "wheel_F", "tire_F", "r_fh", "l_fh", 9999, "f_bc", 1],
+        ["F", "wheel_R", "tire_R", "r_rh", "l_rh", 9999, "f_rc", 1],
+        {"selfCollision":true},
+        {"disableMeshBreaking":false,"disableTriangleBreaking":false}
         ],
 
-        "pressureWheels": [
-            ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
-            {"disableMeshBreaking":false,"disableHubMeshBreaking":false},
-            {"hasTire":true},
-            {"enableTireReinfBeams":false},
-            {"enableTireLbeams":true},
-            {"enableTireSideReinfBeams":false},
-            {"enableTreadReinfBeams":true},
-            {"enableTirePeripheryReinfBeams":true},
+    "nodes":[
+        ["id", "posX", "posY", "posZ"],
+        {"collision":true},
+        {"nodeMaterial":"|NM_METAL"},
+        {"nodeWeight":10},
+        {"group":"frame_g"},
+        //front
+        //top
+        ["lft", 0.25,-1.0, 1.0],
+        ["rft",-0.25,-1.0, 1.0],
+        //bottom
+        ["lfb", 0.25,-1.0, 0.25],
+        ["rfb",-0.25,-1.0, 0.25],
 
-            //general settings
-            {"radius":0.327},
-            {"hubRadius":0.3},
-            {"wheelOffset":0.0},
-            {"hubWidth":0.05},
-            {"tireWidth":0.05},
-            {"numRays":16},
+        //rear
+        //top
+        ["lrt", 0.25, 0.0, 1.0],
+        ["rrt",-0.25, 0.0, 1.0],
+        //bottom
+        ["lrb", 0.25, 0.0, 0.25],
+        ["rrb",-0.25, 0.0, 0.25],
+        {"group":""},
 
-            //hub options
-            {"hubTreadBeamSpring":701000, "hubTreadBeamDamp":4},
-            {"hubPeripheryBeamSpring":701000, "hubPeripheryBeamDamp":4},
-            {"hubSideBeamSpring":901000, "hubSideBeamDamp":4},
-            {"hubNodeWeight":0.3},
-            {"hubNodeMaterial":"|NM_METAL"},
-            {"hubFrictionCoef":0.5},
+        // front hub
+        {"group":"wheelhub_F"},
+        ["l_fh",-0.06,-0.99,0.327],
+        ["r_fh", 0.06,-0.99,0.327],
+        {"group":""},
+        //front brake caliper
+        ["f_bc",0,-0.9,0.62],
 
-            //tire options
-            {"wheelSideBeamSpring":2100,"wheelSideBeamDamp":5},
-            {"wheelSideBeamSpringExpansion":251000,"wheelSideBeamDampExpansion":20},
-            {"wheelSideTransitionZone":0.08,"wheelSideBeamPrecompression":0.99},
+        // rear hub
+        {"group":"wheelhub_R"},
+        ["l_rh",-0.06,0,0.327],
+        ["r_rh", 0.06,0,0.327],
+        {"group":""},
+        //rear brake caliper
+        ["r_bc",0,0,0.62]
 
-            {"wheelReinfBeamSpring":15000,"wheelReinfBeamDamp":145},
-            {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.99},
+    ],
 
-            {"wheelTreadBeamSpring":121000,"wheelTreadBeamDamp":44},
-            {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.99},
+    "refNodes":[
+        ["ref:", "back:", "left:", "up:"],
+        ["rfb"  , "rrb" , "lfb" , "rft"]
+    ],
 
-            {"wheelTreadReinfBeamSpring":121000,"wheelTreadReinfBeamDamp":44},
-            {"wheelTreadReinfBeamDampCutoffHz":500,"wheelTreadReinfBeamPrecompression":0.99},
+    "beams":[
+        ["id1:","id2:"],
+        {"beamSpring":1251000,"beamDamp":250},
+        {"beamDeform":16000,"beamStrength":24000},
+        //rigidity box
+        ["lft", "rft"],
+        ["lft", "lfb"],
+        ["lft", "rfb"],
+        ["lft", "lrt"],
+        ["lft", "rrt"],
+        ["lft", "lrb"],
+        ["lft", "rrb"],
 
-            {"wheelPeripheryBeamSpring":101000,"wheelPeripheryBeamDamp":22},
-            {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":1},
+        ["rft", "lfb"],
+        ["rft", "rfb"],
+        ["rft", "lrt"],
+        ["rft", "rrt"],
+        ["rft", "lrb"],
+        ["rft", "rrb"],
 
-            {"wheelPeripheryReinfBeamSpring":51000,"wheelPeripheryReinfBeamDamp":22},
-            {"wheelPeripheryReinfBeamDampCutoffHz":500,"wheelPeripheryReinfBeamPrecompression":1},
+        ["lfb", "rfb"],
+        ["lfb", "lrt"],
+        ["lfb", "rrt"],
+        ["lfb", "lrb"],
+        ["lfb", "rrb"],
 
-            //general tire values
-            {"nodeWeight":0.09},
-            {"nodeMaterial":"|NM_RUBBER"},
-            {"triangleCollision":false},
-            {"pressurePSI":30},
-            {"dragCoef":5},
+        ["rfb", "lrt"],
+        ["rfb", "rrt"],
+        ["rfb", "lrb"],
+        ["rfb", "rrb"],
 
-            //groundmodel friction multipliers
-            {"frictionCoef":1.0},
-            {"slidingFrictionCoef":1.0},
-            {"treadCoef":0.6},
+        ["lrt", "rrt"],
+        ["lrt", "lrb"],
+        ["lrt", "rrb"],
 
-            //advanced friction values
-            {"noLoadCoef":1.34},
-            {"loadSensitivitySlope":0.0002},
-            {"fullLoadCoef":0.35},
-            {"softnessCoef":0.7},
+        ["rrt", "lrb"],
+        ["rrt", "rrb"],
 
-            //deform values
-            {"wheelSideBeamDeform":11000,"wheelSideBeamStrength":14000},
-            {"wheelReinfBeamDeform":101000,"wheelReinfBeamStrength":101000},
-            {"wheelTreadBeamDeform":8100,"wheelTreadBeamStrength":11000},
-            {"wheelTreadReinfBeamDeform":8100,"wheelTreadReinfBeamStrength":11000},
-            {"wheelPeripheryBeamDeform":101000,"wheelPeripheryBeamStrength":101000},
-            {"hubBeamDeform":14000, "hubBeamStrength":88000},
+        ["rrb", "lrb"],
 
-            //front
-            {"selfCollision":false},
-            {"collision":true},
-            ["F", "wheel_F", "tire_F", "r_fh", "l_fh", 9999, "f_bc", 1],
-            ["F", "wheel_R", "tire_R", "r_rh", "l_rh", 9999, "f_rc", 1],
-            {"selfCollision":true},
-            {"disableMeshBreaking":false,"disableTriangleBreaking":false},
-           ],
+        //this last line resets important values
+        {"beamType":"|NORMAL","beamPrecompression":1,"beamLongBound":1,"beamShortBound":1},
 
-        "nodes":[
-            ["id", "posX", "posY", "posZ"],
-            {"collision":true},
-            {"nodeMaterial":"|NM_METAL"},
-            {"nodeWeight":10},
-            {"group":"frame_g"},
-            //front
-            //top
-            ["lft", 0.25,-1.0, 1.0],
-            ["rft",-0.25,-1.0, 1.0],
-            //bottom
-            ["lfb", 0.25,-1.0, 0.25],
-            ["rfb",-0.25,-1.0, 0.25],
+        //front hub
+        ["lfb", "l_fh"],
+        ["lft", "l_fh"],
+        ["rfb", "l_fh"],
+        ["rft", "l_fh"],
 
-            //rear
-            //top
-            ["lrt", 0.25, 0.0, 1.0],
-            ["rrt",-0.25, 0.0, 1.0],
-            //bottom
-            ["lrb", 0.25, 0.0, 0.25],
-            ["rrb",-0.25, 0.0, 0.25],
-            {"group":""},
+        ["lfb", "r_fh"],
+        ["lft", "r_fh"],
+        ["rfb", "r_fh"],
+        ["rft", "r_fh"],
 
-            // front hub
-            {"group":"wheelhub_F"},
-            ["l_fh",-0.06,-0.99,0.327],
-            ["r_fh", 0.06,-0.99,0.327],
-            {"group":""},
-            //front brake caliper
-            ["f_bc",0,-0.9,0.62]
+        ["r_fh", "l_fh"],
 
-            // rear hub
-            {"group":"wheelhub_R"},
-            ["l_rh",-0.06,0,0.327],
-            ["r_rh", 0.06,0,0.327],
-            {"group":""},
-            //rear brake caliper
-            ["r_bc",0,0,0.62]
+        //front caliper
+        ["lfb", "f_bc"],
+        ["lft", "f_bc"],
+        ["rfb", "f_bc"],
+        ["rft", "f_bc"],
 
-        ],
+            //rear hub
+            ["lrb", "l_rh"],
+            ["lrt", "l_rh"],
+            ["rrb", "l_rh"],
+            ["rrt", "l_rh"],
 
-        "refNodes":[
-            ["ref:", "back:", "left:", "up:"],
-            ["rfb"  , "rrb" , "lfb" , "rft"]
-        ],
- 
-        "beams":[
-            ["id1:","id2:"],
-            {"beamSpring":1251000,"beamDamp":250},
-            {"beamDeform":16000,"beamStrength":24000},
-            //rigidity box
-            ["lft", "rft"],
-            ["lft", "lfb"],
-            ["lft", "rfb"],
-            ["lft", "lrt"],
-            ["lft", "rrt"],
-            ["lft", "lrb"],
-            ["lft", "rrb"],
+            ["lrb", "r_rh"],
+            ["lrt", "r_rh"],
+            ["rrb", "r_rh"],
+            ["rrt", "r_rh"],
 
-            ["rft", "lfb"],
-            ["rft", "rfb"],
-            ["rft", "lrt"],
-            ["rft", "rrt"],
-            ["rft", "lrb"],
-            ["rft", "rrb"],
+            ["r_rh", "l_rh"],
 
-            ["lfb", "rfb"],
-            ["lfb", "lrt"],
-            ["lfb", "rrt"],
-            ["lfb", "lrb"],
-            ["lfb", "rrb"],
-
-            ["rfb", "lrt"],
-            ["rfb", "rrt"],
-            ["rfb", "lrb"],
-            ["rfb", "rrb"],
-
-            ["lrt", "rrt"],
-            ["lrt", "lrb"],
-            ["lrt", "rrb"],
-
-            ["rrt", "lrb"],
-            ["rrt", "rrb"],
-
-            ["rrb", "lrb"],
- 
-            //this last line resets important values
-            {"beamType":"|NORMAL","beamPrecompression":1,"beamLongBound":1,"beamShortBound":1},
-
-            //front hub
-            ["lfb", "l_fh"],
-            ["lft", "l_fh"],
-            ["rfb", "l_fh"],
-            ["rft", "l_fh"],
-
-            ["lfb", "r_fh"],
-            ["lft", "r_fh"],
-            ["rfb", "r_fh"],
-            ["rft", "r_fh"],
-
-            ["r_fh", "l_fh"],
-
-            //front caliper
-            ["lfb", "f_bc"],
-            ["lft", "f_bc"],
-            ["rfb", "f_bc"],
-            ["rft", "f_bc"],
-
-             //rear hub
-             ["lrb", "l_rh"],
-             ["lrt", "l_rh"],
-             ["rrb", "l_rh"],
-             ["rrt", "l_rh"],
- 
-             ["lrb", "r_rh"],
-             ["lrt", "r_rh"],
-             ["rrb", "r_rh"],
-             ["rrt", "r_rh"],
- 
-             ["r_rh", "l_rh"],
- 
-             //rear caliper
-             ["lrb", "r_bc"],
-             ["lrt", "r_bc"],
-             ["rrb", "r_bc"],
-             ["rrt", "r_bc"]
-             
-        ],
-
-        "quads": [
-            ["id1:", "id2:", "id3:", "id4:"],
-            {"dragCoef":10},
-            {"liftCoef":0},
-
-            ["lrt","rrt","rft","lft"],
-            ["lrt","lft","lfb","lrb"],
-            ["rrt","lrt","lrb","rrb"],
-            ["rft","rrt","rrb","rfb"],
-            ["lft","rft","rfb","lfb"],
-            ["lfb","rfb","rrb","lrb"]
-
-
-            // ["rfb","lfb","lft","rft"],
-            // ["rrt","rft","lft","lrt"],
-            // ["rfb","rrb","lrb","lfb"],
-            // ["lrb","lrt","lft","lfb"],
-            // ["lrt","rrt","rrb","lrb"],
-            // ["rrt","rft","rfb","rrb"]
+            //rear caliper
+            ["lrb", "r_bc"],
+            ["lrt", "r_bc"],
+            ["rrb", "r_bc"],
+            ["rrt", "r_bc"]
             
-      ],
+    ],
+
+    "quads": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"dragCoef":10},
+        {"liftCoef":0},
+
+        ["lrt","rrt","rft","lft"],
+        ["lrt","lft","lfb","lrb"],
+        ["rrt","lrt","lrb","rrb"],
+        ["rft","rrt","rrb","rfb"],
+        ["lft","rft","rfb","lfb"],
+        ["lfb","rfb","rrb","lrb"]
+
+
+        // ["rfb","lfb","lft","rft"],
+        // ["rrt","rft","lft","lrt"],
+        // ["rfb","rrb","lrb","lfb"],
+        // ["lrb","lrt","lft","lfb"],
+        // ["lrt","rrt","rrb","lrb"],
+        // ["rrt","rft","rfb","rrb"]
+        
+    ]
 }
 }
