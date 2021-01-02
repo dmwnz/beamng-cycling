@@ -1,0 +1,9 @@
+{
+    "Name":"Sir Velo",
+    "Brand":"Sir",
+    "Type":"Velo",
+    "default_color":"White",
+    "colors":{
+        "White": "1 1 1 1.2"
+    }
+}
