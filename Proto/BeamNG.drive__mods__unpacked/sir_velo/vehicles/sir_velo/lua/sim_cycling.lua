@@ -11,6 +11,7 @@ local throttleSmooth = newTemporalSmoothing(200, 200)
 local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
 local crank_rotation = 0  -- degrees
 local wheel_rotation = 0  -- degrees
+local fake_steering = 0
 
 
 local function setSpeed(speed)
@@ -19,6 +20,7 @@ local function setSpeed(speed)
 end
 
 local function onInit()
+    electrics.values.fake_steering = 0
     electrics.values.throttle = 0
     electrics.values.crank_rotation = crank_rotation
     electrics.values.wheel_rotation = wheel_rotation
@@ -58,6 +60,7 @@ local function updateGFX(dt)
     
     electrics.values.crank_rotation = crank_rotation
     electrics.values.wheel_rotation = wheel_rotation
+    electrics.values.fake_steering = electrics.values.steering_input
     -- log('I', 'sim_cycling', electrics.values['crank_rotation'])
 end
 
