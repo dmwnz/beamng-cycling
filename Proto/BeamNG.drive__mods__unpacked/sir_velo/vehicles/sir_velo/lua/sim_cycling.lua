@@ -9,6 +9,9 @@ local client = assert(socket.tcp())
 local targetSpeed= 0
 local throttleSmooth = newTemporalSmoothing(200, 200)
 local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
+local crank_rotation = 0  -- degrees
+local wheel_rotation = 0  -- degrees
+
 
 local function setSpeed(speed)
     targetSpeed = speed/3.6
@@ -17,6 +20,8 @@ end
 
 local function onInit()
     electrics.values.throttle = 0
+    electrics.values.crank_rotation = crank_rotation
+    electrics.values.wheel_rotation = wheel_rotation
     local result, error = client:connect(host, port);
     if result == nil then
         log('E', 'sim_cycling', error)
@@ -48,6 +53,12 @@ end
 local function updateGFX(dt)
     readCompanionData()
     cruiseControl(dt)
+    crank_rotation = (crank_rotation + electrics.values.throttle_input) % 360
+    wheel_rotation = (wheel_rotation + electrics.values.throttle_input * 2.5) % 360
+    
+    electrics.values.crank_rotation = crank_rotation
+    electrics.values.wheel_rotation = wheel_rotation
+    -- log('I', 'sim_cycling', electrics.values['crank_rotation'])
 end
 
 

@@ -9,16 +9,24 @@
     "flexbodies": [
         ["mesh", "[group]:"],
         ["Frame", ["frame_g"]],
-        ["Chain", ["frame_g"]],
+        // ["Chain", ["frame_g"]],
 
-        ["Wheel_Front", ["wheel_F", "wheelhub_F"]],
-        ["Wheel_Rear" , ["wheel_R", "wheelhub_R"]]
+        // ["Wheel_Front", ["axle_f"]],
+        // ["Wheel_Rear" , ["wheel_R", "wheelhub_R"]]
     ], 
 
+    "variables": [
+        ["name",        "type",  "default", "min", "max"],
+        // ["$crank_pos", "range",       180,      0, 360]
+    ],
+
     "props": [
-        ["func",    "mesh",    "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
-        ["steering","Cockpit", "rfb",    "lfb",  "rrb",  {"x":71.5, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1],
-        ["steering","Crankset","rfb",    "lfb",  "rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, -45,   45,    0,        1]
+        ["func",          "mesh",       "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
+        ["steering_input","Cockpit",    "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
+        ["steering_input","Wheel_Front","mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
+        ["crank_rotation","Crankset",   "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":90,   "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,        360,     0,        1],
+        ["wheel_rotation","Wheel_Rear", "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,        360,     0,        1],
+        ["null",          "Chain",      "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":90,   "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,          0,     0,        1],
     ],
 
     "pressureWheels": [
@@ -96,139 +104,189 @@
         //front
         {"selfCollision":false},
         {"collision":true},
-        ["F", "wheel_F", "tire_F", "r_fh", "l_fh", 9999, "f_bc", 1],
-        ["F", "wheel_R", "tire_R", "r_rh", "l_rh", 9999, "f_rc", 1],
+        // ["F", "wheel_F", "tire_F", "r_fh", "l_fh", 9999, "f_bc", 1],
+        // ["F", "wheel_R", "tire_R", "r_rh", "l_rh", 9999, "f_rc", 1],
         {"selfCollision":true},
         {"disableMeshBreaking":false,"disableTriangleBreaking":false}
-        ],
+    ],
 
     "nodes":[
         ["id", "posX", "posY", "posZ"],
-        {"collision":true},
         {"nodeMaterial":"|NM_METAL"},
-        {"nodeWeight":10},
+        {"nodeWeight":0.1},
         {"group":"frame_g"},
         //front
         //top
-        ["lft", 0.25,-1.0, 1.0],
-        ["rft",-0.25,-1.0, 1.0],
+        ["mid_lft", 0.25,-0.75, 0.5],
+        ["mid_rft",-0.25,-0.75, 0.5],
         //bottom
-        ["lfb", 0.25,-1.0, 0.25],
-        ["rfb",-0.25,-1.0, 0.25],
+        ["mid_lfb", 0.25,-0.75, 0.0],
+        ["mid_rfb",-0.25,-0.75, 0.0],
 
         //rear
         //top
-        ["lrt", 0.25, 0.0, 1.0],
-        ["rrt",-0.25, 0.0, 1.0],
+        ["mid_lrt", 0.25,-0.25, 0.5],
+        ["mid_rrt",-0.25,-0.25, 0.5],
         //bottom
-        ["lrb", 0.25, 0.0, 0.25],
-        ["rrb",-0.25, 0.0, 0.25],
+        ["mid_lrb", 0.25,-0.25, 0.0],
+        ["mid_rrb",-0.25,-0.25, 0.0],
+        
+        //rear weight
+        ["rw", 0, 0.25, 0.25],
+        
         {"group":""},
 
+
+        {"nodeWeight":0.1},
         // front hub
-        {"group":"wheelhub_F"},
-        ["l_fh",-0.06,-0.99,0.327],
-        ["r_fh", 0.06,-0.99,0.327],
+        {"group":"axle_f"},
+        ["l_fh", 0.06,-0.99,0.327],
+        ["r_fh",-0.06,-0.99,0.327],
         {"group":""},
+        // front pivot point (16mm behind hub)
+        // ["top_pp",0,-0.78852,0.83543],
+        // ["bottom_pp",0,-0.974,0.327],
+        ["top_pp",0,-0.88,0.4],
+        ["bottom_pp",0,-1,0.2],
+
+        // virtual handlebar
+        // ["hb_r",-0.25,-1,0.3],
+
+
         //front brake caliper
         ["f_bc",0,-0.9,0.62],
 
-        // rear hub
-        {"group":"wheelhub_R"},
-        ["l_rh",-0.06,0,0.327],
-        ["r_rh", 0.06,0,0.327],
-        {"group":""},
-        //rear brake caliper
-        ["r_bc",0,0,0.62]
+        // // rear hub
+        // {"group":"wheelhub_R"},
+        // ["l_rh",-0.06,0,0.327],
+        // ["r_rh", 0.06,0,0.327],
+        // {"group":""},
+        // //rear brake caliper
+        // ["r_bc",0,0,0.62]
 
     ],
 
     "refNodes":[
         ["ref:", "back:", "left:", "up:"],
-        ["rfb"  , "rrb" , "lfb" , "rft"]
+        ["mid_rfb"  , "mid_rrb" , "mid_lfb" , "mid_rft"]
     ],
 
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":1251000,"beamDamp":250},
-        {"beamDeform":16000,"beamStrength":24000},
+        {"beamSpring":10000,"beamDamp":25},
+        {"beamDeform":10000,"beamStrength":20000},
         //rigidity box
-        ["lft", "rft"],
-        ["lft", "lfb"],
-        ["lft", "rfb"],
-        ["lft", "lrt"],
-        ["lft", "rrt"],
-        ["lft", "lrb"],
-        ["lft", "rrb"],
+        ["mid_lft", "mid_rft"],
+        ["mid_lft", "mid_lfb"],
+        ["mid_lft", "mid_rfb"],
+        ["mid_lft", "mid_lrt"],
+        ["mid_lft", "mid_rrt"],
+        ["mid_lft", "mid_lrb"],
+        ["mid_lft", "mid_rrb"],
 
-        ["rft", "lfb"],
-        ["rft", "rfb"],
-        ["rft", "lrt"],
-        ["rft", "rrt"],
-        ["rft", "lrb"],
-        ["rft", "rrb"],
+        ["mid_rft", "mid_lfb"],
+        ["mid_rft", "mid_rfb"],
+        ["mid_rft", "mid_lrt"],
+        ["mid_rft", "mid_rrt"],
+        ["mid_rft", "mid_lrb"],
+        ["mid_rft", "mid_rrb"],
 
-        ["lfb", "rfb"],
-        ["lfb", "lrt"],
-        ["lfb", "rrt"],
-        ["lfb", "lrb"],
-        ["lfb", "rrb"],
+        ["mid_lfb", "mid_rfb"],
+        ["mid_lfb", "mid_lrt"],
+        ["mid_lfb", "mid_rrt"],
+        ["mid_lfb", "mid_lrb"],
+        ["mid_lfb", "mid_rrb"],
 
-        ["rfb", "lrt"],
-        ["rfb", "rrt"],
-        ["rfb", "lrb"],
-        ["rfb", "rrb"],
+        ["mid_rfb", "mid_lrt"],
+        ["mid_rfb", "mid_rrt"],
+        ["mid_rfb", "mid_lrb"],
+        ["mid_rfb", "mid_rrb"],
 
-        ["lrt", "rrt"],
-        ["lrt", "lrb"],
-        ["lrt", "rrb"],
+        ["mid_lrt", "mid_rrt"],
+        ["mid_lrt", "mid_lrb"],
+        ["mid_lrt", "mid_rrb"],
 
-        ["rrt", "lrb"],
-        ["rrt", "rrb"],
+        ["mid_rrt", "mid_lrb"],
+        ["mid_rrt", "mid_rrb"],
 
-        ["rrb", "lrb"],
+        ["mid_rrb", "mid_lrb"],
+
+        ["rw", "mid_lrt"],
+        ["rw", "mid_lrb"],
+        ["rw", "mid_rrt"],
+        ["rw", "mid_rrb"],
+
+        {"beamSpring":10000,"beamDamp":25},
+        {"beamDeform":10000,"beamStrength":20000},
+
+        //front hub
+        ["r_fh", "l_fh"],
+        // pivot point
+        ["top_pp", "bottom_pp"],
+
+        // pivot point to hub
+        ["top_pp", "l_fh"],
+        ["top_pp", "r_fh"],
+        ["bottom_pp", "l_fh"],
+        ["bottom_pp", "r_fh"],
+
+        // pivot point to frame
+        ["top_pp", "mid_lrt"],
+        ["top_pp", "mid_rrt"],
+
+        ["top_pp", "mid_lft"],
+        ["top_pp", "mid_rft"],
+
+        ["bottom_pp", "mid_lfb"],
+        ["bottom_pp", "mid_lft"],
+        ["bottom_pp", "mid_rfb"],
+        ["bottom_pp", "mid_rft"],
+
+
+        // handlebar to pivot point & hub
+        // ["hb_r", "top_pp"],
+        // ["hb_r", "bottom_pp"],
+        // ["hb_r", "r_fh"],
+
+        // //front caliper
+        // ["mid_lfb", "f_bc"],
+        // ["mid_lft", "f_bc"],
+        // ["mid_rfb", "f_bc"],
+        // ["mid_rft", "f_bc"],
+
+        // //rear hub
+        // ["mid_lrb", "l_rh"],
+        // ["mid_lrt", "l_rh"],
+        // ["mid_rrb", "l_rh"],
+        // ["mid_rrt", "l_rh"],
+
+        // ["mid_lrb", "r_rh"],
+        // ["mid_lrt", "r_rh"],
+        // ["mid_rrb", "r_rh"],
+        // ["mid_rrt", "r_rh"],
+
+        // ["r_rh", "l_rh"],
+
+        // //rear caliper
+        // ["mid_lrb", "r_bc"],
+        // ["mid_lrt", "r_bc"],
+        // ["mid_rrb", "r_bc"],
+        // ["mid_rrt", "r_bc"]
+        
 
         //this last line resets important values
         {"beamType":"|NORMAL","beamPrecompression":1,"beamLongBound":1,"beamShortBound":1},
-
-        //front hub
-        ["lfb", "l_fh"],
-        ["lft", "l_fh"],
-        ["rfb", "l_fh"],
-        ["rft", "l_fh"],
-
-        ["lfb", "r_fh"],
-        ["lft", "r_fh"],
-        ["rfb", "r_fh"],
-        ["rft", "r_fh"],
-
-        ["r_fh", "l_fh"],
-
-        //front caliper
-        ["lfb", "f_bc"],
-        ["lft", "f_bc"],
-        ["rfb", "f_bc"],
-        ["rft", "f_bc"],
-
-        //rear hub
-        ["lrb", "l_rh"],
-        ["lrt", "l_rh"],
-        ["rrb", "l_rh"],
-        ["rrt", "l_rh"],
-
-        ["lrb", "r_rh"],
-        ["lrt", "r_rh"],
-        ["rrb", "r_rh"],
-        ["rrt", "r_rh"],
-
-        ["r_rh", "l_rh"],
-
-        //rear caliper
-        ["lrb", "r_bc"],
-        ["lrt", "r_bc"],
-        ["rrb", "r_bc"],
-        ["rrt", "r_bc"]
             
+    ],
+
+    "hydros": [
+        ["id1:","id2:"],
+        {"beamSpring":200,"beamDamp":25,"beamDeform":83000,"beamStrength":98000},
+        {"beamPrecompression":1.00},
+        // ["mid_rft","hb_r",{"inputSource":"steering_input", "inLimit": 0.4, "outLimit": 1.6, "inputFactor": -1,"lockDegrees":2}],
+        ["mid_rfb","r_fh",{"inputSource":"steering_input", "inLimit": 0.92, "outLimit": 1, "inputFactor": -1}],
+        ["mid_lfb","l_fh",{"inputSource":"steering_input", "inLimit": 0.92, "outLimit": 1, "inputFactor": 1}],
+        {"beamPrecompression":1},
     ],
 
     "quads": [
@@ -236,12 +294,12 @@
         {"dragCoef":10},
         {"liftCoef":0},
 
-        ["lrt","rrt","rft","lft"],
-        ["lrt","lft","lfb","lrb"],
-        ["rrt","lrt","lrb","rrb"],
-        ["rft","rrt","rrb","rfb"],
-        ["lft","rft","rfb","lfb"],
-        ["lfb","rfb","rrb","lrb"]        
+        ["mid_lrt","mid_rrt","mid_rft","mid_lft"],
+        ["mid_lrt","mid_lft","mid_lfb","mid_lrb"],
+        ["mid_rrt","mid_lrt","mid_lrb","mid_rrb"],
+        ["mid_rft","mid_rrt","mid_rrb","mid_rfb"],
+        ["mid_lft","mid_rft","mid_rfb","mid_lfb"],
+        ["mid_lfb","mid_rfb","mid_rrb","mid_lrb"]        
     ]
 }
 }
