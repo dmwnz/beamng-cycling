@@ -14,7 +14,7 @@ Consists of:
  ┣ 📂AntTcpCompanion                 => .NET server app for TCP IPC of relevant ANT data
  ┃ ┣ 📂Dependencies                  => Required build & runtime DLLs
  ┃ ┗ 📂Properties
- ┣ 📂BeamNG.drive__mods__unpacked  => junction to [My Documents]/BeamNG.drive/mods/unpacked
+ ┣ 📂BeamNG.drive__mods__unpacked    => junction to [My Documents]/BeamNG.drive/mods/unpacked
  ┃ ┗ 📂sir_velo
  ┃   ┗ 📂vehicles
  ┃     ┗ 📂sir_velo
