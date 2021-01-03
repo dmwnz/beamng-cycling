@@ -8,7 +8,9 @@
 
     "flexbodies": [
         ["mesh", "[group]:"],
-        ["Frame", ["frame_g"]]
+        // ["Frame"                   , ["cockpit_g","frame_g"]],
+        ["Cockpit_Pivot_Origin"    , ["cockpit_g","frame_g"]],
+        ["Wheel_Front_Pivot_Origin", "wheel_F_g"],
     ], 
 
     "variables": [
@@ -24,74 +26,43 @@
         ["mid_lfb", "mid_lrb"],
         ["mid_rfb", "mid_rrb"],
 
-        {"control": "fake_steering"},
-        {"factor": -10},
-        ["mid_lfb", "mid_rfb"],
-        ["mid_rrb", "mid_lrb"],
+        // {"control": "fake_steering"},
+        // {"factor": -10},
+        // ["mid_lfb", "mid_rfb"],
+        // ["mid_rrb", "mid_lrb"],
 
     ],
 
     "props": [
         ["func",          "mesh",       "idRef:", "idX:", "idY:", "baseRotation",            "rotation",            "translation",         "min", "max", "offset", "multiplier"],
-        ["steering_input","Cockpit",    "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
-        ["steering_input","Wheel_Front","mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
+        
+        // ["steering_input","Cockpit",    "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
+        // ["steering_input","Wheel_Front","mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":71, "y":0, "z":0},  {"x":0, "y":0, "z":1}, {"x":0, "y":0, "z":0}, -100,     100,     0,        -20],
         ["crank_rotation","Crankset",   "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":90,   "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,        360,     0,        1],
-        ["wheel_rotation","Wheel_Rear", "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,        360,     0,        1],
+        ["wheel_rotation","Wheel_Rear_Pivot_Hub", "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":0,    "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,        360,     0,        1],
         ["null",          "Chain",      "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":90,   "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,          0,     0,        1],
+        ["null",          "Frame",      "mid_rfb",    "mid_lfb",  "mid_rrb",  {"x":90,   "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0}, 0,          0,     0,        1],
     ],
 
     "pressureWheels": [
         ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
-        {"disableMeshBreaking":false,"disableHubMeshBreaking":false},
-        {"hasTire":true},
-        {"enableTireReinfBeams":false},
-        {"enableTireLbeams":true},
-        {"enableTireSideReinfBeams":false},
-        {"enableTreadReinfBeams":true},
-        {"enableTirePeripheryReinfBeams":true},
+        {"hasTire":false},
 
         //general settings
         {"radius":0.327},
-        {"hubRadius":0.3},
+        {"hubRadius":0.327},
         {"wheelOffset":0.0},
-        {"hubWidth":0.05},
-        {"tireWidth":0.05},
+        {"hubWidth":0.0},
+        {"tireWidth":0.0},
         {"numRays":16},
 
         //hub options
-        {"hubTreadBeamSpring":701000, "hubTreadBeamDamp":4},
-        {"hubPeripheryBeamSpring":701000, "hubPeripheryBeamDamp":4},
-        {"hubSideBeamSpring":901000, "hubSideBeamDamp":4},
-        {"hubNodeWeight":0.3},
-        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubTreadBeamSpring":12000, "hubTreadBeamDamp":4},
+        {"hubPeripheryBeamSpring":12000, "hubPeripheryBeamDamp":4},
+        {"hubSideBeamSpring":20000, "hubSideBeamDamp":4},
+        {"hubNodeWeight":0.015},
+        {"hubNodeMaterial":"|NM_RUBBER"},
         {"hubFrictionCoef":0.5},
-
-        //tire options
-        {"wheelSideBeamSpring":2100,"wheelSideBeamDamp":5},
-        {"wheelSideBeamSpringExpansion":251000,"wheelSideBeamDampExpansion":20},
-        {"wheelSideTransitionZone":0.08,"wheelSideBeamPrecompression":0.99},
-
-        {"wheelReinfBeamSpring":15000,"wheelReinfBeamDamp":145},
-        {"wheelReinfBeamDampCutoffHz":500,"wheelReinfBeamPrecompression":0.99},
-
-        {"wheelTreadBeamSpring":121000,"wheelTreadBeamDamp":44},
-        {"wheelTreadBeamDampCutoffHz":500,"wheelTreadBeamPrecompression":0.99},
-
-        {"wheelTreadReinfBeamSpring":121000,"wheelTreadReinfBeamDamp":44},
-        {"wheelTreadReinfBeamDampCutoffHz":500,"wheelTreadReinfBeamPrecompression":0.99},
-
-        {"wheelPeripheryBeamSpring":101000,"wheelPeripheryBeamDamp":22},
-        {"wheelPeripheryBeamDampCutoffHz":500,"wheelPeripheryBeamPrecompression":1},
-
-        {"wheelPeripheryReinfBeamSpring":51000,"wheelPeripheryReinfBeamDamp":22},
-        {"wheelPeripheryReinfBeamDampCutoffHz":500,"wheelPeripheryReinfBeamPrecompression":1},
-
-        //general tire values
-        {"nodeWeight":0.09},
-        {"nodeMaterial":"|NM_RUBBER"},
-        {"triangleCollision":false},
-        {"pressurePSI":30},
-        {"dragCoef":5},
 
         //groundmodel friction multipliers
         {"frictionCoef":1.0},
@@ -104,18 +75,12 @@
         {"fullLoadCoef":0.35},
         {"softnessCoef":0.7},
 
-        //deform values
-        {"wheelSideBeamDeform":11000,"wheelSideBeamStrength":14000},
-        {"wheelReinfBeamDeform":101000,"wheelReinfBeamStrength":101000},
-        {"wheelTreadBeamDeform":8100,"wheelTreadBeamStrength":11000},
-        {"wheelTreadReinfBeamDeform":8100,"wheelTreadReinfBeamStrength":11000},
-        {"wheelPeripheryBeamDeform":101000,"wheelPeripheryBeamStrength":101000},
         {"hubBeamDeform":14000, "hubBeamStrength":88000},
 
         //front
         {"selfCollision":false},
         {"collision":true},
-        // ["F", "wheel_F", "tire_F", "r_fh", "l_fh", 9999, "f_bc", 1],
+        ["F", "wheel_F_g", "tire_F", "c_right_hub", "c_left_hub", 9999, "f_bc", 1],
         // ["F", "wheel_R", "tire_R", "r_rh", "l_rh", 9999, "f_rc", 1],
         {"selfCollision":true},
         {"disableMeshBreaking":false,"disableTriangleBreaking":false}
@@ -125,15 +90,24 @@
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
         {"nodeWeight":0.1},
-        {"frictionCoef":0.2}
+        {"frictionCoef":0.1},
+
+        {"group":"cockpit_g"},
+        ["c_pivot_top", 0, -0.79203, 0.825046],
+        ["c_front_top",0,-0.997468,0.825046],
+        ["c_pivot_bot", 0, -0.85589, 0.639582],
+        ["c_front_bot",0,-1.13489,0.639582],
+        ["c_left_lev_top",0.1941,-0.997468,0.825046],
+        ["c_left_lev_bot",0.1941,-0.997468,0.705046],
+        ["c_left_hub",0.055,-0.991,0.327],
+        ["c_right_lev_top",-0.1941,-0.997468,0.825046],
+        ["c_right_lev_bot",-0.1941,-0.997468,0.705046],
+        ["c_right_hub",-0.055,-0.991,0.327],
+        
         {"group":"frame_g"},
-        //front
-        //top
-        ["front_lft", 0.25,-1.25, 0.5],
-        ["front_rft",-0.25,-1.25, 0.5],
-        //bottom
-        ["front_lfb", 0.25,-1.25, 0.0],
-        ["front_rfb",-0.25,-1.25, 0.0],
+
+
+        {"group":""},
 
         //front
         //top
@@ -161,10 +135,6 @@
         
         {"group":""},
 
-        // ["thruster_f", 0, -0.75, 0.5],
-        // ["thruster_r", 0, -0.5, 0.5],
-        
-
     ],
 
     "refNodes":[
@@ -174,36 +144,51 @@
 
     "beams":[
         ["id1:","id2:"],
+        {"beamSpring":100000,"beamDamp":25},
+        {"beamDeform":10000,"beamStrength":20000},
+        // cockpit
+        ["c_pivot_top","c_pivot_bot"],
+        ["c_pivot_top","c_front_top"],
+        ["c_front_top","c_pivot_bot"],
+        ["c_front_top","c_front_bot"],
+        ["c_pivot_bot","c_front_bot"],
+
+        ["c_pivot_bot","c_left_hub"],
+        ["c_front_bot","c_left_hub"],
+        ["c_pivot_top","c_left_lev_top"],
+        ["c_pivot_top","c_left_lev_bot"],
+        ["c_left_lev_top", "c_left_lev_bot"],
+        ["c_left_lev_top", "c_front_top"],
+        ["c_left_lev_bot","c_front_top"],
+        ["c_left_lev_bot","c_front_bot"],
+        ["c_left_lev_bot","c_pivot_bot"],
+        ["c_left_lev_bot","c_left_hub"],
+
+        ["c_pivot_bot","c_right_hub"],
+        ["c_front_bot","c_right_hub"],
+        ["c_pivot_top","c_right_lev_top"],
+        ["c_pivot_top","c_right_lev_bot"],
+        ["c_right_lev_top", "c_right_lev_bot"],
+        ["c_right_lev_top", "c_front_top"],
+        ["c_right_lev_bot","c_front_top"],
+        ["c_right_lev_bot","c_front_bot"],
+        ["c_right_lev_bot","c_pivot_bot"],
+        ["c_right_lev_bot","c_right_hub"],
+
+        ["c_left_hub","c_right_hub"],
+        
+        ["c_pivot_top","mid_lft"],
+        ["c_pivot_top","mid_rft"],
+        ["c_pivot_top","mid_lrt"],
+        ["c_pivot_top","mid_rrt"],
+
+        ["c_pivot_bot","mid_lft"],
+        ["c_pivot_bot","mid_rft"],
+        
+        
+        //rigidity box
         {"beamSpring":10000,"beamDamp":25},
         {"beamDeform":10000,"beamStrength":20000},
-        //rigidity box
-
-        ["front_lft", "front_rft"],
-        ["front_lft", "front_lfb"],
-        ["front_lft", "front_rfb"],
-        ["front_lft", "mid_lft"],
-        ["front_lft", "mid_rft"],
-        ["front_lft", "mid_lfb"],
-        ["front_lft", "mid_rfb"],
-
-        ["front_rft", "front_lfb"],
-        ["front_rft", "front_rfb"],
-        ["front_rft", "mid_lft"],
-        ["front_rft", "mid_rft"],
-        ["front_rft", "mid_lfb"],
-        ["front_rft", "mid_rfb"],
-
-        ["front_lfb", "front_rfb"],
-        ["front_lfb", "mid_lft"],
-        ["front_lfb", "mid_rft"],
-        ["front_lfb", "mid_lfb"],
-        ["front_lfb", "mid_rfb"],
-
-        ["front_rfb", "mid_lft"],
-        ["front_rfb", "mid_rft"],
-        ["front_rfb", "mid_lfb"],
-        ["front_rfb", "mid_rfb"],
-
 
         ["mid_lft", "mid_rft"],
         ["mid_lft", "mid_lfb"],
@@ -276,7 +261,8 @@
         ["id1:","id2:"],
         {"beamSpring":200,"beamDamp":25,"beamDeform":83000,"beamStrength":98000},
         {"beamPrecompression":1.00},
-        // ["mid_rft","hb_r",{"inputSource":"steering_input", "inLimit": 0.4, "outLimit": 1.6, "inputFactor": -1,"lockDegrees":2}],
+        ["mid_lft","c_left_lev_bot" , {"inputSource": "steering_input", "inLimit": 0.4, "outLimit": 1, "inputFactor":  1}],
+        ["mid_rft","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.4, "outLimit": 1, "inputFactor": -1}],
         // ["mid_lfb","l_fh",{"inputSource":"steering_input", "inLimit": 0.92, "outLimit": 1, "inputFactor": 1}],
         {"beamPrecompression":1},
     ],
@@ -286,12 +272,12 @@
         {"dragCoef":10},
         {"liftCoef":0},
 
-        ["rear_lrt","rear_rrt","front_rft","front_lft"],
-        ["rear_lrt","front_lft","front_lfb","rear_lrb"],
+        ["rear_lrt","rear_rrt","mid_rft","mid_lft"],
+        ["rear_lrt","mid_lft","mid_lfb","rear_lrb"],
         ["rear_rrt","rear_lrt","rear_lrb","rear_rrb"],
-        ["front_rft","rear_rrt","rear_rrb","front_rfb"],
-        ["front_lft","front_rft","front_rfb","front_lfb"],
-        ["front_lfb","front_rfb","rear_rrb","rear_lrb"]        
+        ["mid_rft","rear_rrt","rear_rrb","mid_rfb"],
+        ["mid_lft","mid_rft","mid_rfb","mid_lfb"],
+        ["mid_lfb","mid_rfb","rear_rrb","rear_lrb"]        
     ]
 }
 }

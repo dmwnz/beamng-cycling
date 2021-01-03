@@ -24,12 +24,12 @@ local function onInit()
     electrics.values.throttle = 0
     electrics.values.crank_rotation = crank_rotation
     electrics.values.wheel_rotation = wheel_rotation
-    local result, error = client:connect(host, port);
-    if result == nil then
-        log('E', 'sim_cycling', error)
-    end
-    client:settimeout(0);
-    client:send("hello world\n");
+    -- local result, error = client:connect(host, port);
+    -- if result == nil then
+    --     log('E', 'sim_cycling', error)
+    -- end
+    -- client:settimeout(0);
+    -- client:send("hello world\n");
 end
 
 local function cruiseControl(dt)
@@ -53,8 +53,8 @@ local function readCompanionData()
 end
 
 local function updateGFX(dt)
-    readCompanionData()
-    cruiseControl(dt)
+    --readCompanionData()
+    --cruiseControl(dt)
     crank_rotation = (crank_rotation + electrics.values.throttle_input) % 360
     wheel_rotation = (wheel_rotation + electrics.values.throttle_input * 2.5) % 360
     
