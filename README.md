@@ -19,12 +19,12 @@ Consists of:
  ┃   ┗ 📂vehicles
  ┃     ┗ 📂sir_velo
  ┃       ┣ 📂lua
- ┃       ┃ ┗ 📜sim_cycling.lua     => custom vehicle script
- ┃       ┣ 📜default.png           => UI stuff
- ┃       ┣ 📜info.json             => UI stuff
- ┃       ┣ 📜materials.cs          => 3D model materials
- ┃       ┣ 📜sir_velo.jbeam        => main vehicle file
- ┃       ┗ 📜velo.dae              => exported 3D model
+ ┃       ┃ ┗ 📜sim_cycling.lua       => custom vehicle script
+ ┃       ┣ 📜default.png             => UI stuff
+ ┃       ┣ 📜info.json               => UI stuff
+ ┃       ┣ 📜materials.cs            => 3D model materials
+ ┃       ┣ 📜sir_velo.jbeam          => main vehicle file
+ ┃       ┗ 📜velo.dae                => exported 3D model
  ┣ 📜DummyClient.py                  => Dummy client for AntTcpCompanion
  ┣ 📜LICENSE
  ┗ 📜README.md
