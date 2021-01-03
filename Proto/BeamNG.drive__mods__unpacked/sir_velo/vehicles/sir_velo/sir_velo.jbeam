@@ -11,18 +11,26 @@
         ["Frame"                   , "frame_g"  ],
         ["Cockpit_Pivot_Origin"    , "cockpit_g"],
         ["Wheel_Front_Pivot_Origin", "wheel_F_g"],
-        ["Wheel_Rear_Pivot_Origin" , "wheel_R_g"],
+        ["Wheel_Rear_Pivot_Origin" , "wheel_R_g"]
     ], 
 
-    "thrusters": [
-        ["id1:", "id2:"],
-        {"factor": 10},
-        {"thrustLimit": 100},
-        {"control": "throttle_input"},
-        ["c_front", "c_rear"],
-        {"control": "brake_input"},
-        ["c_rear", "c_front"],
+    "controller": [
+        ["fileName"],
+        ["vehicleController", {}]
     ],
+    "powertrain": [
+        ["type"         , "name"        , "inputName", "inputIndex"],
+        ["electricMotor", "myMotor"     , "dummy"    ,           0 ],
+        ["shaft"        , "myAxleShaft1", "myMotor"  ,           1, {"connectedWheel":"R"}]
+    ],
+
+    "myMotor": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 10],
+            [500, 10]
+        ],
+    },
 
     "props": [
         ["func"          , "mesh"    , "idRef:"  , "idX:"  , "idY:" , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
@@ -67,7 +75,7 @@
         {"selfCollision":false},
         {"collision":true},
         ["F", "wheel_F_g", "tire_F", "c_right_hub", "c_left_hub", 9999, "f_bc", 1],
-        ["F", "wheel_R_g", "tire_R", "f_right_hub", "f_left_hub", 9999, "f_rc", 1],
+        ["R", "wheel_R_g", "tire_R", "f_right_hub", "f_left_hub", 9999, "f_rc", 1],
         {"selfCollision":true},
     ],
 
