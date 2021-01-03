@@ -11,6 +11,11 @@ local throttleSmooth = newTemporalSmoothing(200, 200)
 local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
 local crank_rotation = 0  -- degrees
 
+local bike_steering = 0
+
+local previous_leaning, previous_heading = 0, 0
+local current_leaning, current_heading = 0, 0
+
 
 local function setSpeed(speed)
     targetSpeed = speed/3.6
@@ -48,11 +53,34 @@ local function readCompanionData()
     end
 end
 
+local function computeBikeSteering(dt)
+    -- http://paradise.caltech.edu/~cook/papers/TwoNeurons.pdf
+    local junk
+
+    local c1, c2 = 1,2
+    local c3 = math.min(1,1/electrics.values.wheelspeed)
+    -- inputs
+    current_leaning,junk,current_heading = obj:getRollPitchYaw() -- rad
+    local leaning_d = (current_leaning - previous_leaning) / dt -- rad/sec
+    local desired_heading = current_heading + (-math.pi / 4.0 * electrics.values.steering_input)
+
+    -- first neuron
+    local desired_leaning = c1 * (desired_heading - current_heading)
+    desired_leaning = math.max(desired_leaning, -math.pi / 4)
+    desired_leaning = math.min(desired_leaning,  math.pi / 4)
+    -- second neuron
+    bike_steering = c2 * (desired_leaning - current_leaning) - c3 * leaning_d
+
+    previous_leaning = current_leaning
+end
+
 local function updateGFX(dt)
     --readCompanionData()
     --cruiseControl(dt)
-    crank_rotation = (crank_rotation + electrics.values.throttle_input) % 360
+    computeBikeSteering(dt)
+    crank_rotation = (crank_rotation + electrics.values.wheelspeed / 2) % 360
     electrics.values.crank_rotation = crank_rotation
+    electrics.values.bike_steering = bike_steering
     -- log('I', 'sim_cycling', electrics.values['crank_rotation'])
 end
 

@@ -27,15 +27,16 @@
     "myMotor": {
         "torque":[
             ["rpm", "torque"],
-            [0, 10],
-            [500, 10]
+            [0, 20],
+            [500, 20]
         ],
+        "friction":5,
     },
 
     "props": [
         ["func"          , "mesh"    , "idRef:"  , "idX:"  , "idY:" , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
         ["crank_rotation", "Crankset", "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
-        ["null"          , "Chain"   , "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1],
+        ["null"          , "Chain"   , "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
     ],
 
     "pressureWheels": [
@@ -54,7 +55,7 @@
         {"hubTreadBeamSpring":4000, "hubTreadBeamDamp":4},
         {"hubPeripheryBeamSpring":4000, "hubPeripheryBeamDamp":4},
         {"hubSideBeamSpring":6500, "hubSideBeamDamp":4},
-        {"hubNodeWeight":0.02},
+        {"hubNodeWeight":0.05},
         {"hubNodeMaterial":"|NM_RUBBER"},
         {"hubFrictionCoef":0.5},
 
@@ -74,9 +75,9 @@
         //front
         {"selfCollision":false},
         {"collision":true},
-        ["F", "wheel_F_g", "tire_F", "c_right_hub", "c_left_hub", 9999, "f_bc", 1],
-        ["R", "wheel_R_g", "tire_R", "f_right_hub", "f_left_hub", 9999, "f_rc", 1],
-        {"selfCollision":true},
+        ["F", "wheel_F_g", "tire_F", "c_right_hub", "c_left_hub", 9999, "", 1],
+        ["R", "wheel_R_g", "tire_R", "f_right_hub", "f_left_hub", 9999, "", 1],
+        {"selfCollision":true}
     ],
 
     "nodes":[
@@ -114,6 +115,7 @@
         ["c_right",-0.1,-0.248471,0.744888],
         
         {"group":""},
+
     ],
 
     "refNodes":[
@@ -204,15 +206,16 @@
         ["c_rear", "f_top_st"],
 
         ["c_top", "f_top_st"],
-
     ],
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":500,"beamDamp":25,"beamDeform":83000,"beamStrength":98000},
+        {"beamSpring":500,"beamDamp":10,"beamDeform":83000,"beamStrength":98000},
         {"beamPrecompression":1},
-        ["f_left_st","c_left_lev_bot" , {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor":  1}],
-        ["f_right_st","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor": -1}],
+        ["f_left_st","c_left_lev_bot" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1, "inputFactor":  1}],
+        ["f_right_st","c_right_lev_bot", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1, "inputFactor": -1}]
+        // ["f_left_st","c_left_lev_bot" ,  {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor":  1}],
+        // ["f_right_st","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor": -1}]
     ],
 
     "quads": [
@@ -227,6 +230,6 @@
         "distanceMin":1,
         "offset":{"x":0, "y":0.0, "z":0.0},
         "fov":65
-    },
+    }
 }
 }
