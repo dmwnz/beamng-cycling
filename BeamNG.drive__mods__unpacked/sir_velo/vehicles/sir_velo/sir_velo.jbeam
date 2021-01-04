@@ -1,85 +1,114 @@
 {
-"MyVehicle":{
+"sirvelo_wheels":{
     "information":{
-        "name":"Sir Velo",
+        "name":"Sir Velo Wheels (with tire)",
         "authors":"dmwnz"
     },
-    "slotType":"main",
-
+    "slotType":"wheels",
     "flexbodies": [
-        ["mesh"                    , "[group]:" ],
-        ["Frame"                   , "frame_g"  ],
-        ["Cockpit_Pivot_Origin"    , "cockpit_g"],
+        ["mesh"                    , "[group]:"  ],
         ["Wheel_Front_Pivot_Origin", "wheel_F_g"],
-        ["Wheel_Rear_Pivot_Origin" , "wheel_R_g"]
+        ["Wheel_Rear_Pivot_Origin" , "wheel_R_g" ]
     ], 
+    "pressureWheels": [
+        ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
+        {"hasTire":true},
 
-    "controller": [
-        ["fileName"],
-        ["vehicleController", {}]
-    ],
-    "powertrain": [
-        ["type"         , "name"        , "inputName", "inputIndex"],
-        ["electricMotor", "myMotor"     , "dummy"    ,           0 ],
-        ["shaft"        , "myAxleShaft1", "myMotor"  ,           1, {"connectedWheel":"R"}]
-    ],
+        // General Arguments
+        {"numRays":18},
+        
+        // Tire
+        {"radius":0.327},
+        {"tireWidth":0.1},
+        {"nodeWeight":0.02},
+        {"frictionCoef":1.0},
+        {"nodeMaterial":"|NM_RUBBER"},
+        {"wheelTreadBeamSpring": 2800,"wheelTreadBeamDamp": 4},                    // across          Primarily affects lateral stiffness from low to high slip angles (higher->stiffer) 
+        {"wheelPeripheryBeamSpring": 1400, "wheelPeripheryBeamDamp": 4},           // circumference   Affects longitudinal stiffness (higher->stiffer). Also affects compression stiffness, high speed expansion, high speed grip. 
+        {"wheelSideBeamSpring": 20, "wheelSideBeamDamp": 4},                     // sidewall        Should be low to allow air pressure to handle weight of vehicle. 
+        {"wheelSideBeamSpringExpansion": 2000, "wheelSideBeamDampExpansion": 4},   // sidewall        Affects longitudinal stiffness (higher->stiffer), rolling resistance(higher->better), sharpness of lateral grip curve (higher->sharper peak), compression stiffness to a small extent (higher ->stiffer in compression) 
+        
+        // Hub
+        {"hubRadius":0.3},
+        {"hubWidth":0.1},
+        {"hubNodeWeight":0.02},
+        // {"hubNodeWeight":0.03},
+        {"hubNodeMaterial":"|NM_METAL"},
+        {"hubFrictionCoef": 1.0},
+        // {"hubTreadBeamSpring":25000, "hubTreadBeamDamp":4},                     // acrosss
+        // {"hubPeripheryBeamSpring":45000, "hubPeripheryBeamDamp":4},             // circumference
+        // {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
+        {"hubTreadBeamSpring":40000, "hubTreadBeamDamp":4},                     // acrosss
+        {"hubPeripheryBeamSpring":40000, "hubPeripheryBeamDamp":4},             // circumference
+        {"hubSideBeamSpring":50000, "hubSideBeamDamp":4},                       // radial spokes
 
-    "myMotor": {
-        "torque":[
-            ["rpm", "torque"],
-            [0, 20],
-            [500, 20]
-        ],
-        "friction":5,
+        {"pressurePSI":15},
+        {"maxPressurePSI":150},
+        {"triangleCollision":false},
+        
+        {"selfCollision":false},
+        {"collision":true},
+        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "", 1, {"speedo":false}],
+        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "", 1, {"speedo":true}],
+        
+        {"selfCollision":true}
+    ]
+},
+"sirvelo_wheels_simple":{
+    "information":{
+        "name":"Sir Velo Wheels (simple)",
+        "authors":"dmwnz"
     },
-
-    "props": [
-        ["func"          , "mesh"    , "idRef:"  , "idX:"  , "idY:" , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
-        ["crank_rotation", "Crankset", "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
-        ["null"          , "Chain"   , "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
-    ],
-
+    "slotType":"wheels",
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Wheel_Front_Pivot_Origin", "wheel_F_g"],
+        ["Wheel_Rear_Pivot_Origin" , "wheel_R_g" ]
+    ], 
     "pressureWheels": [
         ["name","hubGroup","group","node1:","node2:","nodeS","nodeArm:","wheelDir"],
         {"hasTire":false},
 
-        //general settings
-        {"radius":0.327},
-        {"hubRadius":0.327},
-        {"wheelOffset":0.0},
-        {"hubWidth":0.0},
-        {"tireWidth":0.0},
+        // General Arguments
         {"numRays":18},
-
-        //hub options
-        {"hubTreadBeamSpring":4000, "hubTreadBeamDamp":4},
-        {"hubPeripheryBeamSpring":4000, "hubPeripheryBeamDamp":4},
-        {"hubSideBeamSpring":6500, "hubSideBeamDamp":4},
-        {"hubNodeWeight":0.05},
+        // {"numRays":4},
+        
+        // Hub
+        {"hubRadius":0.3},
+        {"hubWidth":0},
+        {"hubNodeWeight":0.03},
         {"hubNodeMaterial":"|NM_RUBBER"},
-        {"hubFrictionCoef":0.5},
+        {"hubFrictionCoef": 1.0},
+        // {"hubTreadBeamSpring":35000, "hubTreadBeamDamp":4},                     // acrosss
+        // {"hubPeripheryBeamSpring":35000, "hubPeripheryBeamDamp":4},             // circumference
+        // {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
 
-        //groundmodel friction multipliers
-        {"frictionCoef":1.0},
-        {"slidingFrictionCoef":1.0},
-        {"treadCoef":0.6},
+        {"hubTreadBeamSpring":35000, "hubTreadBeamDamp":4},                     // acrosss
+        {"hubPeripheryBeamSpring":35000, "hubPeripheryBeamDamp":4},             // circumference
+        {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
 
-        //advanced friction values
-        {"noLoadCoef":1.34},
-        {"loadSensitivitySlope":0.0002},
-        {"fullLoadCoef":0.35},
-        {"softnessCoef":0.7},
-
-        {"hubBeamDeform":14000, "hubBeamStrength":88000},
-
-        //front
+        
         {"selfCollision":false},
         {"collision":true},
-        ["F", "wheel_F_g", "tire_F", "c_right_hub", "c_left_hub", 9999, "", 1],
-        ["R", "wheel_R_g", "tire_R", "f_right_hub", "f_left_hub", 9999, "", 1],
+        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "", 1, {"speedo":false}],
+        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "", 1, {"speedo":true}],
+        
         {"selfCollision":true}
+    ]
+}
+,
+"sirvelo_frame":{
+    "information":{
+        "name":"Sir Velo Frame",
+        "authors":"dmwnz"
+    },
+    "slotType":"frame",
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Frame"                   , "frame_g"   ],
+        ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
     ],
-
+    
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
@@ -117,12 +146,6 @@
         {"group":""},
 
     ],
-
-    "refNodes":[
-        ["ref:"    , "back:" , "left:" , "up:"  ],
-        ["f_top_st", "c_rear", "c_left", "c_top"]
-    ],
-
     "beams":[
         ["id1:","id2:"],
         {"beamSpring":500000,"beamDamp":10},
@@ -179,9 +202,9 @@
         ["f_right_st", "f_bb"],
         ["f_right_st", "f_right_hub"],
         ["f_bb", "f_right_hub"],
-        
+
         // center
-        
+
         ["c_left", "c_rear"],
         ["c_left", "c_front"],
         ["f_left_st", "c_front"],
@@ -206,16 +229,80 @@
         ["c_rear", "f_top_st"],
 
         ["c_top", "f_top_st"],
+    ]
+}
+,
+"sirvelo":{
+    "information":{
+        "name":"Sir Velo",
+        "authors":"dmwnz"
+    },
+    "slotType":"main",
+    "slots": [
+        ["type", "default", "description"],
+        ["wheels","sirvelo_wheels_simple", "Wheels"],
+        ["frame","sirvelo_frame", "Frame"]
+    ],
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        // ["Frame"                   , "frame_g"   ],
+        // ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
+    ], 
+
+    "controller": [
+        ["fileName"],
+        ["vehicleController", {}]
+    ],
+    "vehicleController": {
+        "shiftLogicName":"electricMotor",
+        "motorNames": ["hubMotor"],
+        "automaticModes": "D",
+        "defaultAutomaticMode" :"D",
+        "defaultRegen": 0,
+        "brakeRegenCoef": 0,
+    },
+    "powertrain": [
+        ["type"         , "name"        , "inputName"  , "inputIndex"],
+        ["electricMotor", "hubMotor"    , "dummy"      ,           0 ],
+        ["shaft"        , "hubShaft"    , "hubMotor"   ,           1, {"connectedWheel":"R"}]
+    ],
+    
+    "hubMotor": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 20],
+            // [10, 200],
+            [200, 20],
+            // [1000, 20]
+        ],
+        "idleRPM":0,
+        "friction":5,
+        "soundConfig": "soundConfigFront",
+    },
+    "soundConfigFront": {
+        "sampleName": "ElectricMotor_v2",
+        "mainGain": -12,
+    },
+
+    "props": [
+        ["func"          , "mesh"             , "idRef:"  , "idX:"  , "idY:" , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
+        ["crank_rotation", "Crankset_Pivot_BB", "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
+        ["null"          , "Chain"            , "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
+    ],
+
+    "refNodes":[
+        ["ref:"    , "back:" , "left:" , "up:"  ],
+        ["f_top_st", "c_rear", "c_left", "c_top"]
     ],
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":500,"beamDamp":10,"beamDeform":83000,"beamStrength":98000},
+        {"beamSpring":3000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
-        ["f_left_st","c_left_lev_bot" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1, "inputFactor":  1}],
-        ["f_right_st","c_right_lev_bot", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1, "inputFactor": -1}]
-        // ["f_left_st","c_left_lev_bot" ,  {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor":  1}],
-        // ["f_right_st","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1, "inputFactor": -1}]
+        ["f_left_st","c_left_lev_bot" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
+        ["f_right_st","c_right_lev_bot", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
+        // ["f_left_st","c_left_lev_bot" ,  {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
+        // ["f_right_st","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
     ],
 
     "quads": [
