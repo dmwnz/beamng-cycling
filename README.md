@@ -34,8 +34,8 @@ Consists of:
 ### Contributing
 
 1. Clone this repo
-1. Move contents of `BeamNG.drive__mods__unpacked` into `[My Documents]/BeamNG.drive/mods/unpacked` (replace `[My Documents]` with actual My Documents path)
+1. Move contents of `BeamNG.drive__mods__unpacked` into `[My Documents]\BeamNG.drive\mods\unpacked` (replace `[My Documents]` with actual My Documents path)
 1. Delete `BeamNG.drive__mods__unpacked` (now empty)
 1. Open `cmd.exe` in repo folder
-1. Type `MKLINK /J BeamNG.drive__mods__unpacked [My Documents]/BeamNG.drive/mods/unpacked` (replace `[My Documents]` with actual My Documents path) to create the folder junction
+1. Type `MKLINK /J BeamNG.drive__mods__unpacked [My Documents]\BeamNG.drive\mods\unpacked` to create the folder junction
 1. Done! Changes made to mod files such as `sir_velo.jbeam` will be detected by BeamNG. Reload the vehicle with `Ctrl+L`
