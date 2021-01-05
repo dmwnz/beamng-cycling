@@ -61,9 +61,9 @@ local function computeBikeSteering(dt)
 
     bs_dt = bs_dt + dt
     
+    -- tuning
+    local c1, c2, c3 = 1, 1, 1
 
-    local c1, c2 = 1, 1
-    local c3 = 1 -- math.min(1,1/electrics.values.wheelspeed)
     -- inputs
     current_leaning,junk,current_heading = obj:getRollPitchYaw() -- rad
     local leaning_d = (current_leaning - previous_leaning) / dt -- rad/sec
@@ -71,23 +71,12 @@ local function computeBikeSteering(dt)
 
     -- first neuron
     local desired_leaning = c1 * (desired_heading - current_heading)
-    desired_leaning = math.max(desired_leaning, -math.pi / 8)
-    desired_leaning = math.min(desired_leaning,  math.pi / 8)
-
-    -- log('I', 'sim_cycling', 'current_leaning ' .. current_leaning)
-    -- log('I', 'sim_cycling', 'desired_leaning ' .. desired_leaning)
-    -- log('I', 'sim_cycling', 'leaning_d       ' .. leaning_d)
+    desired_leaning = math.max(desired_leaning, -math.pi / 4)
+    desired_leaning = math.min(desired_leaning,  math.pi / 4)
 
     -- second neuron
     bike_steering = c2 * (desired_leaning - current_leaning) - c3 * leaning_d
-    -- log('I', 'sim_cycling', 'bike_steering   ' .. bike_steering)
-    -- local sign = 1
-    -- if bike_steering == -1 then
-    --     sign = -1
-    -- end
-
-    -- bike_steering = sign * (bike_steering * bike_steering)
-    -- log('I', 'sim_cycling', 'bike_steering^2 ' .. bike_steering)
+    
     previous_leaning = current_leaning
 end
 
@@ -95,12 +84,14 @@ local function updateGFX(dt)
     --readCompanionData()
     --cruiseControl(dt)
     computeBikeSteering(dt)
+    electrics.values.bike_steering = bike_steering
+    electrics.values.steering_input = bike_steering
+
+
     local crankset_rpm = electrics.values.rpm / 3   -- assuming wheel speed = 3 x crank speed
     crank_rotation = (crank_rotation + crankset_rpm * 360/60 * dt) % 360
     electrics.values.crank_rotation = crank_rotation
-    electrics.values.bike_steering = bike_steering
-    electrics.values.steering_input = bike_steering
-    -- log('I', 'sim_cycling', electrics.values['crank_rotation'])
+
 end
 
 

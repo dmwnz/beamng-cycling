@@ -1,5 +1,5 @@
 {
-"sirvelo_wheels":{
+"sirvelo_wheels":{ // warning : unused
     "information":{
         "name":"Sir Velo Wheels (with tire)",
         "authors":"dmwnz"
@@ -74,7 +74,7 @@
         // {"numRays":4},
         
         // Hub
-        {"hubRadius":0.3},
+        {"hubRadius":0.327},
         {"hubWidth":0},
         {"hubNodeWeight":0.03},
         {"hubNodeMaterial":"|NM_RUBBER"},
@@ -97,9 +97,9 @@
     ]
 }
 ,
-"sirvelo_frame":{
+"sirvelo_frame_old":{ // warning : unused
     "information":{
-        "name":"Sir Velo Frame",
+        "name":"Sir Velo Frame (old)",
         "authors":"dmwnz"
     },
     "slotType":"frame",
@@ -232,6 +232,183 @@
     ]
 }
 ,
+"sirvelo_frame":{
+    "information":{
+        "name":"Sir Velo Frame",
+        "authors":"dmwnz"
+    },
+    "slotType":"frame",
+    "slots": [
+        ["type"   , "default"              , "description"],
+        ["wheels" , "sirvelo_wheels_simple", "Wheels"],
+        ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
+    ],
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Frame"                   , "frame_g"   ]
+    ],
+    "nodes":[
+        ["id", "posX", "posY", "posZ"],
+        {"nodeMaterial":"|NM_PLASTIC"},
+        {"nodeWeight":0.5},
+        {"frictionCoef":1},
+
+        {"group":"frame_g"},
+        ["f_bot_pivot", 0, -0.860135, 0.625],
+        ["f_top_pivot", 0, -0.791647, 0.826729],
+        
+        ["f_saddle", 0, -0.199533, 0.907474],
+        ["f_bb", 0, -0.398, 0.257],
+        ["f_front_bb", 0, -0.498, 0.257],
+        ["f_rear_bb", 0, -0.298, 0.257],
+        ["f_top_bb", 0, -0.398, 0.357],
+        
+        ["f_left_bb", 0.1, -0.398, 0.257],
+        ["f_left_st", 0.1, -0.248471, 0.744889],
+        ["f_left_hub", 0.1, 0, 0.327],  
+
+        ["f_right_bb", -0.1, -0.398, 0.257],
+        ["f_right_st", -0.1, -0.248471, 0.744889],
+        ["f_right_hub", -0.1, 0, 0.327],  
+
+        {"group":""},
+
+    ],
+    "beams":[
+        ["id1:","id2:"],
+        {"beamSpring":500000,"beamDamp":10},
+        {"beamDeform":10000,"beamStrength":2000},
+        // cockpit
+        ["f_top_pivot","f_bot_pivot"],
+        ["f_top_pivot","f_saddle"],
+        ["f_bot_pivot","f_front_bb"],
+        ["f_bot_pivot","f_top_bb"],
+        ["f_bb","f_top_bb"],
+        ["f_bb","f_front_bb"],
+        ["f_bb","f_rear_bb"],        
+
+        ["f_left_bb", "f_right_bb"],
+        ["f_left_bb", "f_right_hub"],
+        ["f_left_bb", "f_right_st"],
+        ["f_left_hub", "f_right_hub"],
+        ["f_left_hub", "f_right_bb"],
+        ["f_left_hub", "f_right_st"],
+        ["f_left_st", "f_right_st"],
+        ["f_left_st", "f_right_bb"],
+        ["f_left_st", "f_right_hub"],
+        
+
+        ["f_left_bb", "f_bot_pivot"],
+        ["f_left_bb", "f_top_pivot"],
+        ["f_left_bb", "f_front_bb"],
+        ["f_left_bb", "f_rear_bb"],
+        ["f_left_bb", "f_bb"],
+        ["f_left_bb", "f_left_st"],
+        ["f_left_bb", "f_left_hub"],
+        ["f_left_st", "f_top_pivot"],
+        ["f_left_st", "f_bot_pivot"],
+        ["f_left_st", "f_top_bb"],
+        ["f_left_st", "f_rear_bb"],
+        ["f_left_st", "f_left_hub"],
+        ["f_left_st", "f_saddle"],
+        
+
+        ["f_right_bb", "f_bot_pivot"],
+        ["f_right_bb", "f_top_pivot"],
+        ["f_right_bb", "f_front_bb"],
+        ["f_right_bb", "f_rear_bb"],
+        ["f_right_bb", "f_bb"],
+        ["f_right_bb", "f_right_st"],
+        ["f_right_bb", "f_right_hub"],
+        ["f_right_st", "f_top_pivot"],
+        ["f_right_st", "f_bot_pivot"],
+        ["f_right_st", "f_top_bb"],
+        ["f_right_st", "f_rear_bb"],
+        ["f_right_st", "f_right_hub"],
+        ["f_right_st", "f_saddle"]  
+    ],
+    
+    "refNodes":[
+        ["ref:"    , "back:"    , "left:"    , "up:"  ],
+        ["f_bb"    , "f_rear_bb", "f_left_bb", "f_top_bb"]
+    ],
+},
+
+"sirvelo_cockpit":{
+    "information":{
+        "name":"Sir Velo Cockpit",
+        "authors":"dmwnz"
+    },
+    "slotType":"cockpit",
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
+    ],
+    
+    "nodes":[
+        ["id", "posX", "posY", "posZ"],
+        {"nodeMaterial":"|NM_PLASTIC"},
+        {"nodeWeight":0.5},
+        {"frictionCoef":1},
+
+        {"group":"cockpit_g"},
+        // ["c_bot_pivot", 0, -0.860135, 0.625],
+        // ["c_top_pivot", 0, -0.791647, 0.826729],
+
+        ["c_left_hub", 0.1, -0.991, 0.327],
+        ["c_left_front", 0.1, -1.01852, 0.681685],
+        ["c_left_hood", 0.2, -0.949992, 0.82291],
+        ["c_left_pushpoint", 0.1, -0.776244, 0.872245],
+
+        ["c_right_hub", -0.1, -0.991, 0.327],
+        ["c_right_front", -0.1, -1.01852, 0.681685],
+        ["c_right_hood", -0.2, -0.949992, 0.82291],
+        ["c_right_pushpoint", -0.1, -0.776244, 0.872245],
+        {"group":""},
+
+    ],
+    "beams":[
+        ["id1:","id2:"],
+        {"beamSpring":500000,"beamDamp":10},
+        {"beamDeform":10000,"beamStrength":2000},
+        // cockpit
+        // ["f_top_pivot","f_bot_pivot"],
+
+        ["c_left_hub","c_right_front"],
+        ["c_left_hub","c_right_hub"],
+        ["c_left_hood", "c_right_hood"],
+        ["c_left_hood", "c_right_front"],
+        ["c_left_front", "c_right_front"],
+        ["c_left_front", "c_right_hood"],
+        ["c_left_hood", "c_right_pushpoint"],
+        ["c_left_pushpoint", "c_right_pushpoint"],
+        ["c_left_pushpoint", "c_right_hood"],
+        
+
+        ["c_left_front", "f_bot_pivot"]
+        ["c_left_front", "f_top_pivot"]
+        ["c_left_hub","f_bot_pivot"],
+        ["c_left_hub","c_left_front"],
+        ["c_left_hood", "f_bot_pivot"],
+        ["c_left_hood", "f_top_pivot"],
+        ["c_left_hood", "c_left_front"],
+        ["c_left_hood", "c_left_pushpoint"],
+        ["c_left_pushpoint", "f_bot_pivot"],
+        ["c_left_pushpoint", "f_top_pivot"],
+        
+        ["c_right_front", "f_bot_pivot"]
+        ["c_right_front", "f_top_pivot"]
+        ["c_right_hub","f_bot_pivot"],
+        ["c_right_hub","c_right_front"],
+        ["c_right_hood", "f_bot_pivot"],
+        ["c_right_hood", "f_top_pivot"],
+        ["c_right_hood", "c_right_front"],
+        ["c_right_hood", "c_right_pushpoint"],
+        ["c_right_pushpoint", "f_bot_pivot"],
+        ["c_right_pushpoint", "f_top_pivot"],
+    ]
+}
+,
 "sirvelo":{
     "information":{
         "name":"Sir Velo",
@@ -239,15 +416,14 @@
     },
     "slotType":"main",
     "slots": [
-        ["type", "default", "description"],
-        ["wheels","sirvelo_wheels_simple", "Wheels"],
-        ["frame","sirvelo_frame", "Frame"]
+        ["type"   , "default"              , "description"],
+        ["frame"  , "sirvelo_frame"        , "Frame"]
     ],
     "flexbodies": [
-        ["mesh"                    , "[group]:"  ],
+        ["mesh"                    , "[group]:"  ]
         // ["Frame"                   , "frame_g"   ],
         // ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
-    ], 
+    ],
 
     "controller": [
         ["fileName"],
@@ -285,24 +461,19 @@
     },
 
     "props": [
-        ["func"          , "mesh"             , "idRef:"  , "idX:"  , "idY:" , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
-        ["crank_rotation", "Crankset_Pivot_BB", "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
-        ["null"          , "Chain"            , "f_top_st", "c_left", "c_top", {"x":0, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
-    ],
-
-    "refNodes":[
-        ["ref:"    , "back:" , "left:" , "up:"  ],
-        ["f_top_st", "c_rear", "c_left", "c_top"]
+        ["func"          , "mesh"             , "idRef:"  , "idX:"     , "idY:"      , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
+        ["crank_rotation", "Crankset_Pivot_BB", "f_bb"    , "f_left_bb", "f_rear_bb" , {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
+        ["null"          , "Chain"            , "f_bb"    , "f_left_bb", "f_rear_bb" , {"x":90, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
     ],
 
     "hydros": [
         ["id1:","id2:"],
         {"beamSpring":3000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
-        ["f_left_st","c_left_lev_bot" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
-        ["f_right_st","c_right_lev_bot", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
-        // ["f_left_st","c_left_lev_bot" ,  {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
-        // ["f_right_st","c_right_lev_bot", {"inputSource": "steering_input", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
+        // ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
+        // ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
+        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor":  1}],
+        ["f_right_st","c_right_pushpoint", {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor": -1}]
     ],
 
     "quads": [
