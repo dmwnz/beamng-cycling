@@ -19,32 +19,51 @@
         
         // Tire
         {"radius":0.327},
-        {"tireWidth":0.1},
+        {"tireWidth":0.05},
         {"nodeWeight":0.02},
         {"frictionCoef":1.0},
-        {"nodeMaterial":"|NM_RUBBER"},
-        {"wheelTreadBeamSpring": 2800,"wheelTreadBeamDamp": 4},                    // across          Primarily affects lateral stiffness from low to high slip angles (higher->stiffer) 
-        {"wheelPeripheryBeamSpring": 1400, "wheelPeripheryBeamDamp": 4},           // circumference   Affects longitudinal stiffness (higher->stiffer). Also affects compression stiffness, high speed expansion, high speed grip. 
-        {"wheelSideBeamSpring": 20, "wheelSideBeamDamp": 4},                     // sidewall        Should be low to allow air pressure to handle weight of vehicle. 
-        {"wheelSideBeamSpringExpansion": 2000, "wheelSideBeamDampExpansion": 4},   // sidewall        Affects longitudinal stiffness (higher->stiffer), rolling resistance(higher->better), sharpness of lateral grip curve (higher->sharper peak), compression stiffness to a small extent (higher ->stiffer in compression) 
-        
-        // Hub
-        {"hubRadius":0.3},
-        {"hubWidth":0.1},
-        {"hubNodeWeight":0.02},
-        // {"hubNodeWeight":0.03},
-        {"hubNodeMaterial":"|NM_METAL"},
-        {"hubFrictionCoef": 1.0},
-        // {"hubTreadBeamSpring":25000, "hubTreadBeamDamp":4},                     // acrosss
-        // {"hubPeripheryBeamSpring":45000, "hubPeripheryBeamDamp":4},             // circumference
-        // {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
-        {"hubTreadBeamSpring":40000, "hubTreadBeamDamp":4},                     // acrosss
-        {"hubPeripheryBeamSpring":40000, "hubPeripheryBeamDamp":4},             // circumference
-        {"hubSideBeamSpring":50000, "hubSideBeamDamp":4},                       // radial spokes
 
-        {"pressurePSI":15},
+        // {"enableTireLbeams": true},
+        // {    "wheelReinfBeamSpring": 1250,         "wheelReinfBeamDamp": 4},
+
+
+        {"nodeMaterial":"|NM_RUBBER"},
+        // across          Primarily affects lateral stiffness from low to high slip angles (higher->stiffer) 
+        {    "wheelTreadBeamSpring": 5250,          "wheelTreadBeamDamp": 25}, // 5250 - 25
+        // circumference   Affects longitudinal stiffness (higher->stiffer). Also affects compression stiffness, high speed expansion, high speed grip. 
+        {"wheelPeripheryBeamSpring": 5250,      "wheelPeripheryBeamDamp": 10}, // 5250 - 10
+        // sidewall        Should be low to allow air pressure to handle weight of vehicle.    
+        {     "wheelSideBeamSpring": 0,              "wheelSideBeamDamp": 10}, // 0 - 10
+        // sidewall        Affects longitudinal stiffness (higher->stiffer), rolling resistance(higher->better), sharpness of lateral grip curve (higher->sharper peak), compression stiffness to a small extent (higher ->stiffer in compression) 
+        {     "wheelSideBeamSpringExpansion": 9000,  "wheelSideBeamDampExpansion": 4}, // 9000 - 4          
+
+        // Hub
+        {"hubRadius"      : 0.25},
+        {"hubWidth"       : 0.05},
+        {"hubNodeWeight"  : 0.02},
+        {"hubFrictionCoef": 1.0},
+        {"hubNodeMaterial": "|NM_PLASTIC"},
+
+        {    "hubTreadBeamSpring": 38000,     "hubTreadBeamDamp": 4}, // acrosss        -- max spring stable : 45000 (NW:0.02, HR:0.3, HW:0.05)
+        {"hubPeripheryBeamSpring": 38000, "hubPeripheryBeamDamp": 4}, // circumference  -- max spring stable : 45000
+        {     "hubSideBeamSpring": 90000,      "hubSideBeamDamp": 4}, // radial spokes  -- max spring stable : 100000
+
+        {"pressurePSI":40},
         {"maxPressurePSI":150},
         {"triangleCollision":false},
+
+        /*
+        https://wiki.beamng.com/PressureWheels
+
+        As a starting point, once you have realistic node weights, keep tire beam spring values very low, while increasing hub beam spring values until instability starts to occur. From there reduce hub beam stiffness about 5% and begin to tune tire beams.
+        Use the beam stress debug or node force debug visualizations (see debug menu) to make sure the tire is not unstable. Rapidly fluctuating colors or force arrows indicates instability.
+        Hub side beams can often handle a higher spring value than the hub tread or periphery beams. Hubs should always be as stiff as possible to limit deflection during cornering, and to limit high speed expansion of the wheel.
+        WheelSideBeamSpring should be very low or 0, but wheelSideBeamSpringExpansion should be very high, near instability limits. Same with the sideReinfBeam. This is to prevent high speed expansion of the wheel.
+        WheelTreadBeamSpring should be very high, up to about 50-75% of the sideBeamSpringExpansion or at the limit of stability.
+        WheelReinfBeamSpring should be low, about 10-25% of the treadBeamSpring. Very high ReinfBeamSpring will make the tire feel more direct, but make the tire too stiff over bumps, and will reduce aligning torque/ffb feel.
+        WheelPeripheryBeamSpring should be nearly the same as treadBeamSpring for narrow tires, but stiffer for wide tires.
+        Hub damping should be kept low (2-20), but tire beams should have damping in the range of 10 to 30 for sidewall and periphery, 40-80 for tread and reinforcement. 
+        */
         
         {"selfCollision":false},
         {"collision":true},
@@ -79,9 +98,6 @@
         {"hubNodeWeight":0.03},
         {"hubNodeMaterial":"|NM_RUBBER"},
         {"hubFrictionCoef": 1.0},
-        // {"hubTreadBeamSpring":35000, "hubTreadBeamDamp":4},                     // acrosss
-        // {"hubPeripheryBeamSpring":35000, "hubPeripheryBeamDamp":4},             // circumference
-        // {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
 
         {"hubTreadBeamSpring":35000, "hubTreadBeamDamp":4},                     // acrosss
         {"hubPeripheryBeamSpring":35000, "hubPeripheryBeamDamp":4},             // circumference
@@ -240,7 +256,7 @@
     "slotType":"frame",
     "slots": [
         ["type"   , "default"              , "description"],
-        ["wheels" , "sirvelo_wheels_simple", "Wheels"],
+        ["wheels" , "sirvelo_wheels"       , "Wheels"],
         ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
     ],
     "flexbodies": [
@@ -373,7 +389,6 @@
         // cockpit
         // ["f_top_pivot","f_bot_pivot"],
 
-        ["c_left_hub","c_right_front"],
         ["c_left_hub","c_right_hub"],
         ["c_left_hood", "c_right_hood"],
         ["c_left_hood", "c_right_front"],
@@ -383,11 +398,8 @@
         ["c_left_pushpoint", "c_right_pushpoint"],
         ["c_left_pushpoint", "c_right_hood"],
         
-
-        ["c_left_front", "f_bot_pivot"]
-        ["c_left_front", "f_top_pivot"]
-        ["c_left_hub","f_bot_pivot"],
-        ["c_left_hub","c_left_front"],
+        ["c_left_front", "f_bot_pivot"],
+        ["c_left_front", "f_top_pivot"],
         ["c_left_hood", "f_bot_pivot"],
         ["c_left_hood", "f_top_pivot"],
         ["c_left_hood", "c_left_front"],
@@ -395,16 +407,25 @@
         ["c_left_pushpoint", "f_bot_pivot"],
         ["c_left_pushpoint", "f_top_pivot"],
         
-        ["c_right_front", "f_bot_pivot"]
-        ["c_right_front", "f_top_pivot"]
+        ["c_right_front", "f_bot_pivot"],
+        ["c_right_front", "f_top_pivot"],
         ["c_right_hub","f_bot_pivot"],
-        ["c_right_hub","c_right_front"],
         ["c_right_hood", "f_bot_pivot"],
         ["c_right_hood", "f_top_pivot"],
         ["c_right_hood", "c_right_front"],
         ["c_right_hood", "c_right_pushpoint"],
         ["c_right_pushpoint", "f_bot_pivot"],
         ["c_right_pushpoint", "f_top_pivot"],
+
+        // fork
+        ["c_left_hub","c_right_front"],
+        ["c_left_front", "c_right_hub"],
+
+        ["c_left_hub","f_bot_pivot"],
+        ["c_left_hub","c_left_front"],
+
+        ["c_right_hub","f_bot_pivot"],
+        ["c_right_hub","c_right_front"]
     ]
 }
 ,
@@ -416,7 +437,7 @@
     "slotType":"dummy",
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
-        ["Dummy"                   , "dummy_g" ]
+        ["Dummy"                   , ["dummy_g", "cockpit_g"]]
     ],
     
     "nodes":[
