@@ -414,12 +414,18 @@
         "authors":"dmwnz"
     },
     "slotType":"dummy",
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Dummy"                   , "dummy_g" ]
+    ],
+    
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
         {"nodeWeight":10},
         {"frictionCoef":1},
 
+        {"group": "dummy_g"},
         ["d_head", 0,-0.614431,1.22315],
         ["d_left_elbow", 0.2,-0.719758,0.977988],
         ["d_left_knee", 0.1,-0.473966,0.621826],
@@ -428,6 +434,8 @@
         {"nodeWeight":15},
 
         ["d_saddle", 0, -0.199533, 0.907474],
+        {"group": ""}
+
 
     ],
     "beams":[
@@ -437,23 +445,25 @@
         
         ["d_head", "d_saddle"],
 
-        ["d_left_elbow", "c_right_hood"],
-        ["c_left_hood", "d_right_elbow"],
+        // ["d_left_elbow", "c_right_hood"],
+        // ["c_left_hood", "d_right_elbow"],
         ["d_left_elbow", "d_right_elbow"],
         ["d_left_knee", "d_right_knee"],
         ["d_left_knee", "f_right_bb"],
         ["f_left_bb", "d_right_knee"],
 
-        ["d_left_elbow", "c_left_hood"],
-        // ["d_left_elbow", "d_saddle"],
+        // ["d_left_elbow", "c_left_hood"],
+        ["d_left_elbow", "f_top_pivot"],
+        ["d_left_elbow", "d_saddle"],
         ["d_left_elbow", "d_head"],
 
         ["d_left_knee", "d_saddle"],
         ["d_left_knee", "f_left_bb"],
         ["d_left_knee", "d_left_elbow"],
 
-        ["d_right_elbow", "c_right_hood"],
-        // ["d_right_elbow", "d_saddle"],
+        // ["d_right_elbow", "c_right_hood"],
+        ["d_right_elbow", "f_top_pivot"],
+        ["d_right_elbow", "d_saddle"],
         ["d_right_elbow", "d_head"],
 
         ["d_right_knee", "d_saddle"],
@@ -519,10 +529,10 @@
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":30000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":3000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
-        ["d_saddle","d_left_elbow" ,  {"inputSource": "steering_input", "inLimit": 0.85, "outLimit": 1.15, "inputFactor":  1}],
-        ["d_saddle","d_right_elbow",  {"inputSource": "steering_input", "inLimit": 0.85, "outLimit": 1.15, "inputFactor": -1}]
+        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor":  1}],
+        ["f_right_st","c_right_pushpoint", {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor": -1}]
     ],
 
     "quads": [
