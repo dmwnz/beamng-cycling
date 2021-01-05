@@ -257,7 +257,6 @@
         ["f_bot_pivot", 0, -0.860135, 0.625],
         ["f_top_pivot", 0, -0.791647, 0.826729],
         
-        ["f_saddle", 0, -0.199533, 0.907474],
         ["f_bb", 0, -0.398, 0.257],
         ["f_front_bb", 0, -0.498, 0.257],
         ["f_rear_bb", 0, -0.298, 0.257],
@@ -277,10 +276,10 @@
     "beams":[
         ["id1:","id2:"],
         {"beamSpring":500000,"beamDamp":10},
-        {"beamDeform":10000,"beamStrength":2000},
+        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         // cockpit
         ["f_top_pivot","f_bot_pivot"],
-        ["f_top_pivot","f_saddle"],
+        ["f_top_pivot","d_saddle"],
         ["f_bot_pivot","f_front_bb"],
         ["f_bot_pivot","f_top_bb"],
         ["f_bb","f_top_bb"],
@@ -310,7 +309,7 @@
         ["f_left_st", "f_top_bb"],
         ["f_left_st", "f_rear_bb"],
         ["f_left_st", "f_left_hub"],
-        ["f_left_st", "f_saddle"],
+        ["f_left_st", "d_saddle"],
         
 
         ["f_right_bb", "f_bot_pivot"],
@@ -325,7 +324,7 @@
         ["f_right_st", "f_top_bb"],
         ["f_right_st", "f_rear_bb"],
         ["f_right_st", "f_right_hub"],
-        ["f_right_st", "f_saddle"]  
+        ["f_right_st", "d_saddle"]  
     ],
     
     "refNodes":[
@@ -370,7 +369,7 @@
     "beams":[
         ["id1:","id2:"],
         {"beamSpring":500000,"beamDamp":10},
-        {"beamDeform":10000,"beamStrength":2000},
+        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         // cockpit
         // ["f_top_pivot","f_bot_pivot"],
 
@@ -409,6 +408,62 @@
     ]
 }
 ,
+"my_dummy":{
+    "information":{
+        "name":"Fred",
+        "authors":"dmwnz"
+    },
+    "slotType":"dummy",
+    "nodes":[
+        ["id", "posX", "posY", "posZ"],
+        {"nodeMaterial":"|NM_PLASTIC"},
+        {"nodeWeight":10},
+        {"frictionCoef":1},
+
+        ["d_head", 0,-0.614431,1.22315],
+        ["d_left_elbow", 0.2,-0.719758,0.977988],
+        ["d_left_knee", 0.1,-0.473966,0.621826],
+        ["d_right_elbow",-0.2,-0.719758,0.977988],
+        ["d_right_knee",-0.1,-0.473966,0.621826],
+        {"nodeWeight":15},
+
+        ["d_saddle", 0, -0.199533, 0.907474],
+
+    ],
+    "beams":[
+        ["id1:","id2:"],
+        {"beamSpring":1000000,"beamDamp":100},
+        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        
+        ["d_head", "d_saddle"],
+
+        ["d_left_elbow", "c_right_hood"],
+        ["c_left_hood", "d_right_elbow"],
+        ["d_left_elbow", "d_right_elbow"],
+        ["d_left_knee", "d_right_knee"],
+        ["d_left_knee", "f_right_bb"],
+        ["f_left_bb", "d_right_knee"],
+
+        ["d_left_elbow", "c_left_hood"],
+        // ["d_left_elbow", "d_saddle"],
+        ["d_left_elbow", "d_head"],
+
+        ["d_left_knee", "d_saddle"],
+        ["d_left_knee", "f_left_bb"],
+        ["d_left_knee", "d_left_elbow"],
+
+        ["d_right_elbow", "c_right_hood"],
+        // ["d_right_elbow", "d_saddle"],
+        ["d_right_elbow", "d_head"],
+
+        ["d_right_knee", "d_saddle"],
+        ["d_right_knee", "f_right_bb"]
+        ["d_right_knee", "d_right_elbow"],
+
+
+    ]
+}
+,
 "sirvelo":{
     "information":{
         "name":"Sir Velo",
@@ -417,12 +472,8 @@
     "slotType":"main",
     "slots": [
         ["type"   , "default"              , "description"],
-        ["frame"  , "sirvelo_frame"        , "Frame"]
-    ],
-    "flexbodies": [
-        ["mesh"                    , "[group]:"  ]
-        // ["Frame"                   , "frame_g"   ],
-        // ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
+        ["frame"  , "sirvelo_frame"        , "Frame"],
+        ["dummy"  , "my_dummy"             , "Character"]
     ],
 
     "controller": [
@@ -446,10 +497,10 @@
     "hubMotor": {
         "torque":[
             ["rpm", "torque"],
-            [0, 20],
-            // [10, 200],
-            [200, 20],
-            // [1000, 20]
+            [0, 70],
+            [50, 50],
+            [200, 12],
+            [400, 6]
         ],
         "idleRPM":0,
         "friction":5,
@@ -468,12 +519,10 @@
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":3000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":30000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
-        // ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor":  1}],
-        // ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.75, "outLimit": 1.15, "inputFactor": -1}]
-        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor":  1}],
-        ["f_right_st","c_right_pushpoint", {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor": -1}]
+        ["d_saddle","d_left_elbow" ,  {"inputSource": "steering_input", "inLimit": 0.85, "outLimit": 1.15, "inputFactor":  1}],
+        ["d_saddle","d_right_elbow",  {"inputSource": "steering_input", "inLimit": 0.85, "outLimit": 1.15, "inputFactor": -1}]
     ],
 
     "quads": [
