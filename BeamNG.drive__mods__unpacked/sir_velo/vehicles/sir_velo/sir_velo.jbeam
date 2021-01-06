@@ -570,9 +570,9 @@
     ],
 
     "cameraExternal":{
-        "distance":2,
+        "distance":2.5,
         "distanceMin":1,
-        "offset":{"x":0, "y":0.0, "z":0.0},
+        "offset":{"x":0, "y":0.0, "z":0.75},
         "fov":65
     }
 }
