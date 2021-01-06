@@ -531,13 +531,16 @@
     "hubMotor": {
         "torque":[
             ["rpm", "torque"],
-            [0, 70],
-            [50, 50],
-            [200, 12],
-            [400, 6]
+            [0, 200],
+            [10, 200],
+            [50,  76],
+            [100, 38],
+            [200, 19],
+            [400, 10],
+            [800, 5]
         ],
         "idleRPM":0,
-        "friction":5,
+        "friction":0,
         "soundConfig": "soundConfigFront",
     },
     "soundConfigFront": {
