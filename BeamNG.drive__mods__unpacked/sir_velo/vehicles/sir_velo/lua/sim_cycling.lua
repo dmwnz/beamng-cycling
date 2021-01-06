@@ -58,11 +58,9 @@ end
 local function computeBikeSteering(dt)
     -- http://paradise.caltech.edu/~cook/papers/TwoNeurons.pdf
     local junk
-
-    bs_dt = bs_dt + dt
     
     -- tuning
-    local c1, c2, c3 = 1, 1, 1
+    local c1, c2, c3 = 1, 1, 0
 
     -- inputs
     current_leaning,junk,current_heading = obj:getRollPitchYaw() -- rad
@@ -76,7 +74,7 @@ local function computeBikeSteering(dt)
 
     -- second neuron
     bike_steering = c2 * (desired_leaning - current_leaning) - c3 * leaning_d
-    
+
     previous_leaning = current_leaning
 end
 

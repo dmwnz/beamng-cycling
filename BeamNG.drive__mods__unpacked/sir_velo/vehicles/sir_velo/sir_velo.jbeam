@@ -98,13 +98,13 @@
         // Hub
         {"hubRadius":0.327},
         {"hubWidth":0},
-        {"hubNodeWeight":0.03},
+        {"hubNodeWeight":0.3},
         {"hubNodeMaterial":"|NM_RUBBER"},
         {"hubFrictionCoef": 1.0},
 
-        {"hubTreadBeamSpring":35000, "hubTreadBeamDamp":4},                     // acrosss
-        {"hubPeripheryBeamSpring":35000, "hubPeripheryBeamDamp":4},             // circumference
-        {"hubSideBeamSpring":60000, "hubSideBeamDamp":4},                       // radial spokes
+        {"hubTreadBeamSpring":200000, "hubTreadBeamDamp":80},                     // acrosss
+        {"hubPeripheryBeamSpring":200000, "hubPeripheryBeamDamp":30},             // circumference
+        {"hubSideBeamSpring":400000, "hubSideBeamDamp":30},                       // radial spokes
 
         
         {"selfCollision":false},
@@ -124,7 +124,7 @@
     "slotType":"frame",
     "slots": [
         ["type"   , "default"              , "description"],
-        ["wheels" , "sirvelo_wheels"       , "Wheels"],
+        ["wheels" , "sirvelo_wheels_simple", "Wheels"],
         ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
     ],
     "flexbodies": [
@@ -134,9 +134,9 @@
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
-        {"nodeWeight":0.5},
+        {"nodeWeight":2},
         {"frictionCoef":1},
-
+        
         {"group":"frame_g"},
         ["f_bot_pivot", 0, -0.860135, 0.625],
         ["f_top_pivot", 0, -0.791647, 0.826729],
@@ -159,8 +159,8 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":500000,"beamDamp":10},
-        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         // cockpit
         ["f_top_pivot","f_bot_pivot"],
         ["f_top_pivot","d_saddle"],
@@ -231,7 +231,7 @@
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
-        {"nodeWeight":0.5},
+        {"nodeWeight":2},
         {"frictionCoef":1},
 
         {"group":"cockpit_g"},
@@ -252,8 +252,8 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":500000,"beamDamp":10},
-        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         // cockpit
         // ["f_top_pivot","f_bot_pivot"],
 
@@ -311,7 +311,7 @@
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_PLASTIC"},
-        {"nodeWeight":10},
+        {"nodeWeight":2},
         {"frictionCoef":1},
 
         {"group": "dummy_g"},
@@ -320,7 +320,7 @@
         ["d_left_knee", 0.1,-0.473966,0.621826],
         ["d_right_elbow",-0.2,-0.719758,0.977988],
         ["d_right_knee",-0.1,-0.473966,0.621826],
-        {"nodeWeight":15},
+        {"nodeWeight":2},
 
         ["d_saddle", 0, -0.199533, 0.907474],
         {"group": ""}
@@ -329,8 +329,8 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":1000000,"beamDamp":100},
-        {"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         
         ["d_head", "d_saddle"],
 
@@ -373,6 +373,11 @@
         ["type"   , "default"              , "description"],
         ["frame"  , "sirvelo_frame"        , "Frame"],
         ["dummy"  , "my_dummy"             , "Character"]
+    ],
+
+    "variables": [
+        ["name"        , "type", "unit", "default", "min", "max", "title"],
+        ["$beam_spring", "range", "N/m", 2000000, 500000, 2500000, "Beam Spring"],
     ],
 
     "controller": [
@@ -421,10 +426,10 @@
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":3000,"beamDamp":200,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":"$beam_spring","beamDamp":500,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
-        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor":  1}],
-        ["f_right_st","c_right_pushpoint", {"inputSource": "steering_input", "inLimit": 0.9, "outLimit": 1.1, "inputFactor": -1}]
+        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.9, "outLimit": 1.1, "inputFactor":  1}],
+        ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.9, "outLimit": 1.1, "inputFactor": -1}]
     ],
 
     "quads": [
