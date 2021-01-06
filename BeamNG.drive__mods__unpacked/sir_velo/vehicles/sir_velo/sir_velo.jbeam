@@ -159,7 +159,7 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamSpring":"$beam_spring","beamDamp":100},
         {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         // cockpit
         ["f_top_pivot","f_bot_pivot"],
@@ -252,7 +252,7 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamSpring":"$beam_spring","beamDamp":100},
         {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         // cockpit
         // ["f_top_pivot","f_bot_pivot"],
@@ -329,7 +329,7 @@
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":"$beam_spring","beamDamp":30},
+        {"beamSpring":"$beam_spring","beamDamp":100},
         {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         
         ["d_head", "d_saddle"],
