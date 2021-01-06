@@ -16,6 +16,8 @@
 
         // General Arguments
         {"numRays":18},
+        {"brakeTorque":70},
+        {"parkingTorque":0},
         
         // Tire
         {"radius":0.327},
@@ -67,8 +69,8 @@
         
         {"selfCollision":false},
         {"collision":true},
-        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "", 1, {"speedo":false}],
-        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "", 1, {"speedo":true}],
+        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "f_bot_pivot", 1, {"speedo":false}],
+        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "f_rear_bb", 1, {"speedo":true}],
         
         {"selfCollision":true}
     ]
@@ -90,7 +92,8 @@
 
         // General Arguments
         {"numRays":18},
-        // {"numRays":4},
+        {"brakeTorque":70},
+        {"parkingTorque":0},
         
         // Hub
         {"hubRadius":0.327},
@@ -106,8 +109,8 @@
         
         {"selfCollision":false},
         {"collision":true},
-        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "", 1, {"speedo":false}],
-        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "", 1, {"speedo":true}],
+        ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "f_bot_pivot", 1, {"speedo":false}],
+        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "f_rear_bb", 1, {"speedo":true}],
         
         {"selfCollision":true}
     ]
