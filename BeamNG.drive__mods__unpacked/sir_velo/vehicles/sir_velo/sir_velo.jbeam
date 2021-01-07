@@ -125,7 +125,7 @@
     "slots": [
         ["type"   , "default"              , "description"],
         ["wheels" , "sirvelo_wheels_simple", "Wheels"],
-        ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
+        ["cockpit", "sirvelo_cockpit"      , "Cockpit"]
     ],
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
@@ -154,7 +154,7 @@
         ["f_right_st", -0.1, -0.248471, 0.744889],
         ["f_right_hub", -0.1, 0, 0.327],  
 
-        {"group":""},
+        {"group":""}
 
     ],
     "beams":[
@@ -214,7 +214,7 @@
     "refNodes":[
         ["ref:"    , "back:"    , "left:"    , "up:"  ],
         ["f_bb"    , "f_rear_bb", "f_left_bb", "f_top_bb"]
-    ],
+    ]
 },
 
 "sirvelo_cockpit":{
@@ -247,7 +247,7 @@
         ["c_right_front", -0.1, -1.01852, 0.681685],
         ["c_right_hood", -0.2, -0.949992, 0.82291],
         ["c_right_pushpoint", -0.1, -0.776244, 0.872245],
-        {"group":""},
+        {"group":""}
 
     ],
     "beams":[
@@ -355,8 +355,8 @@
         ["d_right_elbow", "d_head"],
 
         ["d_right_knee", "d_saddle"],
-        ["d_right_knee", "f_right_bb"]
-        ["d_right_knee", "d_right_elbow"],
+        ["d_right_knee", "f_right_bb"],
+        ["d_right_knee", "d_right_elbow"]
 
 
     ]
@@ -389,7 +389,7 @@
         "automaticModes": "D",
         "defaultAutomaticMode" :"D",
         "defaultRegen": 0,
-        "brakeRegenCoef": 0,
+        "brakeRegenCoef": 0
     },
     "powertrain": [
         ["type"         , "name"        , "inputName"  , "inputIndex"],
@@ -410,11 +410,11 @@
         ],
         "idleRPM":0,
         "friction":0,
-        "soundConfig": "soundConfigFront",
+        "soundConfig": "soundConfigFront"
     },
     "soundConfigFront": {
         "sampleName": "ElectricMotor_v2",
-        "mainGain": -12,
+        "mainGain": -12
     },
 
     "props": [
