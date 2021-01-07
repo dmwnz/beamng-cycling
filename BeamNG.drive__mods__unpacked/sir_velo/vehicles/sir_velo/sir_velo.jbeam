@@ -277,7 +277,6 @@
         
         ["c_right_front", "f_bot_pivot"],
         ["c_right_front", "f_top_pivot"],
-        ["c_right_hub","f_bot_pivot"],
         ["c_right_hood", "f_bot_pivot"],
         ["c_right_hood", "f_top_pivot"],
         ["c_right_hood", "c_right_front"],
