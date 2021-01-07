@@ -65,7 +65,7 @@ local function computeBikeSteering(dt)
     -- inputs
     current_leaning,junk,current_heading = obj:getRollPitchYaw() -- rad
     local leaning_d = (current_leaning - previous_leaning) / dt -- rad/sec
-    local desired_heading = current_heading + (-math.pi / 4.0 * electrics.values.steering_input)
+    local desired_heading = current_heading + (-math.pi / 6.0 * electrics.values.steering_input)
 
     -- first neuron
     local desired_leaning = c1 * (desired_heading - current_heading)
