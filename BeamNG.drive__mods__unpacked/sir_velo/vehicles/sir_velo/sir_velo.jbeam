@@ -127,6 +127,7 @@
         ["wheels" , "sirvelo_wheels_simple", "Wheels"],
         ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
         ["dummy"  , "my_dummy"             , "Character"],
+        ["crankset", "sirvelo_crankset"    , "Crankset"]
     ],
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
@@ -305,7 +306,7 @@
     "slotType":"dummy",
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
-        ["Dummy"                   , ["dummy_g", "cockpit_g"]]
+        ["Dummy"                   , ["dummy_g", "cockpit_g", "crankset_g"]]
     ],
     
     "nodes":[
@@ -363,6 +364,77 @@
     ]
 }
 ,
+"sirvelo_crankset": {
+    "information":{
+        "name":"Sir Velo Crankset",
+        "authors":"dmwnz"
+    },
+    "slotType":"crankset",
+
+    "flexbodies": [
+        ["mesh"                    , "[group]:"  ],
+        ["Crankset_Pivot_Origin"   , "crankset_g"]
+    ],
+    "rotators":
+    [
+        ["name","[group]:","node1:","node2:","nodeArm:","wheelDir"],
+        {"radius":0.1},
+        {"brakeTorque":3000},
+        {"brakeSpring":125},
+        {"speedo":false},
+        ["crankset", ["crankset_g"], "f_right_bb", "f_left_bb", "", 1],
+    ],
+    
+
+    "nodes":[
+        ["id", "posX", "posY", "posZ"],
+        {"nodeMaterial":"|NM_METAL"},
+        {"nodeWeight":0.1},
+        {"frictionCoef":1},
+
+        {"group":"crankset_g"},
+        ["cs_left_pedal", 0.1, -0.228261, 0.25698],
+        ["cs_right_pedal",-0.1, -0.568261, 0.25698],
+
+        ["cs_top_crankset", 0, -0.398, 0.357],
+        ["cs_front_crankset",0, -0.498, 0.257],
+        ["cs_bottom_crankset",0, -0.398, 0.157],
+        ["cs_rear_crankset", 0, -0.298, 0.257],
+        
+        {"group":""},
+
+    ],
+
+    "beams": [
+        ["id1:","id2:"],
+        {"beamSpring":"$=$beam_spring/1000","beamDamp":4},
+        {"beamDeform":"$=$beam_spring/100","beamStrength":"$=$beam_spring/100"},
+
+        ["cs_top_crankset", "cs_front_crankset"],
+        ["cs_front_crankset", "cs_bottom_crankset"],
+        ["cs_bottom_crankset", "cs_rear_crankset"],
+        ["cs_rear_crankset", "cs_top_crankset"],
+        
+        ["f_left_bb", "cs_top_crankset"],
+        ["f_left_bb", "cs_front_crankset"],
+        ["f_left_bb", "cs_bottom_crankset"],
+        ["f_left_bb", "cs_rear_crankset"],
+        ["f_left_bb", "cs_left_pedal"],
+        ["cs_left_pedal", "cs_top_crankset"],
+        ["cs_left_pedal", "cs_rear_crankset"],
+        ["cs_left_pedal", "cs_bottom_crankset"],
+
+        ["f_right_bb", "cs_top_crankset"],
+        ["f_right_bb", "cs_front_crankset"],
+        ["f_right_bb", "cs_bottom_crankset"],
+        ["f_right_bb", "cs_rear_crankset"],
+        ["f_right_bb", "cs_right_pedal"],
+        ["cs_right_pedal", "cs_top_crankset"],
+        ["cs_right_pedal", "cs_rear_crankset"],
+        ["cs_right_pedal", "cs_bottom_crankset"]
+    ]
+}
+,
 "sirvelo":{
     "information":{
         "name":"Sir Velo",
@@ -385,7 +457,7 @@
     ],
     "vehicleController": {
         "shiftLogicName":"electricMotor",
-        "motorNames": ["hubMotor"],
+        "motorNames": ["crankMotor"],
         "automaticModes": "D",
         "defaultAutomaticMode" :"D",
         "defaultRegen": 0,
@@ -394,7 +466,9 @@
     "powertrain": [
         ["type"         , "name"        , "inputName"  , "inputIndex"],
         ["electricMotor", "hubMotor"    , "dummy"      ,           0 ],
-        ["shaft"        , "hubShaft"    , "hubMotor"   ,           1, {"connectedWheel":"R"}]
+        ["shaft"        , "hubShaft"    , "hubMotor"   ,           1, {"connectedWheel":"R"}],
+        ["electricMotor", "crankMotor"  , "dummy"      ,           0 ],
+        ["shaft"        , "crankShaft"  , "crankMotor" ,           1, {"connectedWheel":"crankset"}]
     ],
     
     "hubMotor": {
@@ -412,6 +486,17 @@
         "friction":0,
         "soundConfig": "soundConfigFront"
     },
+    "crankMotor": {
+        "torque":[
+            ["rpm", "torque"],
+            [0, 1],
+            [120, 1],
+        ],
+        "idleRPM":0,
+        "friction":0,
+        "dynamicFriction":"$=9.5493/120",
+        "soundConfig": "soundConfigFront"
+    },
     "soundConfigFront": {
         "sampleName": "ElectricMotor_v2",
         "mainGain": -12
@@ -419,7 +504,6 @@
 
     "props": [
         ["func"          , "mesh"             , "idRef:"  , "idX:"     , "idY:"      , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
-        ["crank_rotation", "Crankset_Pivot_BB", "f_bb"    , "f_left_bb", "f_rear_bb" , {"x":0, "y":0, "z":0},  {"x":1, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,   360,        0,            1],
         ["null"          , "Chain"            , "f_bb"    , "f_left_bb", "f_rear_bb" , {"x":90, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
     ],
 
