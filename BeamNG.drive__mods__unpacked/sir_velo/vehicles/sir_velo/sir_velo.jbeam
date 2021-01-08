@@ -125,7 +125,8 @@
     "slots": [
         ["type"   , "default"              , "description"],
         ["wheels" , "sirvelo_wheels_simple", "Wheels"],
-        ["cockpit", "sirvelo_cockpit"      , "Cockpit"]
+        ["cockpit", "sirvelo_cockpit"      , "Cockpit"],
+        ["dummy"  , "my_dummy"             , "Character"],
     ],
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
@@ -309,7 +310,7 @@
     
     "nodes":[
         ["id", "posX", "posY", "posZ"],
-        {"nodeMaterial":"|NM_PLASTIC"},
+        {"nodeMaterial":"|NM_RUBBER"},
         {"nodeWeight":2},
         {"frictionCoef":1},
 
@@ -370,8 +371,7 @@
     "slotType":"main",
     "slots": [
         ["type"   , "default"              , "description"],
-        ["frame"  , "sirvelo_frame"        , "Frame"],
-        ["dummy"  , "my_dummy"             , "Character"]
+        ["frame"  , "sirvelo_frame"        , "Frame"]
     ],
 
     "variables": [
