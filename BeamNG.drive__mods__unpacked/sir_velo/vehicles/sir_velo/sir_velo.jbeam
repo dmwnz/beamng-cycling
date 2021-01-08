@@ -527,6 +527,14 @@
         "distanceMin":1,
         "offset":{"x":0, "y":0.0, "z":0.75},
         "fov":65
-    }
+    },
+    "camerasInternal":[
+        ["type", "x", "y", "z", "fov", "id1:", "id2:", "id3:"],
+        {"nodeWeight":1},
+        {"selfCollision":false},
+        {"collision":false},
+        {"beamSpring":"$=$beam_spring/400","beamDamp":75},
+        ["head", 0, -0.730579, 1.23494, 90, "d_head","d_left_elbow","d_right_elbow"] 
+     ]
 }
 }
