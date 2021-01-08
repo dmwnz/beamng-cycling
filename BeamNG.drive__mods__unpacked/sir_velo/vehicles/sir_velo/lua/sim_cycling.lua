@@ -13,12 +13,6 @@ local crank_rotation = 0  -- degrees
 
 local bike_steering = 0
 
-local previous_leaning = 0
-local current_leaning, current_heading = 0, 0
-
-local bs_dt = 0
-
-
 local function setSpeed(speed)
     targetSpeed = speed/3.6
     rampedTargetSpeed = electrics.values.wheelspeed or 0
@@ -59,22 +53,19 @@ local function computeBikeSteering(dt)
     -- http://paradise.caltech.edu/~cook/papers/TwoNeurons.pdf
     local _
     -- tuning
-    local c1, c2, c3 = 1, 1, 0
+    local c1, c2 = 1, 1
 
     -- inputs
-    current_leaning,_,current_heading = obj:getRollPitchYaw() -- rad
-    local leaning_d = (current_leaning - previous_leaning) / dt -- rad/sec
-    local desired_heading = current_heading + (-math.pi / 6.0 * electrics.values.steering_input)
+    local current_leaning,_,_ = obj:getRollPitchYaw() -- rad
+    local desired_heading = (-math.pi / 6.0 * electrics.values.steering_input)
 
     -- first neuron
-    local desired_leaning = c1 * (desired_heading - current_heading)
+    local desired_leaning = c1 * desired_heading
     desired_leaning = math.max(desired_leaning, -math.pi / 4)
     desired_leaning = math.min(desired_leaning,  math.pi / 4)
 
     -- second neuron
-    bike_steering = c2 * (desired_leaning - current_leaning) - c3 * leaning_d
-
-    previous_leaning = current_leaning
+    bike_steering = c2 * (desired_leaning - current_leaning)
 end
 
 local function updateGFX(dt)
