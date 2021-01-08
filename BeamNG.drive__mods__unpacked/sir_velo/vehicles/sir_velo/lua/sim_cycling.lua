@@ -57,7 +57,7 @@ end
 
 local function computeBikeSteering(dt)
     -- http://paradise.caltech.edu/~cook/papers/TwoNeurons.pdf
-    
+    local _
     -- tuning
     local c1, c2, c3 = 1, 1, 0
 
