@@ -382,7 +382,7 @@
         {"brakeTorque":3000},
         {"brakeSpring":125},
         {"speedo":false},
-        ["crankset", ["crankset_g"], "f_right_bb", "f_left_bb", "", 1],
+        ["crankset", ["crankset_g"], "f_right_bb", "f_left_bb", "", 1]
     ],
     
 
@@ -401,7 +401,7 @@
         ["cs_bottom_crankset",0, -0.398, 0.157],
         ["cs_rear_crankset", 0, -0.298, 0.257],
         
-        {"group":""},
+        {"group":""}
 
     ],
 
@@ -448,7 +448,7 @@
 
     "variables": [
         ["name"        , "type", "unit", "default", "min", "max", "title"],
-        ["$beam_spring", "range", "N/m", 2000000, 500000, 2500000, "Beam Spring"],
+        ["$beam_spring", "range", "N/m", 2000000, 500000, 2500000, "Beam Spring"]
     ],
 
     "controller": [
