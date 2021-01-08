@@ -165,7 +165,6 @@
         {"beamDeform":"$=$beam_spring/100","beamStrength":"$=$beam_spring/100"},
         // cockpit
         ["f_top_pivot","f_bot_pivot"],
-        ["f_top_pivot","d_saddle"],
         ["f_bot_pivot","f_front_bb"],
         ["f_bot_pivot","f_top_bb"],
         ["f_bb","f_top_bb"],
@@ -182,7 +181,6 @@
         ["f_left_st", "f_right_bb"],
         ["f_left_st", "f_right_hub"],
         
-
         ["f_left_bb", "f_bot_pivot"],
         ["f_left_bb", "f_top_pivot"],
         ["f_left_bb", "f_front_bb"],
@@ -195,9 +193,7 @@
         ["f_left_st", "f_top_bb"],
         ["f_left_st", "f_rear_bb"],
         ["f_left_st", "f_left_hub"],
-        ["f_left_st", "d_saddle"],
         
-
         ["f_right_bb", "f_bot_pivot"],
         ["f_right_bb", "f_top_pivot"],
         ["f_right_bb", "f_front_bb"],
@@ -209,8 +205,7 @@
         ["f_right_st", "f_bot_pivot"],
         ["f_right_st", "f_top_bb"],
         ["f_right_st", "f_rear_bb"],
-        ["f_right_st", "f_right_hub"],
-        ["f_right_st", "d_saddle"]  
+        ["f_right_st", "f_right_hub"]
     ],
     
     "refNodes":[
@@ -306,7 +301,9 @@
     "slotType":"dummy",
     "flexbodies": [
         ["mesh"                    , "[group]:"  ],
-        ["Dummy"                   , ["dummy_g", "cockpit_g", "crankset_g"]]
+        ["Dummy"                   , ["dummy_g", "cockpit_g"]],
+        ["Dummy_Left_Leg"          , "dummy_left_leg_g"],
+        ["Dummy_Right_Leg"         , "dummy_right_leg_g"]
     ],
     
     "nodes":[
@@ -318,47 +315,76 @@
         {"group": "dummy_g"},
         ["d_head", 0,-0.614431,1.22315],
         ["d_left_elbow", 0.2,-0.719758,0.977988],
-        ["d_left_knee", 0.1,-0.473966,0.621826],
         ["d_right_elbow",-0.2,-0.719758,0.977988],
-        ["d_right_knee",-0.1,-0.473966,0.621826],
-        {"nodeWeight":2},
 
-        ["d_saddle", 0, -0.199533, 0.907474],
+        {"group": ["dummy_g", "dummy_left_leg_g", "dummy_right_leg_g"]},
+        ["d_left_saddle", 0.1,-0.248471, 0.933499],
+        ["d_right_saddle",-0.1,-0.248471, 0.933499],
+
+        {"nodeWeight":0.1},
+        {"group": "dummy_left_leg_g"},
+        ["d_left_outer_knee",0.1,-0.56929,0.69718],
+        ["d_left_inner_knee",0.05,-0.56929,0.69718],
+        ["d_left_pedal", 0.1, -0.230572, 0.25698],
+        
+        {"group": "dummy_right_leg_g"},
+        ["d_right_outer_knee",-0.1,-0.628439,0.816268],
+        ["d_right_inner_knee",-0.05,-0.628439,0.816268],
+        ["d_right_pedal",-0.1, -0.56595, 0.25698],
+
         {"group": ""}
 
 
     ],
     "beams":[
         ["id1:","id2:"],
-        {"beamSpring":"$=$beam_spring/200","beamDamp":100},
         {"beamDeform":"$=$beam_spring/10","beamStrength":"$=$beam_spring/10"},
         
-        ["d_head", "d_saddle"],
+        {"beamSpring":"$=$beam_spring/400","beamDamp":100},
+        ["f_top_pivot", "d_head"],
 
-        // ["d_left_elbow", "c_right_hood"],
-        // ["c_left_hood", "d_right_elbow"],
+        {"beamSpring":"$=$beam_spring/200","beamDamp":100},
         ["d_left_elbow", "d_right_elbow"],
-        ["d_left_knee", "d_right_knee"],
-        ["d_left_knee", "f_right_bb"],
-        ["f_left_bb", "d_right_knee"],
+        ["d_left_elbow", "d_right_saddle"],
+        ["d_left_saddle", "d_right_elbow"],
+        ["d_left_saddle", "d_right_saddle"],
+        ["d_left_inner_knee", "d_right_saddle"],
+        ["d_left_saddle", "d_right_inner_knee"],
 
-        // ["d_left_elbow", "c_left_hood"],
+        ["d_left_saddle", "d_head"],
+        ["d_left_saddle", "f_top_pivot"],
         ["d_left_elbow", "f_top_pivot"],
-        ["d_left_elbow", "d_saddle"],
+        ["d_left_elbow", "d_left_saddle"],
         ["d_left_elbow", "d_head"],
 
-        ["d_left_knee", "d_saddle"],
-        ["d_left_knee", "f_left_bb"],
-        ["d_left_knee", "d_left_elbow"],
-
-        // ["d_right_elbow", "c_right_hood"],
+        ["d_right_saddle", "d_head"],
+        ["d_right_saddle", "f_top_pivot"],
         ["d_right_elbow", "f_top_pivot"],
-        ["d_right_elbow", "d_saddle"],
+        ["d_right_elbow", "d_right_saddle"],
         ["d_right_elbow", "d_head"],
 
-        ["d_right_knee", "d_saddle"],
-        ["d_right_knee", "f_right_bb"],
-        ["d_right_knee", "d_right_elbow"]
+        // legs
+        {"highlight":{"radius":0.005, "col":"#4444ffff" }},
+        ["d_left_inner_knee", "d_left_outer_knee"],
+        ["d_left_inner_knee", "d_left_pedal"],
+        ["d_left_inner_knee", "d_left_saddle"],
+        ["d_left_outer_knee", "d_left_pedal"],
+        ["d_left_outer_knee", "d_left_saddle"],
+        
+        ["d_right_inner_knee", "d_right_outer_knee"],
+        ["d_right_inner_knee", "d_right_pedal"],
+        ["d_right_inner_knee", "d_right_saddle"],
+        ["d_right_outer_knee", "d_right_pedal"],
+        ["d_right_outer_knee", "d_right_saddle"],
+
+        {"highlight":""},
+
+        {"beamSpring":"$=$beam_spring/50","beamDamp":100},
+        ["d_left_saddle", "f_right_st"],
+        ["f_left_st", "d_right_saddle"],
+
+        ["d_left_saddle", "f_left_st"],
+        ["d_right_saddle", "f_right_st"]
 
 
     ]
@@ -389,13 +415,10 @@
     "nodes":[
         ["id", "posX", "posY", "posZ"],
         {"nodeMaterial":"|NM_METAL"},
-        {"nodeWeight":0.1},
+        {"nodeWeight":0.2},
         {"frictionCoef":1},
 
         {"group":"crankset_g"},
-        ["cs_left_pedal", 0.1, -0.228261, 0.25698],
-        ["cs_right_pedal",-0.1, -0.568261, 0.25698],
-
         ["cs_top_crankset", 0, -0.398, 0.357],
         ["cs_front_crankset",0, -0.498, 0.257],
         ["cs_bottom_crankset",0, -0.398, 0.157],
@@ -407,7 +430,7 @@
 
     "beams": [
         ["id1:","id2:"],
-        {"beamSpring":"$=$beam_spring/1000","beamDamp":4},
+        {"beamSpring":"$=$beam_spring/100","beamDamp":4},
         {"beamDeform":"$=$beam_spring/100","beamStrength":"$=$beam_spring/100"},
 
         ["cs_top_crankset", "cs_front_crankset"],
@@ -419,19 +442,19 @@
         ["f_left_bb", "cs_front_crankset"],
         ["f_left_bb", "cs_bottom_crankset"],
         ["f_left_bb", "cs_rear_crankset"],
-        ["f_left_bb", "cs_left_pedal"],
-        ["cs_left_pedal", "cs_top_crankset"],
-        ["cs_left_pedal", "cs_rear_crankset"],
-        ["cs_left_pedal", "cs_bottom_crankset"],
+        ["f_left_bb", "d_left_pedal"],
+        ["d_left_pedal", "cs_top_crankset"],
+        ["d_left_pedal", "cs_rear_crankset"],
+        ["d_left_pedal", "cs_bottom_crankset"],
 
         ["f_right_bb", "cs_top_crankset"],
         ["f_right_bb", "cs_front_crankset"],
         ["f_right_bb", "cs_bottom_crankset"],
         ["f_right_bb", "cs_rear_crankset"],
-        ["f_right_bb", "cs_right_pedal"],
-        ["cs_right_pedal", "cs_top_crankset"],
-        ["cs_right_pedal", "cs_rear_crankset"],
-        ["cs_right_pedal", "cs_bottom_crankset"]
+        ["f_right_bb", "d_right_pedal"],
+        ["d_right_pedal", "cs_top_crankset"],
+        ["d_right_pedal", "cs_rear_crankset"],
+        ["d_right_pedal", "cs_bottom_crankset"]
     ]
 }
 ,
@@ -489,12 +512,12 @@
     "crankMotor": {
         "torque":[
             ["rpm", "torque"],
-            [0, 1],
-            [120, 1],
+            [0, 5],
+            [120, 5]
         ],
         "idleRPM":0,
         "friction":0,
-        "dynamicFriction":"$=9.5493/120",
+        "dynamicFriction":"$=9.5493/120*5",
         "soundConfig": "soundConfigFront"
     },
     "soundConfigFront": {
