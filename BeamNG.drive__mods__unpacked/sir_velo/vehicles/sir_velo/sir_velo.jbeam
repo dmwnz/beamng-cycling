@@ -425,7 +425,7 @@
 
     "hydros": [
         ["id1:","id2:"],
-        {"beamSpring":"$beam_spring/1000","beamDamp":500,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
+        {"beamSpring":"$=$beam_spring/200","beamDamp":500,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
         {"beamPrecompression":1},
         ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor":  1}],
         ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor": -1}]
