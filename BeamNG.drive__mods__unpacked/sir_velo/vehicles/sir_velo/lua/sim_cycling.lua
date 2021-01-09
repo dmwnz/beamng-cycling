@@ -80,6 +80,12 @@ local function computeBikeSteering(dt)
 end
 
 local function balanceBike()
+    local throttleOverride = math.max(0, 2 - electrics.values.airspeed)
+    if throttleOverride > 0 then
+        electrics.values.throttle = electrics.values.throttle + throttleOverride
+        electrics.values.brake = 0
+        electrics.values.parkingbrake = 0
+    end
     computeBikeSteering()
 end
 
