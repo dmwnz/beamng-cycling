@@ -9,7 +9,6 @@ local client = assert(socket.tcp())
 local targetSpeed= 0
 local throttleSmooth = newTemporalSmoothing(200, 200)
 local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
-local crank_rotation = 0  -- degrees
 
 local bike_steering = 0
 
@@ -19,8 +18,6 @@ local function setSpeed(speed)
 end
 
 local function onInit()
-    electrics.values.throttle = 0
-    electrics.values.crank_rotation = crank_rotation
     -- local result, error = client:connect(host, port);
     -- if result == nil then
     --     log('E', 'sim_cycling', error)
@@ -76,9 +73,6 @@ local function updateGFX(dt)
     electrics.values.steering_input = bike_steering
 
 
-    local crankset_rpm = electrics.values.rpm / 3   -- assuming wheel speed = 3 x crank speed
-    crank_rotation = (crank_rotation + crankset_rpm * 360/60 * dt) % 360
-    electrics.values.crank_rotation = crank_rotation
 
 end
 
