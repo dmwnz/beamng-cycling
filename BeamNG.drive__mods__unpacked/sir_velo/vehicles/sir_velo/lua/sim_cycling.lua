@@ -47,32 +47,46 @@ local function readCompanionData()
 end
 
 local function computeBikeSteering(dt)
-    -- http://paradise.caltech.edu/~cook/papers/TwoNeurons.pdf
     local _
     -- tuning
-    local c1, c2 = 1, 1
+    local c1, c2 = math.min(10 / electrics.values.airspeed, 10) , 1
 
     -- inputs
-    local current_leaning,_,_ = obj:getRollPitchYaw() -- rad
-    local desired_heading = (-math.pi / 6.0 * electrics.values.steering_input)
+    local current_leaning,_,_ = -1 * obj:getRollPitchYaw() -- rad
+    --                           ^
+    -- giving it the same sign as input_steering (negative = left, positive = right)
 
-    -- first neuron
-    local desired_leaning = c1 * desired_heading
-    desired_leaning = math.max(desired_leaning, -math.pi / 4)
-    desired_leaning = math.min(desired_leaning,  math.pi / 4)
+    local max_leaning = math.pi/4 -- could be improved
+
+    local additional_leaning_left  = math.abs(math.min(0,electrics.values.steering_input)) * max_leaning
+    local additional_leaning_right = math.max(0,electrics.values.steering_input)* max_leaning
+    -- to go right (steering_input > 0), we want to lean right
+
+    if current_leaning > max_leaning then
+        additional_leaning_right = 0
+    elseif current_leaning < -max_leaning then
+        additional_leaning_left = 0
+    else
+        if current_leaning - additional_leaning_left < -max_leaning then
+            additional_leaning_left = max_leaning - math.abs(current_leaning)
+        end
+        if current_leaning + additional_leaning_right > max_leaning then
+            additional_leaning_right = max_leaning - current_leaning
+        end
+    end
 
     -- second neuron
-    bike_steering = c2 * (desired_leaning - current_leaning)
+    electrics.values.bike_steering = c1 * current_leaning  + c2 * (additional_leaning_left - additional_leaning_right)
+end
+
+local function balanceBike()
+    computeBikeSteering()
 end
 
 local function updateGFX(dt)
     --readCompanionData()
     --cruiseControl(dt)
-    computeBikeSteering(dt)
-    electrics.values.bike_steering = bike_steering
-    electrics.values.steering_input = bike_steering
-
-
+    balanceBike()
 
 end
 
