@@ -49,7 +49,7 @@ end
 local function computeBikeSteering(dt)
     local _
     -- tuning
-    local c1, c2 = math.min(10 / electrics.values.airspeed, 10) , 1
+    local c1, c2 = math.min(10/(electrics.values.airspeed + 0.01), 10) , math.min(electrics.values.airspeed/3, 2)
 
     -- inputs
     local current_leaning,_,_ = -1 * obj:getRollPitchYaw() -- rad
@@ -58,25 +58,16 @@ local function computeBikeSteering(dt)
 
     local max_leaning = math.pi/4 -- could be improved
 
-    local additional_leaning_left  = math.abs(math.min(0,electrics.values.steering_input)) * max_leaning
-    local additional_leaning_right = math.max(0,electrics.values.steering_input)* max_leaning
+    local additional_leaning = electrics.values.steering_input * max_leaning
     -- to go right (steering_input > 0), we want to lean right
 
-    if current_leaning > max_leaning then
-        additional_leaning_right = 0
-    elseif current_leaning < -max_leaning then
-        additional_leaning_left = 0
-    else
-        if current_leaning - additional_leaning_left < -max_leaning then
-            additional_leaning_left = max_leaning - math.abs(current_leaning)
-        end
-        if current_leaning + additional_leaning_right > max_leaning then
-            additional_leaning_right = max_leaning - current_leaning
-        end
+    if current_leaning + additional_leaning < -max_leaning then
+        additional_leaning = -max_leaning - current_leaning
+    elseif current_leaning + additional_leaning > max_leaning then
+        additional_leaning = max_leaning - current_leaning
     end
 
-    -- second neuron
-    electrics.values.bike_steering = c1 * current_leaning  + c2 * (additional_leaning_left - additional_leaning_right)
+    electrics.values.bike_steering = c1 * current_leaning  + c2 * -additional_leaning
 end
 
 local function balanceBike()
