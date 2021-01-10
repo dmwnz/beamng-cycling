@@ -110,7 +110,7 @@
         {"selfCollision":false},
         {"collision":true},
         ["F", "wheel_F_g", "", "c_right_hub", "c_left_hub", 9999, "f_bot_pivot", 1, {"speedo":false}],
-        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "f_rear_bb", 1, {"speedo":true,"parkingTorque":70}],
+        ["R", "wheel_R_g", "", "f_right_hub", "f_left_hub", 9999, "f_rear_bb", 1, {"speedo":true}],
         
         {"selfCollision":true}
     ]
