@@ -1,4 +1,4 @@
-﻿using ANT_Managed_Library;
+using ANT_Managed_Library;
 using AntPlus.Profiles.BikeCadence;
 using AntPlus.Profiles.BikePower;
 using AntPlus.Profiles.BikeSpeedCadence;
@@ -67,7 +67,7 @@ namespace AntTcpCompanion
             feDisplay.DataPageReceived += (DataPage page) =>
             {
                 Trace.TraceInformation("Received fe data");
-                OutputMessages.Add("POWER:" + feDisplay.SpecificTrainer.InstantaneousPower);
+                OutputMessages.Add("POW:" + feDisplay.SpecificTrainer.InstantaneousPower);
                 OutputMessages.Add("CAD:" + feDisplay.SpecificTrainer.InstantaneousCadence);
             };
             feDisplay.SensorFound += (ushort a, byte b) =>
@@ -79,8 +79,9 @@ namespace AntTcpCompanion
             bpDisplay.DataPageReceived += (DataPage page) =>
             {
                 Trace.TraceInformation("Received bp data");
-                OutputMessages.Add("POWER:" + bpDisplay.CalculatedPower);
-                OutputMessages.Add("CAD:" + feDisplay.SpecificTrainer.InstantaneousCadence);
+                OutputMessages.Add("POW:" + bpDisplay.CalculatedPower);
+                if (bpDisplay.StandardPowerOnly != null)
+                    OutputMessages.Add("CAD:" + bpDisplay.StandardPowerOnly.InstantaneousCadence);
             };
 
             hrDisplay.DataPageReceived += (DataPage page) =>
