@@ -507,7 +507,7 @@
         ],
         "idleRPM":0,
         "friction":0,
-        "soundConfig": "soundConfigFront"
+        "soundConfig": "silentSoundConfig"
     },
     "crankMotor": {
         "torque":[
@@ -517,12 +517,9 @@
         ],
         "idleRPM":0,
         "friction":0,
-        "dynamicFriction":"$=9.5493/120*5",
-        "soundConfig": "soundConfigFront"
+        "soundConfig": "silentSoundConfig"
     },
-    "soundConfigFront": {
-        "sampleName": "ElectricMotor_v2",
-        "mainGain": -12
+    "silentSoundConfig": {
     },
 
     "props": [
