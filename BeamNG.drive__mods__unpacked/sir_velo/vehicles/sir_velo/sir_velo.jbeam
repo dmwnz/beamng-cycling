@@ -523,8 +523,8 @@
     },
 
     "props": [
-        ["func"          , "mesh"             , "idRef:"  , "idX:"     , "idY:"      , "baseRotation"       , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
-        ["null"          , "Chain"            , "f_bb"    , "f_left_bb", "f_rear_bb" , {"x":90, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
+        ["func", "mesh" , "idRef:", "idX:"     , "idY:"     , "baseRotation"        , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
+        ["null", "Chain", "f_bb"  , "f_left_bb", "f_rear_bb", {"x":90, "y":0, "z":0},  {"x":0, "y":0, "z":0}, {"x":0, "y":0, "z":0},     0,     0,        0,            1]
     ],
 
     "hydros": [
