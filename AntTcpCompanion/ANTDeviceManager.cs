@@ -147,12 +147,13 @@ namespace AntTcpCompanion
         private async Task SendSlopeAsync(string slopeString)
         {
             var slope = float.Parse(slopeString, CultureInfo.InvariantCulture);
+            slope = slope * 100;
             if (feDisplay.FeState != FitnessEquipment.FeState.Asleep)
             {
                 await Task.Run(() =>
                 {
                     Trace.TraceInformation("Sending slope : " + slopeString);
-                    feDisplay.SendTrackResistance(new ControlTrackResistancePage() { Grade = (ushort)((slope + 200.0f) / 400.0f * 40000) });
+                    feDisplay.SendTrackResistance(new ControlTrackResistancePage() { Grade = (ushort)((slope + 200.0f) / 400.0f * 40000)});
                 });
             }
         }
