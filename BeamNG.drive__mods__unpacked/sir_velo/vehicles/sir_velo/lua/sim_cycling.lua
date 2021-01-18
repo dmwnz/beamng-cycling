@@ -2,8 +2,8 @@ log('I', 'sim_cycling', 'Hello World !')
 
 local M = {}
 
-local socket = require("socket")
-local host, port = "127.0.0.1", 20201
+local socket = require('socket')
+local host, port = '127.0.0.1', 20201
 local client = assert(socket.tcp())
 
 local targetSpeed= 0
@@ -65,16 +65,16 @@ local function sendCurrentSituation(dt)
 end
 
 local function computeBikeSteering(dt)
-    local _
     -- tuning
     local c1, c2 = math.min(10/(electrics.values.airspeed + 0.01), 10) , math.min(electrics.values.airspeed/3, 2)
 
     -- inputs
-    local current_leaning,_,_ = -1 * obj:getRollPitchYaw() -- rad
-    --                           ^
+    local current_leaning,_,_ = obj:getRollPitchYaw() -- rad
+    current_leaning = current_leaning * -1
+    --                                   ^
     -- giving it the same sign as input_steering (negative = left, positive = right)
 
-    local max_leaning = math.pi/4 -- could be improved
+    local max_leaning = math.pi/5 -- could be improved
 
     local additional_leaning = electrics.values.steering_input * max_leaning
     -- to go right (steering_input > 0), we want to lean right
