@@ -1,0 +1,16 @@
+// this file holds all the actions that only this specific vehicle can perform
+// ===========================================================================
+{
+    "toggle_ai": {
+        "order": 1,
+        "onDown": "controller.mainController.toggleAI()",
+        "title": "ui.apps.aicontrol.name",
+        "desc": "ui.apps.aicontrol.name"
+    },
+    "force_brake": {
+        "order": 2,
+        "onChange": "electrics.values.brakeOverride = VALUE",
+        "title": "Force braking",
+        "desc": "Force braking"
+    }
+}

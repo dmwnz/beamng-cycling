@@ -1,0 +1,17 @@
+{
+    "bindings": [
+        {
+            "control": "btn_a",
+            "action": "toggle_ai"
+        },
+        {
+            "control": "triggerl",
+            "action": "force_brake"
+        }
+    ],
+    "name": "XBox Controller 1",
+    "version": 1,
+    "devicetype": "xinput",
+    "vidpid": "XIDevice",
+    "guid": "xinput_device_XIDevice"
+}

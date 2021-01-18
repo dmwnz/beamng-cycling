@@ -6,28 +6,14 @@ local socket = require('socket')
 local host, port = '127.0.0.1', 20201
 local client = assert(socket.tcp())
 
-local targetSpeed= 0
-local throttleSmooth = newTemporalSmoothing(200, 200)
-local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
-
-local situationAge = 0
+local slopeAge = 0
 
 local function onInit()
-
-    electrics.values.ant_cadence_factor = 1/150
-    electrics.values.ant_power_factor = 1/250
-
+    client:settimeout(0);
     local result, error = client:connect(host, port)
     if result == nil then
         log('E', 'sim_cycling', error)
     end
-    client:settimeout(0);
-end
-
-local function cruiseControl(dt)
-    local currentSpeed = electrics.values.wheelspeed or 0
-    local output = speedPID:get(currentSpeed, targetSpeed, dt)
-    electrics.values.throttleOverride = throttleSmooth:getUncapped(output, dt)
 end
 
 local function readCompanionData()
@@ -57,10 +43,10 @@ local function sendCurrentSituation(dt)
 
     electrics.values.ant_slope = math.tan(pitch)
 
-    situationAge = situationAge + dt
-    if situationAge >= 1 then
+    slopeAge = slopeAge + dt
+    if slopeAge >= 1 then
         client:send('SLOPE:' .. electrics.values.ant_slope)
-        situationAge = 0
+        slopeAge = 0
     end
 end
 
@@ -89,13 +75,7 @@ local function computeBikeSteering(dt)
 end
 
 local function balanceBike()
-    local throttleOverride = math.max(0, 2 - electrics.values.airspeed)
-    local ant_power = electrics.values.ant_power or 0
-    if throttleOverride > 0 then
-        electrics.values.ant_power = ant_power + throttleOverride/electrics.values.ant_power_factor
-        electrics.values.brake = 0
-        electrics.values.parkingbrake = 0
-    end
+    electrics.values.throttleOverride = math.max(0, 2 - electrics.values.airspeed)
     computeBikeSteering()
 end
 

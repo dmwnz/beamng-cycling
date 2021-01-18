@@ -476,16 +476,8 @@
 
     "controller": [
         ["fileName"],
-        ["vehicleController", {}]
+        ["veloController", {}]
     ],
-    "vehicleController": {
-        "shiftLogicName":"electricMotor",
-        "motorNames": ["crankMotor"],
-        "automaticModes": "D",
-        "defaultAutomaticMode" :"D",
-        "defaultRegen": 0,
-        "brakeRegenCoef": 0
-    },
     "powertrain": [
         ["type"         , "name"        , "inputName"  , "inputIndex"],
         ["electricMotor", "hubMotor"    , "dummy"      ,           0 ],
@@ -507,9 +499,7 @@
         ],
         "idleRPM":0,
         "friction":0,
-        "soundConfig": "silentSoundConfig",
-        "electricsThrottleName": "ant_power",
-        "electricsThrottleFactorName": "ant_power_factor"
+        "soundConfig": "silentSoundConfig"
     },
     "crankMotor": {
         "torque":[
