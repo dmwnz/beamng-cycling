@@ -16,12 +16,19 @@ Consists of:
  ┃ ┗ 📂Properties
  ┣ 📂BeamNG.drive__mods__unpacked    => junction to [My Documents]/BeamNG.drive/mods/unpacked
  ┃ ┗ 📂sir_velo
+ ┃   ┣ 📂ui
+ ┃   ┃ ┗ 📂modules
+ ┃   ┃   ┗ 📂apps
+ ┃   ┃     ┗ 📂SimCycling            => little UI app
  ┃   ┗ 📂vehicles
  ┃     ┗ 📂sir_velo
+ ┃       ┣ 📂inputmaps               => default custom input mappings
  ┃       ┣ 📂lua
+ ┃       ┣ ┣ 📂controller            => custom vehicle control logic
  ┃       ┃ ┗ 📜sim_cycling.lua       => custom vehicle script
  ┃       ┣ 📜default.png             => UI stuff
  ┃       ┣ 📜info.json               => UI stuff
+ ┃       ┣ 📜input_actions.json      => velo-specific input actions
  ┃       ┣ 📜materials.cs            => 3D model materials
  ┃       ┣ 📜sir_velo.jbeam          => main vehicle file
  ┃       ┗ 📜velo.dae                => exported 3D model
