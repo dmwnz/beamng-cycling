@@ -10,20 +10,18 @@ local targetSpeed= 0
 local throttleSmooth = newTemporalSmoothing(200, 200)
 local speedPID = newPIDStandard(0.3, 2, 0.0, 0, 1, 1, 1, 0, 2)
 
-local bike_steering = 0
-
-local function setSpeed(speed)
-    targetSpeed = speed/3.6
-    rampedTargetSpeed = electrics.values.wheelspeed or 0
-end
+local situationAge = 0
 
 local function onInit()
-    -- local result, error = client:connect(host, port);
-    -- if result == nil then
-    --     log('E', 'sim_cycling', error)
-    -- end
-    -- client:settimeout(0);
-    -- client:send("hello world\n");
+
+    electrics.values.ant_cadence_factor = 1/150
+    electrics.values.ant_power_factor = 1/250
+
+    local result, error = client:connect(host, port)
+    if result == nil then
+        log('E', 'sim_cycling', error)
+    end
+    client:settimeout(0);
 end
 
 local function cruiseControl(dt)
@@ -35,14 +33,34 @@ end
 local function readCompanionData()
     local res, status = client:receive()
     if res ~= nil then
-        for k,v in string.gmatch(res, "(%w+):(%w+)") do
+        for k,v in string.gmatch(res, '(%w+):(%w+)') do
             if k == 'HR' then
-                local lastHr = tonumber(v)
-                setSpeed(lastHr)
-                log('I', 'sim_cycling', 'found hr : ' .. lastHr)
+                local hr = tonumber(v)
+                electrics.values.ant_heartrate = hr
+            elseif k == 'POW' then
+                local power = tonumber(v)
+                electrics.values.ant_power = power
+            elseif k == 'SPD' then
+                local speed = tonumber(v)
+                electrics.values.ant_speed = speed * 3.6
+            elseif k == 'CAD' then
+                local cadence = tonumber(v)
+                electrics.values.ant_cadence = cadence
             end
         end
-        client:send("hello world\n");
+    end
+end
+
+local function sendCurrentSituation(dt)
+
+    local _, pitch = obj:getRollPitchYaw()
+
+    electrics.values.ant_slope = math.tan(pitch)
+
+    situationAge = situationAge + dt
+    if situationAge >= 1 then
+        client:send('SLOPE:' .. electrics.values.ant_slope)
+        situationAge = 0
     end
 end
 
@@ -72,8 +90,9 @@ end
 
 local function balanceBike()
     local throttleOverride = math.max(0, 2 - electrics.values.airspeed)
+    local ant_power = electrics.values.ant_power or 0
     if throttleOverride > 0 then
-        electrics.values.throttle = electrics.values.throttle + throttleOverride
+        electrics.values.ant_power = ant_power + throttleOverride/electrics.values.ant_power_factor
         electrics.values.brake = 0
         electrics.values.parkingbrake = 0
     end
@@ -81,7 +100,8 @@ local function balanceBike()
 end
 
 local function updateGFX(dt)
-    --readCompanionData()
+    sendCurrentSituation(dt)
+    readCompanionData()
     --cruiseControl(dt)
     balanceBike()
 

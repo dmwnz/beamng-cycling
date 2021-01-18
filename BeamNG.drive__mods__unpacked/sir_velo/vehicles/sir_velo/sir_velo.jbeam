@@ -507,17 +507,22 @@
         ],
         "idleRPM":0,
         "friction":0,
-        "soundConfig": "silentSoundConfig"
+        "soundConfig": "silentSoundConfig",
+        "electricsThrottleName": "ant_power",
+        "electricsThrottleFactorName": "ant_power_factor"
     },
     "crankMotor": {
         "torque":[
             ["rpm", "torque"],
             [0, 5],
-            [120, 5]
+            [150, 5]
         ],
         "idleRPM":0,
         "friction":0,
-        "soundConfig": "silentSoundConfig"
+        "dynamicFriction":"$=9.5493/150*5",
+        "soundConfig": "silentSoundConfig",
+        "electricsThrottleName": "ant_cadence",
+        "electricsThrottleFactorName": "ant_cadence_factor"
     },
     "silentSoundConfig": {
     },
