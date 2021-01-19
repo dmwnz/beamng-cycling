@@ -7,6 +7,10 @@
         {
             "control": "triggerl",
             "action": "force_brake"
+        },
+        {
+            "control": "btn_l",
+            "action": "toggle_recording"
         }
     ],
     "name": "XBox Controller 1",

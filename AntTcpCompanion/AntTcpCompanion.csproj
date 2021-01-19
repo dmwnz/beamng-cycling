@@ -41,6 +41,9 @@
     <Reference Include="ANT+ProfileLib">
       <HintPath>Dependencies\ANT+ProfileLib.dll</HintPath>
     </Reference>
+    <Reference Include="Dynastream.Fit.Portable">
+      <HintPath>Dependencies\Dynastream.Fit.Portable.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -55,6 +58,7 @@
     <Compile Include="ANTDeviceManager.cs" />
     <Compile Include="ANTServer.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="FitWriter.cs" />
     <Compile Include="Launcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,5 +12,11 @@
         "onChange": "electrics.values.brakeOverride = VALUE",
         "title": "Force braking",
         "desc": "Force braking"
+    },
+    "toggle_recording":{
+        "order":3,
+        "onDown": "controller.mainController.toggleFitRecording()",
+        "title": "Start/Stop FIT recording",
+        "desc": "Start/Stop FIT recording"
     }
 }

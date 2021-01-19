@@ -470,14 +470,31 @@
     ],
 
     "variables": [
-        ["name"        , "type", "unit", "default", "min", "max", "title"],
-        ["$beam_spring", "range", "N/m", 2000000, 500000, 2500000, "Beam Spring"]
+        ["name"        , "type", "unit", "default", "min", "max", "category", "title", "description"],
+        ["$beam_spring", "range", "N/m", 2000000, 2000000, 2000000,"Misc.", "Beam Spring", "Internal use. Do not change."],
+        ["$max_cadence", "range", "rpm", 150, 150, 150, "Misc.", "Maximum cadence", "Internal use. Do not change."],
+        ["$rider_weight", "range", "kg", 60, 50, 150, "User configuration", "Rider weight", "Rider weight in kilograms"],
+        ["$grade_difficulty", "range", "%", 100, 0, 100, "Difficulty", "Hill difficulty factor", "Factor to apply to hills. Lower if you want hills to feel easier."],
+        ["$min_grade", "range", "%", -25, -25, 25, "Difficulty", "Minimum simulated grade", "Minimum incline to transmit to smart HT. Raise if HT is too loud at high speeds."],
+        ["$max_grade", "range", "%", 25, -25, 25, "Difficulty", "Maximum simulated grade", "Maximum incline to transmit to smart HT. Lower if the steepest hills are too hard."]
     ],
 
     "controller": [
         ["fileName"],
         ["veloController", {}]
     ],
+    "veloController": {
+        "crr": 0.0025,
+        "cda": 0.3,
+        "drivetrainEfficiency": 0.975,
+        "bikeWeight": 7,
+        "riderWeight": "$rider_weight",
+        "minGrade": "$min_grade",
+        "maxGrade": "$max_grade",
+        "difficulty": "$grade_difficulty",
+        "maxCadence": "$max_cadence"
+    },
+
     "powertrain": [
         ["type"         , "name"        , "inputName"  , "inputIndex"],
         ["electricMotor", "hubMotor"    , "dummy"      ,           0 ],
@@ -489,13 +506,13 @@
     "hubMotor": {
         "torque":[
             ["rpm", "torque"],
-            [0, 200],
-            [10, 200],
-            [50,  76],
-            [100, 38],
-            [200, 19],
-            [400, 10],
-            [800, 5]
+            [0, 100],
+            [10, 100],
+            [50,  100], // 500W
+            [100, 200],
+            [200, 100], // 200 rpm ~= 25km/h // 2000W
+            [400, 100],
+            [800, 50] // ~4000W
         ],
         "idleRPM":0,
         "friction":0,
@@ -505,14 +522,13 @@
         "torque":[
             ["rpm", "torque"],
             [0, 5],
-            [150, 5]
+            ["$max_cadence", 5]
         ],
         "idleRPM":0,
         "friction":0,
-        "dynamicFriction":"$=9.5493/150*5",
+        "dynamicFriction":"$=9.5493/$max_cadence*5",
         "soundConfig": "silentSoundConfig",
-        "electricsThrottleName": "ant_cadence",
-        "electricsThrottleFactorName": "ant_cadence_factor"
+        "electricsThrottleName": "bike_cadence_normalized"
     },
     "silentSoundConfig": {
     },

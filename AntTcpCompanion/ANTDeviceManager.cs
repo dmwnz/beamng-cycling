@@ -5,6 +5,7 @@ using AntPlus.Profiles.BikeSpeedCadence;
 using AntPlus.Profiles.Components;
 using AntPlus.Profiles.FitnessEquipment;
 using AntPlus.Profiles.HeartRate;
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,7 @@ namespace AntTcpCompanion
     {
         readonly byte[] NETWORK_KEY       = { 0xB9, 0xA5, 0x21, 0xFB, 0xBD, 0x72, 0xC3, 0x45 }; // ANT+ Managed network key
         readonly byte   CHANNEL_FREQUENCY = 0x39;
+        readonly TimeSpan MIN_DURATION_BETWEEN_OUT_COMMANDS = TimeSpan.FromSeconds(1);
 
         public BlockingCollection<string> OutputMessages { get; private set; } = new BlockingCollection<string>();
         public BlockingCollection<string> InputMessages { get; private set; } = new BlockingCollection<string>();
@@ -29,6 +31,9 @@ namespace AntTcpCompanion
         FitnessEquipmentDisplay feDisplay;
         BikeCadenceDisplay bcDisplay;
         BikeSpeedCadenceDisplay bscDisplay;
+
+        DateTime lastOutwardCommandTime = DateTime.Now;
+        private bool CanSendCommand => DateTime.Now >= lastOutwardCommandTime + MIN_DURATION_BETWEEN_OUT_COMMANDS;
 
         public void Init()
         {
@@ -123,6 +128,15 @@ namespace AntTcpCompanion
                         case "TARGET_POWER":
                             _ = SendTargetPowerAsync(value);
                             break;
+                        case "START_RECORDING":
+                            FitWriter.Start();
+                            break;
+                        case "WRITE_RECORD":
+                            _ = FitWriter.AddRecordAsync(FitRecord.FromString(value));
+                            break;
+                        case "STOP_RECORDING":
+                            _ = FitWriter.StopAsync();
+                            break;
                         default:
                             break;
                     }
@@ -134,8 +148,9 @@ namespace AntTcpCompanion
         private async Task SendTargetPowerAsync(string targetPowerString)
         {
             var targetPower = int.Parse(targetPowerString);
-            if (feDisplay.FeState != FitnessEquipment.FeState.Asleep)
+            if (feDisplay.FeState != FitnessEquipment.FeState.Asleep && CanSendCommand)
             {
+                lastOutwardCommandTime = DateTime.Now;
                 await Task.Run(() =>
                 {
                     Trace.TraceInformation("Sending target power : " + targetPowerString);
@@ -147,9 +162,9 @@ namespace AntTcpCompanion
         private async Task SendSlopeAsync(string slopeString)
         {
             var slope = float.Parse(slopeString, CultureInfo.InvariantCulture);
-            slope = slope * 100;
-            if (feDisplay.FeState != FitnessEquipment.FeState.Asleep)
+            if (feDisplay.FeState != FitnessEquipment.FeState.Asleep && CanSendCommand)
             {
+                lastOutwardCommandTime = DateTime.Now;
                 await Task.Run(() =>
                 {
                     Trace.TraceInformation("Sending slope : " + slopeString);
