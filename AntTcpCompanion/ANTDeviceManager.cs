@@ -129,13 +129,19 @@ namespace AntTcpCompanion
                             _ = SendTargetPowerAsync(value);
                             break;
                         case "START_RECORDING":
-                            FitWriter.Start();
+                            _ = FitWriter.StartAsync();
                             break;
                         case "WRITE_RECORD":
                             _ = FitWriter.AddRecordAsync(FitRecord.FromString(value));
                             break;
                         case "STOP_RECORDING":
                             _ = FitWriter.StopAsync();
+                            break;
+                        case "PAUSE_RECORDING":
+                            _ = FitWriter.PauseAsync();
+                            break;
+                        case "RESUME_RECORDING":
+                            _ = FitWriter.ResumeAsync();
                             break;
                         default:
                             break;
