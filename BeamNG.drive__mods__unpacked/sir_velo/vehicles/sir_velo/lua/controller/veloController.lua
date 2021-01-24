@@ -16,6 +16,7 @@ local avToRPM = 9.549296596425384
 
 local crankMotor = nil
 local hubMotor = nil
+local steererServo = nil
 local maxRPM = 13000
 
 local socket = require('socket')
@@ -170,6 +171,7 @@ local function computeBikeSteering(dt)
     end
 
     electrics.values.bike_steering = c1 * current_leaning  + c2 * -additional_leaning
+    steererServo:setTargetAngle(electrics.values.bike_steering)
 end
 
 local function balanceBike()
@@ -205,6 +207,7 @@ end
 local function init(jbeamData)
     hubMotor = powertrain.getDevice('hubMotor')
     crankMotor = powertrain.getDevice('crankMotor')
+    steererServo = powertrain.getDevice('steererServo')
 
     MODEL_DRIVETRAINEFFICIENCY = jbeamData.drivetrainEfficiency
     MODEL_TOTALMASS = jbeamData.bikeWeight + jbeamData.riderWeight

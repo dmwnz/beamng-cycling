@@ -224,6 +224,13 @@
         ["mesh"                    , "[group]:"  ],
         ["Cockpit_Pivot_Origin"    , "cockpit_g" ]
     ],
+    "rotators": [
+        ["name","[group]:","node1:","node2:","nodeArm:","wheelDir"],
+        {"radius":1},
+        {"brakeSpring":1},
+        {"rotatorType":"rotator"},
+        ["cockpit", ["cockpit_g"], "f_top_pivot", "f_bot_pivot", "", 1]
+    ],
     
     "nodes":[
         ["id", "posX", "posY", "posZ"],
@@ -500,7 +507,8 @@
         ["electricMotor", "hubMotor"    , "dummy"      ,           0 ],
         ["shaft"        , "hubShaft"    , "hubMotor"   ,           1, {"connectedWheel":"R"}],
         ["electricMotor", "crankMotor"  , "dummy"      ,           0 ],
-        ["shaft"        , "crankShaft"  , "crankMotor" ,           1, {"connectedWheel":"crankset"}]
+        ["shaft"        , "crankShaft"  , "crankMotor" ,           1, {"connectedWheel":"crankset"}],
+        ["electricServo", "steererServo", "dummy"      ,           1 ]
     ],
     
     "hubMotor": {
@@ -532,6 +540,16 @@
     },
     "silentSoundConfig": {
     },
+    "steererServo": {
+        "connectedRotator":"cockpit", 
+        // "electricsTargetAngleName":"bike_steering", 
+        "maxRPM":0.1, 
+        "stallTorque":10000,
+        "angularSpring":1,
+        "friction": 1,
+        "gearRatio": 1,
+        "rotationMode":"absolute"
+    },
 
     "props": [
         ["func", "mesh" , "idRef:", "idX:"     , "idY:"     , "baseRotation"        , "rotation"            , "translation"        , "min", "max", "offset", "multiplier"],
@@ -541,9 +559,9 @@
     "hydros": [
         ["id1:","id2:"],
         {"beamSpring":"$=$beam_spring/150","beamDamp":500,"beamDeform":"FLT_MAX","beamStrength":"FLT_MAX"},
-        {"beamPrecompression":1},
-        ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor":  1}],
-        ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor": -1}]
+        {"beamPrecompression":1}
+        // ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor":  1}],
+        // ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor": -1}]
     ],
 
     "quads": [
