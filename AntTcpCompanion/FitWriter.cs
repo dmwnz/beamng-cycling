@@ -32,7 +32,6 @@ namespace AntTcpCompanion
         public float Lat { get; private set; }
         public float Lon { get; private set; }
         public float Alt { get; private set; }
-        public float Distance { get; private set; }
 
         public string InitialString { get; private set; }
 
@@ -40,7 +39,14 @@ namespace AntTcpCompanion
         public static FitRecord FromString(string str)
         {
             var splitStr = str.Split(',').Select(s => float.Parse(s, CultureInfo.InvariantCulture)).ToArray();
-            return new FitRecord() {InitialString=str, Speed = splitStr[0], Power = splitStr[1], Cadence = splitStr[2], Heartrate = splitStr[3], Lat = splitStr[4], Lon = splitStr[5], Alt = splitStr[6], Distance= splitStr[7] };
+            return new FitRecord() {InitialString=str, Speed = splitStr[0], Power = splitStr[1], Cadence = splitStr[2], Heartrate = splitStr[3], Lat = splitStr[4], Lon = splitStr[5], Alt = splitStr[6] };
+        }
+
+        public override string ToString()
+        {
+            FormattableString formattableString = $"{Speed,7:0.0},{Power,7:0.0},{Cadence,7:0.0},{Heartrate,7:0.0},{Lat,7:0.0},{Lon,7:0.0},{Alt,7:0.0}";
+
+            return FormattableString.Invariant(formattableString);
         }
     }
 
@@ -73,6 +79,7 @@ namespace AntTcpCompanion
         }
         public static void Start(DateTime? start = null)
         {
+            Trace.TraceInformation("Start()");
             var activityFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\BeamNG.drive\\VeloActivities";
             if (!Directory.Exists(activityFolder))
             {
@@ -84,6 +91,7 @@ namespace AntTcpCompanion
             csvFile = new StreamWriter(filepath + ".csv", true);
 
             startTime = start ?? DateTime.Now;
+            totalDistance = 0;
 
             // Create file encode object
             encoder = new Encode(ProtocolVersion.V20);
@@ -119,6 +127,7 @@ namespace AntTcpCompanion
         }
         public static void AddRecord(FitRecord record, DateTime? time = null)
         {
+            Trace.TraceInformation("AddRecord()");
             if (isPaused)
             {
                 return;
@@ -131,7 +140,8 @@ namespace AntTcpCompanion
                 return; // do not record twice with same timestamp
             }
 
-            csvFile.WriteLine($"{(int)(now - startTime).TotalSeconds},{record.InitialString}");
+            totalDistance += record.Speed / 3.6f * (float)(now - lastEventTime).TotalSeconds;
+            csvFile.WriteLine($"{(int)(now - startTime).TotalSeconds,7},{record}," + totalDistance.ToString("0.0", CultureInfo.InvariantCulture));
 
             totalTimerTime += (now - lastEventTime);
 
@@ -142,13 +152,12 @@ namespace AntTcpCompanion
                 var cad = record.Cadence > 0 ? (byte?)record.Cadence : null;
 
                 newRecord.SetTimestamp(new Dynastream.Fit.DateTime(now));
-                totalDistance = record.Distance;
 
                 newRecord.SetHeartRate(hr);
                 newRecord.SetCadence(cad);
                 newRecord.SetPower((ushort)record.Power);
                 // newRecord.SetGrade(State.BikeIncline);
-                newRecord.SetDistance(record.Distance);
+                newRecord.SetDistance(totalDistance);
                 newRecord.SetSpeed(record.Speed / 3.6f);
                 if (record.Lat != 0f && record.Lon != 0f)
                 {
@@ -175,6 +184,7 @@ namespace AntTcpCompanion
         }
         public static void Pause(DateTime? time = null)
         {
+            Trace.TraceInformation("Pause()");
             if (isPaused)
             {
                 return;
@@ -197,6 +207,7 @@ namespace AntTcpCompanion
         }
         public static void Resume(DateTime? time = null)
         {
+            Trace.TraceInformation("Resume()");
             if (!isPaused)
             {
                 return;
@@ -220,6 +231,7 @@ namespace AntTcpCompanion
 
         public static void Stop(DateTime? time = null)
         {
+            Trace.TraceInformation("Stop()");
             var now = time ?? DateTime.Now;
 
             TerminateLap(time);
@@ -270,6 +282,7 @@ namespace AntTcpCompanion
         /// </summary>
         public static void TerminateLap(DateTime? time = null)
         {
+            Trace.TraceInformation("TerminateLap()");
             var now = time ?? DateTime.Now;
 
             currentLapMesg.SetTimestamp(new Dynastream.Fit.DateTime(now));

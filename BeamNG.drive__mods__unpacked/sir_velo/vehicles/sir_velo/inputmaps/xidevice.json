@@ -10,7 +10,11 @@
         },
         {
             "control": "btn_l",
-            "action": "toggle_recording"
+            "action": "start_recording"
+        },
+        {
+            "control": "btn_r",
+            "action": "stop_recording"
         }
     ],
     "name": "XBox Controller 1",

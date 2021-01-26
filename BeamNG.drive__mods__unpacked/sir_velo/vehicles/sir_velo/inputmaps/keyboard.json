@@ -10,7 +10,11 @@
         },
         {
             "control": "lshift",
-            "action": "toggle_recording"
+            "action": "start_recording"
+        },
+        {
+            "control": "lcontrol",
+            "action": "stop_recording"
         }
     ],
     "name": "Keyboard",

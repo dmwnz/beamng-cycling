@@ -29,7 +29,9 @@ electrics.values.ant_power = 0
 electrics.values.ant_cadence = 0
 electrics.values.ant_heartrate = 0
 electrics.values.ant_slope = 0
-local ant_is_recording = 0
+local slope_averaged = 0
+
+electrics.values.ant_is_recording = 0 -- 0 = stopped, 1 = paused, 2 = recording
 
 local MAX_CADENCE = 0
 local MIN_GRADE = 0
@@ -44,6 +46,7 @@ electrics.values.clutchRatio = 1
 electrics.values.gearIndex = 0
 
 electrics.values.bike_cadence_normalized = 0
+electrics.values.bike_steering = 0
 
 local MODEL_CDA = 0
 local MODEL_CRR = 0
@@ -68,24 +71,36 @@ end
 local function toggleAI()
     if ai.mode == 'disabled' then
         ai.setMode('random')
+        ai.setScriptDebugMode('route')
+        ai.debugMode = 'route'
         ai.driveInLane('on')
-        electrics.set_warn_signal(0)
     else
         ai.setMode('disabled')
-        electrics.set_warn_signal(1)
     end
 end
 
-local function toggleFitRecording()
-    if ant_is_recording == 0 then
+local function startFitRecording()
+    if electrics.values.ant_is_recording == 0 then
         client:send('START_RECORDING:0')
-        electrics.setLightsState(1)
         totalDistance = 0
-        ant_is_recording = 1
-    else
+        electrics.values.ant_is_recording = 2
+    elseif electrics.values.ant_is_recording == 1 then
+        client:send('RESUME_RECORDING:0')
+        electrics.values.ant_is_recording = 2
+    end
+end
+
+local function pauseFitRecording()
+    if electrics.values.ant_is_recording == 2 then
+        client:send('PAUSE_RECORDING:0')
+        electrics.values.ant_is_recording = 1
+    end
+end
+
+local function stopFitRecording()
+    if electrics.values.ant_is_recording == 1 then
         client:send('STOP_RECORDING:0')
-        electrics.setLightsState(0)
-        ant_is_recording = 0
+        electrics.values.ant_is_recording = 0
     end
 end
 
@@ -119,22 +134,27 @@ end
 
 local function sendCurrentSituation(dt)
     local _, pitch = obj:getRollPitchYaw()
-    electrics.values.ant_slope = math.tan(pitch) * 100
-    electrics.values.ant_slope = min(MAX_GRADE, electrics.values.ant_slope)
-    electrics.values.ant_slope = max(MIN_GRADE, electrics.values.ant_slope)
-    electrics.values.ant_slope = electrics.values.ant_slope * (GRADE_DIFFICULTY / 100)
+
+    local slope = math.tan(pitch) * 100
+    slope = min(MAX_GRADE, slope)
+    slope = max(MIN_GRADE, slope)
+    slope = slope * (GRADE_DIFFICULTY / 100)
+
+    slope_averaged = slope_averaged + slope * dt
 
     slopeAge = slopeAge + dt
     if slopeAge >= 1 then
+        electrics.values.ant_slope = slope_averaged / slopeAge
         client:send('SLOPE:' .. electrics.values.ant_slope)
         slopeAge = 0
+        slope_averaged = 0
     end
 
     totalDistance = totalDistance + electrics.values.airspeed * dt
     local lon, lat = getCurrentLonLat()
 
     recordAge = recordAge + dt
-    if ant_is_recording == 1 and recordAge >= 1 then
+    if electrics.values.ant_is_recording == 2 and recordAge >= 1 then
         client:send('WRITE_RECORD:' ..
             electrics.values.airspeed * 3.6 .. ',' ..
             electrics.values.ant_power .. ',' ..
@@ -173,7 +193,7 @@ local function computeBikeSteering(dt)
 end
 
 local function balanceBike()
-    throttleOverride = math.max(0, 2 - electrics.values.airspeed)
+    throttleOverride = math.min(math.max(0, 2 - electrics.values.airspeed), 1)
     computeBikeSteering()
 end
 
@@ -197,12 +217,14 @@ local function deltaV(dt)
 end
 
 local function updateSpeedModel(dt)
+    electrics.values.ant_power = input.throttle * 250
     local deltaV = deltaV(dt)
-    model_targetspeed = electrics.values.airspeed + deltaV
+    model_targetspeed = min(15, electrics.values.airspeed + deltaV)
 end
 
 
 local function init(jbeamData)
+    log('I', 'veloController', 'init')
     hubMotor = powertrain.getDevice('hubMotor')
     crankMotor = powertrain.getDevice('crankMotor')
 
@@ -216,9 +238,7 @@ local function init(jbeamData)
     MAX_GRADE = jbeamData.maxGrade
     GRADE_DIFFICULTY = jbeamData.difficulty
 
-    if ant_is_recording == 1 then
-        toggleFitRecording()
-    end
+    pauseFitRecording()
 
     if ai.mode ~= 'disabled' then
         toggleAI()
@@ -239,7 +259,9 @@ local function updateGFX(dt)
     balanceBike()
     updateSpeedModel(dt)
 
-    electrics.values.throttle = max(throttleOverride, deltaV(dt) * 50)
+    electrics.values.ant_speed = model_targetspeed * 3.6
+
+    electrics.values.throttle = max(throttleOverride, max(0, model_targetspeed - electrics.values.airspeed) * 50)
     if ai.mode == 'disabled' then
         electrics.values.throttle = max(electrics.values.throttle, input.throttle)
     end
@@ -252,7 +274,13 @@ local function updateGFX(dt)
         end
         electrics.values.brake = min(max(input.brake or 0, 0), 1)
         electrics.values.abs = 0
+
+        if electrics.values.brake > 0 then
+            electrics.values.throttle = 0
+        end
     end
+
+    electrics.setLightsState(electrics.values.ant_is_recording)
 
     electrics.values.bike_cadence_normalized = electrics.values.ant_cadence / MAX_CADENCE
 
@@ -302,7 +330,10 @@ M.setStarter = nop
 M.setFreeze = nop
 M.sendTorqueData = sendTorqueData
 M.toggleAI = toggleAI
-M.toggleFitRecording = toggleFitRecording
+M.startFitRecording = startFitRecording
+M.pauseFitRecording = pauseFitRecording
+M.stopFitRecording = stopFitRecording
+
 -------------------------------
 
 return M

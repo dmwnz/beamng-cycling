@@ -13,10 +13,16 @@
         "title": "Force braking",
         "desc": "Force braking"
     },
-    "toggle_recording":{
+    "start_recording":{
         "order":3,
-        "onDown": "controller.mainController.toggleFitRecording()",
-        "title": "Start/Stop FIT recording",
-        "desc": "Start/Stop FIT recording"
+        "onDown": "controller.mainController.startFitRecording()",
+        "title": "Start/Resume recording",
+        "desc": "Start FIT recording"
+    },
+    "stop_recording":{
+        "order":4,
+        "onDown": "if electrics.values.ant_is_recording == 1 then controller.mainController.stopFitRecording() elseif electrics.values.ant_is_recording == 2 then controller.mainController.pauseFitRecording() end",
+        "title": "Pause/Stop recording",
+        "desc": "Pause/Stop FIT recording"
     }
 }
