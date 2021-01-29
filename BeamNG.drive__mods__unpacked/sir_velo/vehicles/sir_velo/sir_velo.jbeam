@@ -499,7 +499,8 @@
         ["name"        , "type", "unit", "default", "min", "max", "category", "title", "description"],
         ["$beam_spring", "range", "N/m", 2000000, 2000000, 2000000,"Misc.", "Beam Spring", "Internal use. Do not change."],
         ["$max_cadence", "range", "rpm", 150, 150, 150, "Misc.", "Maximum cadence", "Internal use. Do not change."],
-        ["$rider_weight", "range", "kg", 60, 50, 150, "User configuration", "Rider weight", "Rider weight in kilograms"],
+        ["$cyclist_power", "range", "W", 400, 150, 1000, "Gameplay", "Cyclist Power", "Cyclist max power when not connected to smart equipment"],
+        ["$rider_weight", "range", "kg", 75, 50, 150, "User configuration", "Rider weight", "Rider weight in kilograms"],
         ["$grade_difficulty", "range", "%", 100, 0, 100, "Difficulty", "Hill difficulty factor", "Factor to apply to hills. Lower if you want hills to feel easier."],
         ["$min_grade", "range", "%", -25, -25, 25, "Difficulty", "Minimum simulated grade", "Minimum incline to transmit to smart HT. Raise if HT is too loud at high speeds."],
         ["$max_grade", "range", "%", 25, -25, 25, "Difficulty", "Maximum simulated grade", "Maximum incline to transmit to smart HT. Lower if the steepest hills are too hard."]
@@ -518,7 +519,8 @@
         "minGrade": "$min_grade",
         "maxGrade": "$max_grade",
         "difficulty": "$grade_difficulty",
-        "maxCadence": "$max_cadence"
+        "maxCadence": "$max_cadence",
+        "fakePower": "$cyclist_power"
     },
 
     "powertrain": [

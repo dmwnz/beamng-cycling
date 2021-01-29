@@ -33,6 +33,8 @@ local slope_averaged = 0
 
 electrics.values.ant_is_recording = 0 -- 0 = stopped, 1 = paused, 2 = recording
 
+local FAKE_POWER = 0
+
 local MAX_CADENCE = 0
 local MIN_GRADE = 0
 local MAX_GRADE = 0
@@ -212,12 +214,12 @@ local function RollingResistanceForce()
     return MODEL_TOTALMASS * MODEL_CRR * abs(obj:getGravity())
 end
 
-local function deltaV(dt)
+local function deltaV(dt, power)
 
     local acceleration = (AirResistanceForce() + RollingResistanceForce()) / MODEL_TOTALMASS + GravityAcceleration()
     local a = 1
     local b = electrics.values.airspeed - acceleration * dt
-    local p = electrics.values.ant_power * MODEL_DRIVETRAINEFFICIENCY
+    local p = power * MODEL_DRIVETRAINEFFICIENCY
     local c = - p * dt / MODEL_TOTALMASS + acceleration * electrics.values.airspeed * dt
     local delta = b * b - 4 * a * c
     if delta < 0 then
@@ -226,9 +228,8 @@ local function deltaV(dt)
     return (-b + math.sqrt(delta)) / 2 / a;
 end
 
-local function updateSpeedModel(dt)
-    electrics.values.ant_power = input.throttle * 250
-    local deltaV = deltaV(dt)
+local function updateSpeedModel(dt, power)
+    local deltaV = deltaV(dt, power)
     model_targetspeed = min(15, electrics.values.airspeed + deltaV)
 end
 
@@ -248,6 +249,8 @@ local function init(jbeamData)
     MAX_GRADE = jbeamData.maxGrade
     GRADE_DIFFICULTY = jbeamData.difficulty
 
+    FAKE_POWER = jbeamData.fakePower
+
     pauseFitRecording()
 
     if ai.mode ~= 'disabled' then
@@ -264,17 +267,19 @@ local function init(jbeamData)
 end
 
 local function updateGFX(dt)
+    local power = electrics.values.ant_power
+    if electrics.values.ant_power == 0 and input.throttle ~= 0 then
+        power = input.throttle * FAKE_POWER
+    end
+
     sendCurrentSituation(dt)
     readCompanionData()
     balanceBike()
-    updateSpeedModel(dt)
+    updateSpeedModel(dt, power)
 
     electrics.values.ant_speed = model_targetspeed * 3.6
 
     electrics.values.throttle = max(throttleOverride, max(0, model_targetspeed - electrics.values.airspeed) * 50)
-    if ai.mode == 'disabled' then
-        electrics.values.throttle = max(electrics.values.throttle, input.throttle)
-    end
     if throttleOverride > 0 then
         electrics.values.brake = 0
         electrics.values.abs = 1
@@ -294,7 +299,7 @@ local function updateGFX(dt)
 
     electrics.values.bike_cadence_normalized = electrics.values.ant_cadence / MAX_CADENCE
 
-    electrics.values.gear = string.format("%dW", electrics.values.ant_power)
+    electrics.values.gear = string.format("%dW", power)
     electrics.values.rpm = electrics.values.ant_cadence * 100
     electrics.values.watertemp = electrics.values.ant_heartrate / 200 * 130 -- on dial; min: 50, max: 130
 
