@@ -7,20 +7,26 @@
         "title": "ui.apps.aicontrol.name",
         "desc": "ui.apps.aicontrol.name"
     },
-    "force_brake": {
+    "toggle_ai_debug": {
         "order": 2,
+        "onDown": "if ai.debugMode ~= 'route' then ai.setScriptDebugMode('route'); ai.debugMode = 'route' else ai.setScriptDebugMode('off') end",
+        "title": "Toggle AI debug",
+        "desc": "Toggle AI debug"
+    },
+    "force_brake": {
+        "order": 3,
         "onChange": "electrics.values.brakeOverride = VALUE",
         "title": "Force braking",
         "desc": "Force braking"
     },
     "start_recording":{
-        "order":3,
+        "order":4,
         "onDown": "controller.mainController.startFitRecording()",
         "title": "Start/Resume recording",
         "desc": "Start FIT recording"
     },
     "stop_recording":{
-        "order":4,
+        "order":5,
         "onDown": "if electrics.values.ant_is_recording == 1 then controller.mainController.stopFitRecording() elseif electrics.values.ant_is_recording == 2 then controller.mainController.pauseFitRecording() end",
         "title": "Pause/Stop recording",
         "desc": "Pause/Stop FIT recording"

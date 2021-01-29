@@ -5,6 +5,10 @@
             "action": "toggle_ai"
         },
         {
+            "control": "backspace",
+            "action": "toggle_ai_debug"
+        },
+        {
             "control": "down",
             "action": "force_brake"
         },

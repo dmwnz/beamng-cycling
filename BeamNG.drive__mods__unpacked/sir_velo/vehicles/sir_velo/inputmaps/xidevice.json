@@ -5,6 +5,10 @@
             "action": "toggle_ai"
         },
         {
+            "control": "btn_x",
+            "action": "toggle_ai_debug"
+        },
+        {
             "control": "triggerl",
             "action": "force_brake"
         },
