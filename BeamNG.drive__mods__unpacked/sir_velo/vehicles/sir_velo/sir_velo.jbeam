@@ -290,6 +290,12 @@
 
         ["c_right_hub","f_bot_pivot"],
         ["c_right_hub","c_right_front"]
+    ],
+    "quads": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"dragCoef":150},
+        {"liftCoef":0},
+        ["c_left_hood", "c_right_hood", "c_right_front", "c_left_front"]
     ]
 }
 ,
@@ -395,6 +401,18 @@
         ["d_right_saddle", "f_right_st"]
 
 
+    ],
+    "triangles": [
+        ["id1:", "id2:", "id3:"],
+        {"dragCoef":150},
+        {"liftCoef":0},
+        ["d_head", "d_right_elbow", "d_left_elbow"]
+    ],
+    "quads": [
+        ["id1:", "id2:", "id3:", "id4:"],
+        {"dragCoef":150},
+        {"liftCoef":0},
+        ["d_left_elbow", "d_right_elbow", "c_right_hood", "c_left_hood" ]
     ]
 }
 ,
@@ -552,13 +570,6 @@
         {"beamPrecompression":1},
         ["f_left_st","c_left_pushpoint" ,  {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor":  1}],
         ["f_right_st","c_right_pushpoint", {"inputSource": "bike_steering", "inLimit": 0.85, "outLimit": 1.1, "inputFactor": -1}]
-    ],
-
-    "quads": [
-        ["id1:", "id2:", "id3:", "id4:"],
-        {"dragCoef":10},
-        {"liftCoef":0}
-
     ],
 
     "cameraExternal":{
