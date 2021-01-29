@@ -197,14 +197,24 @@ local function balanceBike()
     computeBikeSteering()
 end
 
-local function Resistance()
-    return 0.5 * model_draftingcoefficient * obj:getAirDensity() * MODEL_CDA * electrics.values.airspeed * electrics.values.airspeed + MODEL_TOTALMASS * MODEL_CRR * -1 * obj:getGravity()
+local function GravityAcceleration()
+    local _, pitch = obj:getRollPitchYaw()
+    local slope = math.tan(pitch)
+
+    return slope * abs(obj:getGravity())
+end
+
+local function AirResistanceForce()
+    return 0.5 * model_draftingcoefficient * obj:getAirDensity() * MODEL_CDA * electrics.values.airspeed * electrics.values.airspeed
+end
+
+local function RollingResistanceForce()
+    return MODEL_TOTALMASS * MODEL_CRR * abs(obj:getGravity())
 end
 
 local function deltaV(dt)
-    local _, pitch = obj:getRollPitchYaw()
-    local slope = math.tan(pitch)
-    local acceleration = Resistance() / MODEL_TOTALMASS - slope * obj:getGravity()
+
+    local acceleration = (AirResistanceForce() + RollingResistanceForce()) / MODEL_TOTALMASS + GravityAcceleration()
     local a = 1
     local b = electrics.values.airspeed - acceleration * dt
     local p = electrics.values.ant_power * MODEL_DRIVETRAINEFFICIENCY
