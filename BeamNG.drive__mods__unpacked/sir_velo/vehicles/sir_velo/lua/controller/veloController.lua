@@ -25,8 +25,8 @@ local slopeAge = 0
 local recordAge = 0
 local totalDistance = 0
 
-electrics.values.ant_power = 0
-electrics.values.ant_cadence = 0
+electrics.values.ant_power = -1
+electrics.values.ant_cadence = -1
 electrics.values.ant_heartrate = 0
 electrics.values.ant_slope = 0
 local slope_averaged = 0
@@ -283,8 +283,12 @@ end
 
 local function updateGFX(dt)
     local power = electrics.values.ant_power
-    if electrics.values.ant_power == 0 and input.throttle ~= 0 then
+    local cadence =  electrics.values.ant_cadence
+    if electrics.values.ant_power == -1 then
         power = input.throttle * FAKE_POWER
+    end
+    if electrics.values.ant_cadence == -1 then
+        cadence = input.throttle * MAX_CADENCE
     end
 
     sendCurrentSituation(dt)
@@ -312,10 +316,10 @@ local function updateGFX(dt)
 
     electrics.setLightsState(electrics.values.ant_is_recording)
 
-    electrics.values.bike_cadence_normalized = electrics.values.ant_cadence / MAX_CADENCE
+    electrics.values.bike_cadence_normalized = cadence / MAX_CADENCE
 
     electrics.values.gear = string.format("%dW", power)
-    electrics.values.rpm = electrics.values.ant_cadence * 100
+    electrics.values.rpm = cadence * 100
     electrics.values.watertemp = electrics.values.ant_heartrate / 200 * 130 -- on dial; min: 50, max: 130
 
     electrics.values.fuelCapacity = 1 -- w'bal ?
