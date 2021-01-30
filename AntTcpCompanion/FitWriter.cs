@@ -159,6 +159,7 @@ namespace AntTcpCompanion
                 // newRecord.SetGrade(State.BikeIncline);
                 newRecord.SetDistance(totalDistance);
                 newRecord.SetSpeed(record.Speed / 3.6f);
+                newRecord.SetEnhancedSpeed(record.Speed / 3.6f);
                 if (record.Lat != 0f && record.Lon != 0f)
                 {
                     var semiLat = record.Lat * Math.Pow(2,31) / 180.0; // convert degrees to semicircles
