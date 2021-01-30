@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 ////////////////////////////////////////////////////////////////////////////////
 // The following FIT Protocol software provided may be used with FIT protocol
 // devices only and remains the copyrighted property of Garmin Canada Inc.
@@ -90,7 +90,7 @@ namespace AntTcpCompanion
 
             csvFile = new StreamWriter(filepath + ".csv", true);
 
-            startTime = start ?? DateTime.Now;
+            startTime = start ?? DateTime.UtcNow;
             totalDistance = 0;
 
             // Create file encode object
@@ -133,7 +133,7 @@ namespace AntTcpCompanion
                 return;
             }
 
-            var now = time ?? DateTime.Now;
+            var now = time ?? DateTime.UtcNow;
 
             if (now - lastRecordTime < TimeSpan.FromSeconds(1))
             {
@@ -193,7 +193,7 @@ namespace AntTcpCompanion
 
             var stopEventMesg = new EventMesg();
             stopEventMesg.SetEventType(EventType.Start);
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             now = time ?? now;
             stopEventMesg.SetTimestamp(new Dynastream.Fit.DateTime(now));
             lastEventTime = now;
@@ -216,7 +216,7 @@ namespace AntTcpCompanion
 
             var startEventMesg = new EventMesg();
             startEventMesg.SetEventType(EventType.Start);
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             now = time ?? now;
             startEventMesg.SetTimestamp(new Dynastream.Fit.DateTime(now));
             lastEventTime = now;
@@ -232,7 +232,7 @@ namespace AntTcpCompanion
         public static void Stop(DateTime? time = null)
         {
             Trace.TraceInformation("Stop()");
-            var now = time ?? DateTime.Now;
+            var now = time ?? DateTime.UtcNow;
 
             TerminateLap(time);
 
@@ -283,7 +283,7 @@ namespace AntTcpCompanion
         public static void TerminateLap(DateTime? time = null)
         {
             Trace.TraceInformation("TerminateLap()");
-            var now = time ?? DateTime.Now;
+            var now = time ?? DateTime.UtcNow;
 
             currentLapMesg.SetTimestamp(new Dynastream.Fit.DateTime(now));
             currentLapMesg.SetSport(Sport.Cycling);
