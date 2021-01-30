@@ -39,12 +39,12 @@ namespace AntTcpCompanion
         public static FitRecord FromString(string str)
         {
             var splitStr = str.Split(',').Select(s => float.Parse(s, CultureInfo.InvariantCulture)).ToArray();
-            return new FitRecord() {InitialString=str, Speed = splitStr[0], Power = splitStr[1], Cadence = splitStr[2], Heartrate = splitStr[3], Lat = splitStr[4], Lon = splitStr[5], Alt = splitStr[6] };
+            return new FitRecord() {InitialString=str, Speed = splitStr[0], Power = splitStr[1], Cadence = splitStr[2], Heartrate = splitStr[3], Lon = splitStr[4], Lat = splitStr[5], Alt = splitStr[6] };
         }
 
         public override string ToString()
         {
-            FormattableString formattableString = $"{Speed,7:0.0},{Power,7:0.0},{Cadence,7:0.0},{Heartrate,7:0.0},{Lat,7:0.0},{Lon,7:0.0},{Alt,7:0.0}";
+            FormattableString formattableString = $"{Speed,7:0.0},{Power,7:0.0},{Cadence,7:0.0},{Heartrate,7:0.0},{Lon,7:0.0},{Lat,7:0.0},{Alt,7:0.0}";
 
             return FormattableString.Invariant(formattableString);
         }

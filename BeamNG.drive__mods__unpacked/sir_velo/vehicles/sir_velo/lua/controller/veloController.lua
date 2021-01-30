@@ -162,8 +162,8 @@ local function sendCurrentSituation(dt)
             electrics.values.ant_power .. ',' ..
             electrics.values.ant_cadence .. ',' ..
             electrics.values.ant_heartrate .. ',' ..
-            lat .. ',' ..
             lon .. ',' ..
+            lat .. ',' ..
             electrics.values.altitude .. ',' ..
             totalDistance)
         recordAge = 0
