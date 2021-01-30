@@ -102,9 +102,9 @@ namespace AntTcpCompanion
             var fileIdMesg = new FileIdMesg(); // Every FIT file MUST contain a 'File ID' message as the first message
 
             fileIdMesg.SetType(Dynastream.Fit.File.Activity);
-            fileIdMesg.SetManufacturer(Manufacturer.Dynastream);  // Types defined in the profile are available
-            fileIdMesg.SetProduct(22);
-            fileIdMesg.SetSerialNumber(1234);
+            fileIdMesg.SetManufacturer(Manufacturer.Bryton);  // Types defined in the profile are available
+            fileIdMesg.SetProduct(1704);
+            fileIdMesg.SetSerialNumber(5122);
             fileIdMesg.SetTimeCreated(new Dynastream.Fit.DateTime(startTime));
 
             // Encode each message, a definition message is automatically generated and output if necessary
@@ -165,6 +165,7 @@ namespace AntTcpCompanion
                     newRecord.SetPositionLong((int)(record.Lon * (2 ^ 31 / 180)));  
                 }
                 newRecord.SetAltitude(record.Alt);
+                newRecord.SetEnhancedAltitude(record.Alt);
 
                 encoder.Write(newRecord);
 
