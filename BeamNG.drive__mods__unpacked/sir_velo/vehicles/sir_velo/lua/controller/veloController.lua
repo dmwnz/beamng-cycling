@@ -129,7 +129,19 @@ end
 
 local function getCurrentLonLat()
     local x,y = obj:getPositionXYZ()  -- +x = E,  +y = N
-    -- todo
+
+    if M.currentLevel == 'italy' then
+        local lon0 = 10.3083114
+        local lat0 = 42.6105413
+
+        local mPerDegree = 2 * math.pi * 6378137.0 / 360.0;
+
+        local latitude = lat0 + y / mPerDegree;
+        local longitude = lon0 + x / mPerDegree * math.cos(math.pi / 180 * latitude);
+
+        return longitude, latitude;
+    end
+
     return 0, 0
 end
 
@@ -238,6 +250,9 @@ local function init(jbeamData)
     log('I', 'veloController', 'init')
     hubMotor = powertrain.getDevice('hubMotor')
     crankMotor = powertrain.getDevice('crankMotor')
+
+    -- black magic to get current level
+    obj:queueGameEngineLua('be:getPlayerVehicle(0):queueLuaCommand(\'controller.mainController.currentLevel="\' .. getCurrentLevelIdentifier() .. \'"\')')
 
     MODEL_DRIVETRAINEFFICIENCY = jbeamData.drivetrainEfficiency
     MODEL_TOTALMASS = jbeamData.bikeWeight + jbeamData.riderWeight
@@ -348,6 +363,7 @@ M.toggleAI = toggleAI
 M.startFitRecording = startFitRecording
 M.pauseFitRecording = pauseFitRecording
 M.stopFitRecording = stopFitRecording
+M.currentLevel = nil
 
 -------------------------------
 
