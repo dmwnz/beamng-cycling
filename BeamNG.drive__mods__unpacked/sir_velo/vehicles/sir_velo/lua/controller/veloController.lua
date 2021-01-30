@@ -230,7 +230,7 @@ local function deltaV(dt, power)
 
     local acceleration = (AirResistanceForce() + RollingResistanceForce()) / MODEL_TOTALMASS + GravityAcceleration()
     local a = 1
-    local b = electrics.values.airspeed - acceleration * dt
+    local b = electrics.values.airspeed + acceleration * dt
     local p = power * MODEL_DRIVETRAINEFFICIENCY
     local c = - p * dt / MODEL_TOTALMASS + acceleration * electrics.values.airspeed * dt
     local delta = b * b - 4 * a * c
@@ -294,7 +294,7 @@ local function updateGFX(dt)
 
     electrics.values.ant_speed = model_targetspeed * 3.6
 
-    electrics.values.throttle = max(throttleOverride, max(0, model_targetspeed - electrics.values.airspeed) * 50)
+    electrics.values.throttle = min(1, max(throttleOverride, max(0, model_targetspeed - electrics.values.airspeed) * 100))
     if throttleOverride > 0 then
         electrics.values.brake = 0
         electrics.values.abs = 1
