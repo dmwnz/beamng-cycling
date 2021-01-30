@@ -161,8 +161,10 @@ namespace AntTcpCompanion
                 newRecord.SetSpeed(record.Speed / 3.6f);
                 if (record.Lat != 0f && record.Lon != 0f)
                 {
-                    newRecord.SetPositionLat( (int)(record.Lat * (2 ^ 31 / 180)));  // convert degrees to semicircles
-                    newRecord.SetPositionLong((int)(record.Lon * (2 ^ 31 / 180)));  
+                    var semiLat = record.Lat * Math.Pow(2,31) / 180.0; // convert degrees to semicircles
+                    var semiLon = record.Lon * Math.Pow(2,31) / 180.0;
+                    newRecord.SetPositionLong((int)semiLon);
+                    newRecord.SetPositionLat((int)semiLat);  
                 }
                 newRecord.SetAltitude(record.Alt);
                 newRecord.SetEnhancedAltitude(record.Alt);
