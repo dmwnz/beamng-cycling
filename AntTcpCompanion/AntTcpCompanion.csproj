@@ -84,6 +84,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>xcopy /y /d  "$(ProjectDir)Dependencies\ANT_WrappedLib.dll" "$(ProjectDir)$(OutDir)"
-xcopy /y /d  "$(ProjectDir)Dependencies\DSI*.dll" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
+xcopy /y /d  "$(ProjectDir)Dependencies\DSI*.dll" "$(ProjectDir)$(OutDir)"
+xcopy /y /d  "$(ProjectDir)$(OutDir)" "$(ProjectDir)\..\BeamNG.drive__mods__unpacked\sir_velo\vehicles\sir_velo\companion"</PostBuildEvent>
   </PropertyGroup>
 </Project>

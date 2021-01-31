@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Reflection;
+using System.Threading;
 
 namespace AntTcpCompanion
 {
@@ -11,20 +13,34 @@ namespace AntTcpCompanion
     {
         static async Task Main(string[] args)
         {
-            Trace.AutoFlush = true;
-            Trace.Listeners.Add(new TextWriterTraceListener(File.CreateText("log.log")) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
-            Trace.Listeners.Add(new ConsoleTraceListener() { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
+            var appName = Assembly.GetEntryAssembly().GetName().Name;
+            using (var mutex = new Mutex(true, appName + "Singleton", out bool amIFirst))
+            {
+                if (!amIFirst)
+                {
+                    return; // only allow one instance of the app
+                }
+                else
+                {
+                    ShowWindow(Process.GetCurrentProcess().MainWindowHandle.ToInt32(), 6); // start minimized
 
+                    Trace.AutoFlush = true;
+                    Trace.Listeners.Add(new TextWriterTraceListener(File.CreateText("log.log")) { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
+                    Trace.Listeners.Add(new ConsoleTraceListener() { TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId });
 
-            ANTDeviceManager manager = new ANTDeviceManager();
-            ANTServer server = new ANTServer(manager);
+                    ANTDeviceManager manager = new ANTDeviceManager();
+                    ANTServer server = new ANTServer(manager);
 
-            manager.Init();
-            manager.Start();
+                    manager.Init();
+                    manager.Start();
 
-            await server.StartServer();
-
+                    await server.StartServer();
+                }
+            }
         }
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(int hWnd, int nCmdShow);
 
         static void FITFromCSV()
         {

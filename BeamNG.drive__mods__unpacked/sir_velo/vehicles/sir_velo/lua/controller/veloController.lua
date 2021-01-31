@@ -251,6 +251,9 @@ local function init(jbeamData)
     hubMotor = powertrain.getDevice('hubMotor')
     crankMotor = powertrain.getDevice('crankMotor')
 
+    -- black magic to launch companion app
+    obj:queueGameEngineLua('Engine.Platform.openFile(extensions.core_vehicle_manager.getPlayerVehicleData().vehicleDirectory .. "/companion/SimCompanion.exe")')
+
     -- black magic to get current level
     obj:queueGameEngineLua('be:getPlayerVehicle(0):queueLuaCommand(\'controller.mainController.currentLevel="\' .. getCurrentLevelIdentifier() .. \'"\')')
 
