@@ -21,6 +21,7 @@ local maxRPM = 13000
 local socket = require('socket')
 local host, port = '127.0.0.1', 20201
 local client = assert(socket.tcp())
+local companionStarted = false
 local slopeAge = 0
 local recordAge = 0
 local totalDistance = 0
@@ -251,11 +252,16 @@ local function init(jbeamData)
     hubMotor = powertrain.getDevice('hubMotor')
     crankMotor = powertrain.getDevice('crankMotor')
 
-    -- black magic to launch companion app
-    obj:queueGameEngineLua('Engine.Platform.openFile(extensions.core_vehicle_manager.getPlayerVehicleData().vehicleDirectory .. "/companion/SimCompanion.exe")')
+    if not companionStarted then
+        -- black magic to launch companion app
+        obj:queueGameEngineLua('Engine.Platform.openFile(extensions.core_vehicle_manager.getPlayerVehicleData().vehicleDirectory .. "/companion/SimCompanion.exe")')
+        companionStarted = true
+    end
 
-    -- black magic to get current level
-    obj:queueGameEngineLua('be:getPlayerVehicle(0):queueLuaCommand(\'controller.mainController.currentLevel="\' .. getCurrentLevelIdentifier() .. \'"\')')
+    if M.currentLevel == nil then
+        -- black magic to get current level
+        obj:queueGameEngineLua('be:getPlayerVehicle(0):queueLuaCommand(\'controller.mainController.currentLevel="\' .. getCurrentLevelIdentifier() .. \'"\')')
+    end
 
     MODEL_DRIVETRAINEFFICIENCY = jbeamData.drivetrainEfficiency
     MODEL_TOTALMASS = jbeamData.bikeWeight + jbeamData.riderWeight
