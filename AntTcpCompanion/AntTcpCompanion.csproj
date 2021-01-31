@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -41,6 +41,9 @@
     <Reference Include="ANT+ProfileLib">
       <HintPath>Dependencies\ANT+ProfileLib.dll</HintPath>
     </Reference>
+    <Reference Include="ANT_NET">
+      <HintPath>Dependencies\ANT_NET.dll</HintPath>
+    </Reference>
     <Reference Include="Dynastream.Fit.Portable">
       <HintPath>Dependencies\Dynastream.Fit.Portable.dll</HintPath>
     </Reference>
@@ -66,15 +69,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Damien\Downloads\ANT-SDK_PC.3.5\ANT_Managed_Library\ANT_Managed_Library.csproj">
-      <Project>{16270052-0db5-41f9-8dd4-d1700e6e7281}</Project>
-      <Name>ANT_Managed_Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Dependencies\ANT_WrappedLib.dll" />
     <None Include="Dependencies\DSI_CP210xManufacturing_3_1.dll" />
     <None Include="Dependencies\DSI_SiUSBXp_3_1.dll" />
+    <None Include="Dependencies\ANT+ProfileLib.dll" />
+    <None Include="Dependencies\ANT+ProfileLib.XML" />
+    <None Include="Dependencies\ANT_NET.dll" />
+    <None Include="Dependencies\Dynastream.Fit.Portable.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -82,6 +83,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d  "$(ProjectDir)Dependencies\*.dll" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d  "$(ProjectDir)Dependencies\ANT_WrappedLib.dll" "$(ProjectDir)$(OutDir)"
+xcopy /y /d  "$(ProjectDir)Dependencies\DSI*.dll" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
