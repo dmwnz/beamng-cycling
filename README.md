@@ -22,10 +22,10 @@ Consists of:
  ┃   ┃     ┗ 📂SimCycling            => little UI app
  ┃   ┗ 📂vehicles
  ┃     ┗ 📂sir_velo
+ ┃       ┣ 📂companion               => output folder for AntTcpCompanion build
  ┃       ┣ 📂inputmaps               => default custom input mappings
  ┃       ┣ 📂lua
- ┃       ┣ ┣ 📂controller            => custom vehicle control logic
- ┃       ┃ ┗ 📜sim_cycling.lua       => custom vehicle script
+ ┃       ┣ ┗ 📂controller            => custom vehicle control logic
  ┃       ┣ 📜default.png             => UI stuff
  ┃       ┣ 📜info.json               => UI stuff
  ┃       ┣ 📜input_actions.json      => velo-specific input actions
